@@ -16,6 +16,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AppRoutingModule } from './app-routing.module';
 import { TokenComponent } from './token/token.component';
+import { TeamMatchConfigurationComponent } from './team-match-configuration/team-match-configuration.component';
+import { TabsModule } from 'ngx-bootstrap';
+import { PlayersConfigComponent } from './players-config/players-config.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,9 @@ import { TokenComponent } from './token/token.component';
     CounterComponent,
     FetchDataComponent,
     TodoComponent,
-    TokenComponent
+    TokenComponent,
+    TeamMatchConfigurationComponent,
+    PlayersConfigComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -35,7 +40,8 @@ import { TokenComponent } from './token/token.component';
     ApiAuthorizationModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    TabsModule.forRoot(),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
