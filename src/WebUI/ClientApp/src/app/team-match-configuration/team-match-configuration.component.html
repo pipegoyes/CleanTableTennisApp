@@ -1,23 +1,33 @@
 <p>Set up basic configuration</p>
 
-<div class="input-group mb-3">
-    <input type="text" placeholder="Host Team" class="form-control"/>
-</div>
-<div class="class">
-    <input type="text" placeholder="Guest Team" class="form-control"/>
-</div>
+<form [formGroup]="teamMatchConfiguration" (ngSubmit)="onSubmit()">
+    <div class="input-group mb-3">
+        <input type="text" placeholder="Host Team" class="form-control" formControlName="hostTeamName" />
+    </div>
+    <div class="class">
+        <input type="text" placeholder="Guest Team" class="form-control" formControlName="guestTeamName" />
+    </div>
 
-<div class="main-part">
-    <tabset>
-        <tab heading="Team A" id="tab1">
-            <app-players-config></app-players-config>
-        </tab>
-        <tab heading="Guest Team">
-            <app-players-config></app-players-config>
-        </tab>
-    </tabset>
-</div>
+    <div class="main-part">
+        <tabset>
+            <tab heading="{{hostTeamName.value}}" formGroupName="hostTeamPlayersForm">
 
-<div>
-    <button class="btn btn-primary">Start game</button>
-</div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">1</span>
+                    <input type="text" class="form-control" placeholder="Player" aria-label="Player 1"
+                        aria-describedby="basic-addon1" formControlName="player1">
+                </div>
+
+
+                <!-- <app-players-config></app-players-config> -->
+            </tab>
+            <tab heading="{{guestTeamName.value}}">
+                <!-- <app-players-config></app-players-config> -->
+            </tab>
+        </tabset>
+    </div>
+
+    <div>
+        <button type="submit" class="btn btn-primary">Start game</button>
+    </div>
+</form>
