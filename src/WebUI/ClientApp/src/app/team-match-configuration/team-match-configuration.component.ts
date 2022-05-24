@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-team-match-configuration',
@@ -7,30 +7,38 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./team-match-configuration.component.scss']
 })
 export class TeamMatchConfigurationComponent implements OnInit {
-
-  hostTeamName = new FormControl("Host");
-  guestTeamName = new FormControl("Guest");
-  player1 = new FormControl("");
-  teamMatchConfiguration = new FormGroup({
-    hostTeamName : this.hostTeamName,
-    guestTeamName : this.guestTeamName,
-    hostTeamPlayersForm : new FormGroup({
-      player1: this.player1,
-      // player2: new FormControl(""),
-      // player3: new FormControl(""),
-      // player4: new FormControl(""),
-    })
+  teamMatchForm = new FormGroup({
+    hostTeamName: new FormControl("Host"),
+    guestTeamName: new FormControl("Guest"),
+    hostPlayers: this.builder.array([
+      this.builder.control(""),
+      this.builder.control(""),
+      this.builder.control(""),
+      this.builder.control(""),
+    ]),
+    guestPlayers: this.builder.array([
+      this.builder.control(""),
+      this.builder.control(""),
+      this.builder.control(""),
+      this.builder.control(""),
+    ]),
   });
 
+  get getHostPlayers(){
+    return this.teamMatchForm.get("hostPlayers") as FormArray;
+  }
   
-  
-  constructor() { }
+  get getGuestPlayers(){
+    return this.teamMatchForm.get("guestPlayers") as FormArray;
+  }
+
+  constructor(private builder : FormBuilder) { }
 
   ngOnInit(): void {
   }
 
   onSubmit() {
-    console.log(this.teamMatchConfiguration.value);
+    console.log(this.teamMatchForm.value);
   }
 
 }
