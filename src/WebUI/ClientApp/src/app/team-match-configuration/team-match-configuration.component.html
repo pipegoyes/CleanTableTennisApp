@@ -10,16 +10,16 @@
 
     <div class="main-part">
         <tabset>
-            <tab heading="Team A" formArrayName="hostPlayers">
+            <tab heading="Host Team" formArrayName="hostPlayers">
                 <div class="input-group mb-3" *ngFor="let player of getHostPlayers.controls; index as i">
                     <span class="input-group-text">{{i}}</span>
-                    <input type="text" class="form-control" placeholder="Player" aria-label="Player {{i}}" aria-describedby="basic-addon1" >
+                    <input type="text" class="form-control" placeholder="Player" aria-label="Player {{i}}" aria-describedby="basic-addon1" [formControlName]="i" >
                 </div>
             </tab>
-            <tab heading="Team B">
-                <div class="input-group mb-3" *ngFor="let player of getGuestPlayers.controls; index as i">
-                    <span class="input-group-text">{{i}}</span>
-                    <input type="text" class="form-control" placeholder="Player" aria-label="Player {{i}}" aria-describedby="basic-addon1" >
+            <tab heading="Guest Team" formArrayName="guestPlayers">
+                <div class="input-group mb-3" *ngFor="let player of getGuestPlayers.controls; index as j">
+                    <span class="input-group-text">{{j}}</span>
+                    <input type="text" class="form-control" placeholder="Player" aria-label="Player {{j}}" aria-describedby="basic-addon1" [formControlName]="j" >
                 </div>
             </tab>
         </tabset>
