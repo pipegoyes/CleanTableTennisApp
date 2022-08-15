@@ -9,7 +9,7 @@
     "
   >
     <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">CleanArchitectureSolution.WebUI</a>
+      <a class="navbar-brand" [routerLink]="['/']">Table tennis app</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -26,15 +26,6 @@
         [ngClass]="{ show: isExpanded }"
       >
         <app-login-menu></app-login-menu>
-        <ul class="navbar-nav flex-grow">
-          <li
-            class="nav-item"
-            [routerLinkActive]="['link-active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
-          </li>
-        </ul>
       </div>
     </div>
   </nav>
