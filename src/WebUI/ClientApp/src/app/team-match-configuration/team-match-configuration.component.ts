@@ -7,9 +7,10 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./team-match-configuration.component.scss']
 })
 export class TeamMatchConfigurationComponent implements OnInit {
-  teamMatchForm = new FormGroup({
-    hostTeamName: new FormControl("Host"),
-    guestTeamName: new FormControl("Guest"),
+  firstDoublePlayer = "";
+  teamMatchForm = this.builder.group({
+    hostTeamName: this.builder.control("Host"),
+    guestTeamName: this.builder.control("Guest"),
     hostPlayers: this.builder.array([
       this.builder.control(""),
       this.builder.control(""),
@@ -38,7 +39,8 @@ export class TeamMatchConfigurationComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.teamMatchForm.value);
+    // console.log(this.teamMatchForm.value);
+    // console.log(this.firstDoublePlayer);
   }
 
 }

@@ -13,16 +13,28 @@
             <tab heading="Host Team" formArrayName="hostPlayers">
                 <div class="input-group mb-3" *ngFor="let player of getHostPlayers.controls; index as i">
                     <span class="input-group-text">{{i}}</span>
-                    <input type="text" class="form-control" placeholder="Player" aria-label="Player {{i}}" aria-describedby="basic-addon1" [formControlName]="i" >
+                    <input type="text" class="form-control" placeholder="Player" aria-label="Player {{i + 1}}" aria-describedby="basic-addon1" [formControlName]="i" >
                 </div>
             </tab>
             <tab heading="Guest Team" formArrayName="guestPlayers">
                 <div class="input-group mb-3" *ngFor="let player of getGuestPlayers.controls; index as j">
                     <span class="input-group-text">{{j}}</span>
-                    <input type="text" class="form-control" placeholder="Player" aria-label="Player {{j}}" aria-describedby="basic-addon1" [formControlName]="j" >
+                    <input type="text" class="form-control" placeholder="Player" aria-label="Player {{j + 1}}" aria-describedby="basic-addon1" [formControlName]="j" >
                 </div>
             </tab>
         </tabset>
+    </div>
+
+    <h4>First double</h4>
+    <div class="input-group">
+        <label>1. Player</label>
+        <select [(ngModel)]="firstDoublePlayer">
+            <option *ngFor="let player of getHostPlayers.controls; index as i" [ngValue]="player.value">{{i + 1}} - {{player.value}}</option>
+        </select>
+        <label>2. Player</label>
+        <select>
+            <option *ngFor="let player of getHostPlayers.controls; index as i">{{i + 1}} - {{player.value}}</option>
+        </select>
     </div>
 
     <div>
