@@ -2,8 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
-        <RootNamespace>CleanArchitectureSolution.Application.UnitTests</RootNamespace>
-        <AssemblyName>CleanArchitectureSolution.Application.UnitTests</AssemblyName>
+        <RootNamespace>CleanTableTennisApp.Application.UnitTests</RootNamespace>
+        <AssemblyName>CleanTableTennisApp.Application.UnitTests</AssemblyName>
 
         <IsPackable>false</IsPackable>
         <ImplicitUsings>enable</ImplicitUsings>

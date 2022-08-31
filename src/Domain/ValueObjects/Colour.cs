@@ -1,4 +1,4 @@
-﻿namespace CleanArchitectureSolution.Domain.ValueObjects;
+﻿namespace CleanTableTennisApp.Domain.ValueObjects;
 
 public class Colour : ValueObject
 {

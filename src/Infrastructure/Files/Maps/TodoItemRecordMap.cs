@@ -1,8 +1,8 @@
 ﻿using System.Globalization;
-using CleanArchitectureSolution.Application.TodoLists.Queries.ExportTodos;
+using CleanTableTennisApp.Application.TodoLists.Queries.ExportTodos;
 using CsvHelper.Configuration;
 
-namespace CleanArchitectureSolution.Infrastructure.Files.Maps;
+namespace CleanTableTennisApp.Infrastructure.Files.Maps;
 
 public class TodoItemRecordMap : ClassMap<TodoItemRecord>
 {

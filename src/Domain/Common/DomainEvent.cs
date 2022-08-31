@@ -1,4 +1,4 @@
-﻿namespace CleanArchitectureSolution.Domain.Common;
+﻿namespace CleanTableTennisApp.Domain.Common;
 
 public interface IHasDomainEvent
 {

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace CleanArchitectureSolution.Application.WeatherForecasts.Queries.GetWeatherForecasts;
+namespace CleanTableTennisApp.Application.WeatherForecasts.Queries.GetWeatherForecasts;
 
 public class GetWeatherForecastsQuery : IRequest<IEnumerable<WeatherForecast>>
 {

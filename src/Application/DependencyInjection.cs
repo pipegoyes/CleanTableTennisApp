@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
-using CleanArchitectureSolution.Application.Common.Behaviours;
+using CleanTableTennisApp.Application.Common.Behaviours;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CleanArchitectureSolution.Application;
+namespace CleanTableTennisApp.Application;
 
 public static class DependencyInjection
 {

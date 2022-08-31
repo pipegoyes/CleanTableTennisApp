@@ -1,6 +1,6 @@
-﻿using CleanArchitectureSolution.Application.Common.Interfaces;
+﻿using CleanTableTennisApp.Application.Common.Interfaces;
 
-namespace CleanArchitectureSolution.Infrastructure.Services;
+namespace CleanTableTennisApp.Infrastructure.Services;
 
 public class DateTimeService : IDateTime
 {

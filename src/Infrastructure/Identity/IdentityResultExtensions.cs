@@ -1,7 +1,7 @@
-﻿using CleanArchitectureSolution.Application.Common.Models;
+﻿using CleanTableTennisApp.Application.Common.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace CleanArchitectureSolution.Infrastructure.Identity;
+namespace CleanTableTennisApp.Infrastructure.Identity;
 
 public static class IdentityResultExtensions
 {

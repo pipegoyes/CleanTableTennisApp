@@ -1,6 +1,6 @@
-﻿using CleanArchitectureSolution.Application.TodoLists.Queries.ExportTodos;
+﻿using CleanTableTennisApp.Application.TodoLists.Queries.ExportTodos;
 
-namespace CleanArchitectureSolution.Application.Common.Interfaces;
+namespace CleanTableTennisApp.Application.Common.Interfaces;
 
 public interface ICsvFileBuilder
 {

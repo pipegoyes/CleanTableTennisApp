@@ -1,10 +1,10 @@
-﻿using CleanArchitectureSolution.Application.Common.Exceptions;
-using CleanArchitectureSolution.Application.TodoLists.Commands.CreateTodoList;
-using CleanArchitectureSolution.Domain.Entities;
+﻿using CleanTableTennisApp.Application.Common.Exceptions;
+using CleanTableTennisApp.Application.TodoLists.Commands.CreateTodoList;
+using CleanTableTennisApp.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace CleanArchitectureSolution.Application.IntegrationTests.TodoLists.Commands;
+namespace CleanTableTennisApp.Application.IntegrationTests.TodoLists.Commands;
 
 using static Testing;
 

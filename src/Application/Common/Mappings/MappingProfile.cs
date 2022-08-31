@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using AutoMapper;
 
-namespace CleanArchitectureSolution.Application.Common.Mappings;
+namespace CleanTableTennisApp.Application.Common.Mappings;
 
 public class MappingProfile : Profile
 {

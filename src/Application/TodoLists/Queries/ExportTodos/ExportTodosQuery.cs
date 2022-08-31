@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using CleanArchitectureSolution.Application.Common.Interfaces;
+using CleanTableTennisApp.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace CleanArchitectureSolution.Application.TodoLists.Queries.ExportTodos;
+namespace CleanTableTennisApp.Application.TodoLists.Queries.ExportTodos;
 
 public class ExportTodosQuery : IRequest<ExportTodosVm>
 {

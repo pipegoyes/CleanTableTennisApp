@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
-using CleanArchitectureSolution.Application.Common.Exceptions;
-using CleanArchitectureSolution.Application.Common.Interfaces;
-using CleanArchitectureSolution.Application.Common.Security;
+using CleanTableTennisApp.Application.Common.Exceptions;
+using CleanTableTennisApp.Application.Common.Interfaces;
+using CleanTableTennisApp.Application.Common.Security;
 using MediatR;
 
-namespace CleanArchitectureSolution.Application.Common.Behaviours;
+namespace CleanTableTennisApp.Application.Common.Behaviours;
 
 public class AuthorizationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
 {

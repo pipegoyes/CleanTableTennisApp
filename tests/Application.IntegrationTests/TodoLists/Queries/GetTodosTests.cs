@@ -1,10 +1,10 @@
-﻿using CleanArchitectureSolution.Application.TodoLists.Queries.GetTodos;
-using CleanArchitectureSolution.Domain.Entities;
-using CleanArchitectureSolution.Domain.ValueObjects;
+﻿using CleanTableTennisApp.Application.TodoLists.Queries.GetTodos;
+using CleanTableTennisApp.Domain.Entities;
+using CleanTableTennisApp.Domain.ValueObjects;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace CleanArchitectureSolution.Application.IntegrationTests.TodoLists.Queries;
+namespace CleanTableTennisApp.Application.IntegrationTests.TodoLists.Queries;
 
 using static Testing;
 

@@ -1,7 +1,7 @@
-﻿using CleanArchitectureSolution.Domain.Common;
+﻿using CleanTableTennisApp.Domain.Common;
 using MediatR;
 
-namespace CleanArchitectureSolution.Application.Common.Models;
+namespace CleanTableTennisApp.Application.Common.Models;
 
 public class DomainEventNotification<TDomainEvent> : INotification where TDomainEvent : DomainEvent
 {

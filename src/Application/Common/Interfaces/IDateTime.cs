@@ -1,4 +1,4 @@
-﻿namespace CleanArchitectureSolution.Application.Common.Interfaces;
+﻿namespace CleanTableTennisApp.Application.Common.Interfaces;
 
 public interface IDateTime
 {

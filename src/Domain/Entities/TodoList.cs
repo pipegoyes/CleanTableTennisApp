@@ -1,4 +1,4 @@
-﻿namespace CleanArchitectureSolution.Domain.Entities;
+﻿namespace CleanTableTennisApp.Domain.Entities;
 
 public class TodoList : AuditableEntity
 {

@@ -1,10 +1,10 @@
-﻿using CleanArchitectureSolution.Application.Common.Exceptions;
-using CleanArchitectureSolution.Application.Common.Interfaces;
-using CleanArchitectureSolution.Domain.Entities;
+﻿using CleanTableTennisApp.Application.Common.Exceptions;
+using CleanTableTennisApp.Application.Common.Interfaces;
+using CleanTableTennisApp.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace CleanArchitectureSolution.Application.TodoLists.Commands.DeleteTodoList;
+namespace CleanTableTennisApp.Application.TodoLists.Commands.DeleteTodoList;
 
 public class DeleteTodoListCommand : IRequest
 {

@@ -1,9 +1,9 @@
-﻿using CleanArchitectureSolution.Application.Common.Exceptions;
+﻿using CleanTableTennisApp.Application.Common.Exceptions;
 using FluentAssertions;
 using FluentValidation.Results;
 using NUnit.Framework;
 
-namespace CleanArchitectureSolution.Application.UnitTests.Common.Exceptions;
+namespace CleanTableTennisApp.Application.UnitTests.Common.Exceptions;
 
 public class ValidationExceptionTests
 {

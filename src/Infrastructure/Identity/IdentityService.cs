@@ -1,10 +1,10 @@
-﻿using CleanArchitectureSolution.Application.Common.Interfaces;
-using CleanArchitectureSolution.Application.Common.Models;
+﻿using CleanTableTennisApp.Application.Common.Interfaces;
+using CleanTableTennisApp.Application.Common.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace CleanArchitectureSolution.Infrastructure.Identity;
+namespace CleanTableTennisApp.Infrastructure.Identity;
 
 public class IdentityService : IIdentityService
 {

@@ -1,10 +1,10 @@
-﻿using CleanArchitectureSolution.Application.Common.Exceptions;
-using CleanArchitectureSolution.Application.Common.Interfaces;
-using CleanArchitectureSolution.Domain.Entities;
-using CleanArchitectureSolution.Domain.Events;
+﻿using CleanTableTennisApp.Application.Common.Exceptions;
+using CleanTableTennisApp.Application.Common.Interfaces;
+using CleanTableTennisApp.Domain.Entities;
+using CleanTableTennisApp.Domain.Events;
 using MediatR;
 
-namespace CleanArchitectureSolution.Application.TodoItems.Commands.DeleteTodoItem;
+namespace CleanTableTennisApp.Application.TodoItems.Commands.DeleteTodoItem;
 
 public class DeleteTodoItemCommand : IRequest
 {

@@ -2,8 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
-        <RootNamespace>CleanArchitectureSolution.WebUI</RootNamespace>
-        <AssemblyName>CleanArchitectureSolution.WebUI</AssemblyName>
+        <RootNamespace>CleanTableTennisApp.WebUI</RootNamespace>
+        <AssemblyName>CleanTableTennisApp.WebUI</AssemblyName>
         <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
         <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
         <IsPackable>true</IsPackable>

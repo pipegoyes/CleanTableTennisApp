@@ -1,11 +1,11 @@
-﻿using CleanArchitectureSolution.Application.Common.Behaviours;
-using CleanArchitectureSolution.Application.Common.Interfaces;
-using CleanArchitectureSolution.Application.TodoItems.Commands.CreateTodoItem;
+﻿using CleanTableTennisApp.Application.Common.Behaviours;
+using CleanTableTennisApp.Application.Common.Interfaces;
+using CleanTableTennisApp.Application.TodoItems.Commands.CreateTodoItem;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 
-namespace CleanArchitectureSolution.Application.UnitTests.Common.Behaviours;
+namespace CleanTableTennisApp.Application.UnitTests.Common.Behaviours;
 
 public class RequestLoggerTests
 {

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace CleanArchitectureSolution.Application.TodoItems.Queries.GetTodoItemsWithPagination;
+namespace CleanTableTennisApp.Application.TodoItems.Queries.GetTodoItemsWithPagination;
 
 public class GetTodoItemsWithPaginationQueryValidator : AbstractValidator<GetTodoItemsWithPaginationQuery>
 {

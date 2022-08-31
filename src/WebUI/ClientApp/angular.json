@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "CleanArchitectureSolution.WebUI": {
+    "CleanTableTennisApp.WebUI": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -66,18 +66,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "CleanArchitectureSolution.WebUI:build"
+            "browserTarget": "CleanTableTennisApp.WebUI:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "CleanArchitectureSolution.WebUI:build:production"
+              "browserTarget": "CleanTableTennisApp.WebUI:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "CleanArchitectureSolution.WebUI:build"
+            "browserTarget": "CleanTableTennisApp.WebUI:build"
           }
         },
         "test": {
@@ -138,7 +138,7 @@
         }
       }
     },
-    "CleanArchitectureSolution.WebUI-e2e": {
+    "CleanTableTennisApp.WebUI-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -146,7 +146,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "CleanArchitectureSolution.WebUI:serve"
+            "devServerTarget": "CleanTableTennisApp.WebUI:serve"
           }
         },
         "lint": {
@@ -161,5 +161,5 @@
       }
     }
   },
-  "defaultProject": "CleanArchitectureSolution.WebUI"
+  "defaultProject": "CleanTableTennisApp.WebUI"
 }

@@ -1,6 +1,6 @@
-﻿using CleanArchitectureSolution.Domain.Common;
+﻿using CleanTableTennisApp.Domain.Common;
 
-namespace CleanArchitectureSolution.Application.Common.Interfaces;
+namespace CleanTableTennisApp.Application.Common.Interfaces;
 
 public interface IDomainEventService
 {

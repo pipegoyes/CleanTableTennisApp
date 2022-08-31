@@ -1,6 +1,6 @@
-﻿using CleanArchitectureSolution.Application.Common.Models;
+﻿using CleanTableTennisApp.Application.Common.Models;
 
-namespace CleanArchitectureSolution.Application.Common.Interfaces;
+namespace CleanTableTennisApp.Application.Common.Interfaces;
 
 public interface IIdentityService
 {

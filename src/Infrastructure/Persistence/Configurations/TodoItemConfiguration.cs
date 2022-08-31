@@ -1,8 +1,8 @@
-﻿using CleanArchitectureSolution.Domain.Entities;
+﻿using CleanTableTennisApp.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CleanArchitectureSolution.Infrastructure.Persistence.Configurations;
+namespace CleanTableTennisApp.Infrastructure.Persistence.Configurations;
 
 public class TodoItemConfiguration : IEntityTypeConfiguration<TodoItem>
 {

@@ -1,14 +1,14 @@
-﻿using CleanArchitectureSolution.Application.Common.Exceptions;
-using CleanArchitectureSolution.Application.TodoItems.Commands.CreateTodoItem;
-using CleanArchitectureSolution.Application.TodoItems.Commands.UpdateTodoItem;
-using CleanArchitectureSolution.Application.TodoItems.Commands.UpdateTodoItemDetail;
-using CleanArchitectureSolution.Application.TodoLists.Commands.CreateTodoList;
-using CleanArchitectureSolution.Domain.Entities;
-using CleanArchitectureSolution.Domain.Enums;
+﻿using CleanTableTennisApp.Application.Common.Exceptions;
+using CleanTableTennisApp.Application.TodoItems.Commands.CreateTodoItem;
+using CleanTableTennisApp.Application.TodoItems.Commands.UpdateTodoItem;
+using CleanTableTennisApp.Application.TodoItems.Commands.UpdateTodoItemDetail;
+using CleanTableTennisApp.Application.TodoLists.Commands.CreateTodoList;
+using CleanTableTennisApp.Domain.Entities;
+using CleanTableTennisApp.Domain.Enums;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace CleanArchitectureSolution.Application.IntegrationTests.TodoItems.Commands;
+namespace CleanTableTennisApp.Application.IntegrationTests.TodoItems.Commands;
 
 using static Testing;
 

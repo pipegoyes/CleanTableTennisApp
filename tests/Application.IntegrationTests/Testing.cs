@@ -1,7 +1,7 @@
-﻿using CleanArchitectureSolution.Application.Common.Interfaces;
-using CleanArchitectureSolution.Infrastructure.Identity;
-using CleanArchitectureSolution.Infrastructure.Persistence;
-using CleanArchitectureSolution.WebUI;
+﻿using CleanTableTennisApp.Application.Common.Interfaces;
+using CleanTableTennisApp.Infrastructure.Identity;
+using CleanTableTennisApp.Infrastructure.Persistence;
+using CleanTableTennisApp.WebUI;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -12,7 +12,7 @@ using Moq;
 using NUnit.Framework;
 using Respawn;
 
-namespace CleanArchitectureSolution.Application.IntegrationTests;
+namespace CleanTableTennisApp.Application.IntegrationTests;
 
 [SetUpFixture]
 public class Testing
@@ -38,7 +38,7 @@ public class Testing
 
         services.AddSingleton(Mock.Of<IWebHostEnvironment>(w =>
             w.EnvironmentName == "Development" &&
-            w.ApplicationName == "CleanArchitectureSolution.WebUI"));
+            w.ApplicationName == "CleanTableTennisApp.WebUI"));
 
         services.AddLogging();
 

@@ -1,4 +1,4 @@
-﻿namespace CleanArchitectureSolution.Domain.Exceptions;
+﻿namespace CleanTableTennisApp.Domain.Exceptions;
 
 public class UnsupportedColourException : Exception
 {

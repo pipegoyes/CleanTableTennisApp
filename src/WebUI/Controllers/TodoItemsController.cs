@@ -1,13 +1,13 @@
-﻿using CleanArchitectureSolution.Application.Common.Models;
-using CleanArchitectureSolution.Application.TodoItems.Commands.CreateTodoItem;
-using CleanArchitectureSolution.Application.TodoItems.Commands.DeleteTodoItem;
-using CleanArchitectureSolution.Application.TodoItems.Commands.UpdateTodoItem;
-using CleanArchitectureSolution.Application.TodoItems.Commands.UpdateTodoItemDetail;
-using CleanArchitectureSolution.Application.TodoItems.Queries.GetTodoItemsWithPagination;
+﻿using CleanTableTennisApp.Application.Common.Models;
+using CleanTableTennisApp.Application.TodoItems.Commands.CreateTodoItem;
+using CleanTableTennisApp.Application.TodoItems.Commands.DeleteTodoItem;
+using CleanTableTennisApp.Application.TodoItems.Commands.UpdateTodoItem;
+using CleanTableTennisApp.Application.TodoItems.Commands.UpdateTodoItemDetail;
+using CleanTableTennisApp.Application.TodoItems.Queries.GetTodoItemsWithPagination;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CleanArchitectureSolution.WebUI.Controllers;
+namespace CleanTableTennisApp.WebUI.Controllers;
 
 [Authorize]
 public class TodoItemsController : ApiControllerBase

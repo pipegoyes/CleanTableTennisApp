@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using CleanArchitectureSolution.Application.Common.Interfaces;
-using CleanArchitectureSolution.Domain.Enums;
+using CleanTableTennisApp.Application.Common.Interfaces;
+using CleanTableTennisApp.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace CleanArchitectureSolution.Application.TodoLists.Queries.GetTodos;
+namespace CleanTableTennisApp.Application.TodoLists.Queries.GetTodos;
 
 public class GetTodosQuery : IRequest<TodosVm>
 {

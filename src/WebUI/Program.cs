@@ -1,9 +1,9 @@
-using CleanArchitectureSolution.Infrastructure.Identity;
-using CleanArchitectureSolution.Infrastructure.Persistence;
+using CleanTableTennisApp.Infrastructure.Identity;
+using CleanTableTennisApp.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace CleanArchitectureSolution.WebUI;
+namespace CleanTableTennisApp.WebUI;
 
 public class Program
 {

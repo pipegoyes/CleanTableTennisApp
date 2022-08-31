@@ -1,7 +1,7 @@
-﻿using CleanArchitectureSolution.Application.WeatherForecasts.Queries.GetWeatherForecasts;
+﻿using CleanTableTennisApp.Application.WeatherForecasts.Queries.GetWeatherForecasts;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CleanArchitectureSolution.WebUI.Controllers;
+namespace CleanTableTennisApp.WebUI.Controllers;
 
 public class WeatherForecastController : ApiControllerBase
 {

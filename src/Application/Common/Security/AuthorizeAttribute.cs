@@ -1,4 +1,4 @@
-﻿namespace CleanArchitectureSolution.Application.Common.Security;
+﻿namespace CleanTableTennisApp.Application.Common.Security;
 
 /// <summary>
 /// Specifies the class this attribute is applied to requires authorization.

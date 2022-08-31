@@ -1,8 +1,8 @@
 ﻿using System.Security.Claims;
 
-using CleanArchitectureSolution.Application.Common.Interfaces;
+using CleanTableTennisApp.Application.Common.Interfaces;
 
-namespace CleanArchitectureSolution.WebUI.Services;
+namespace CleanTableTennisApp.WebUI.Services;
 
 public class CurrentUserService : ICurrentUserService
 {

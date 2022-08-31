@@ -1,9 +1,9 @@
-﻿using CleanArchitectureSolution.Domain.Exceptions;
-using CleanArchitectureSolution.Domain.ValueObjects;
+﻿using CleanTableTennisApp.Domain.Exceptions;
+using CleanTableTennisApp.Domain.ValueObjects;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace CleanArchitectureSolution.Domain.UnitTests.ValueObjects;
+namespace CleanTableTennisApp.Domain.UnitTests.ValueObjects;
 
 public class ColourTests
 {

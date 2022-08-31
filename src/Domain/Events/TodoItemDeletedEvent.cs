@@ -1,4 +1,4 @@
-﻿namespace CleanArchitectureSolution.Domain.Events;
+﻿namespace CleanTableTennisApp.Domain.Events;
 
 public class TodoItemDeletedEvent : DomainEvent
 {

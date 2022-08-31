@@ -1,10 +1,10 @@
 ﻿using System.Globalization;
-using CleanArchitectureSolution.Application.Common.Interfaces;
-using CleanArchitectureSolution.Application.TodoLists.Queries.ExportTodos;
-using CleanArchitectureSolution.Infrastructure.Files.Maps;
+using CleanTableTennisApp.Application.Common.Interfaces;
+using CleanTableTennisApp.Application.TodoLists.Queries.ExportTodos;
+using CleanTableTennisApp.Infrastructure.Files.Maps;
 using CsvHelper;
 
-namespace CleanArchitectureSolution.Infrastructure.Files;
+namespace CleanTableTennisApp.Infrastructure.Files;
 
 public class CsvFileBuilder : ICsvFileBuilder
 {

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using CleanArchitectureSolution.Application.Common.Mappings;
-using CleanArchitectureSolution.Domain.Entities;
+using CleanTableTennisApp.Application.Common.Mappings;
+using CleanTableTennisApp.Domain.Entities;
 
-namespace CleanArchitectureSolution.Application.TodoLists.Queries.GetTodos;
+namespace CleanTableTennisApp.Application.TodoLists.Queries.GetTodos;
 
 public class TodoItemDto : IMapFrom<TodoItem>
 {

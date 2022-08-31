@@ -1,12 +1,12 @@
-﻿using CleanArchitectureSolution.Application.TodoLists.Commands.CreateTodoList;
-using CleanArchitectureSolution.Application.TodoLists.Commands.DeleteTodoList;
-using CleanArchitectureSolution.Application.TodoLists.Commands.UpdateTodoList;
-using CleanArchitectureSolution.Application.TodoLists.Queries.ExportTodos;
-using CleanArchitectureSolution.Application.TodoLists.Queries.GetTodos;
+﻿using CleanTableTennisApp.Application.TodoLists.Commands.CreateTodoList;
+using CleanTableTennisApp.Application.TodoLists.Commands.DeleteTodoList;
+using CleanTableTennisApp.Application.TodoLists.Commands.UpdateTodoList;
+using CleanTableTennisApp.Application.TodoLists.Queries.ExportTodos;
+using CleanTableTennisApp.Application.TodoLists.Queries.GetTodos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CleanArchitectureSolution.WebUI.Controllers;
+namespace CleanTableTennisApp.WebUI.Controllers;
 
 [Authorize]
 public class TodoListsController : ApiControllerBase

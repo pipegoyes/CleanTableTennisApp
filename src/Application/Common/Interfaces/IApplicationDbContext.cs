@@ -1,7 +1,7 @@
-﻿using CleanArchitectureSolution.Domain.Entities;
+﻿using CleanTableTennisApp.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace CleanArchitectureSolution.Application.Common.Interfaces;
+namespace CleanTableTennisApp.Application.Common.Interfaces;
 
 public interface IApplicationDbContext
 {

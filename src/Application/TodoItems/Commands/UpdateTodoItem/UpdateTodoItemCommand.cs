@@ -1,9 +1,9 @@
-﻿using CleanArchitectureSolution.Application.Common.Exceptions;
-using CleanArchitectureSolution.Application.Common.Interfaces;
-using CleanArchitectureSolution.Domain.Entities;
+﻿using CleanTableTennisApp.Application.Common.Exceptions;
+using CleanTableTennisApp.Application.Common.Interfaces;
+using CleanTableTennisApp.Domain.Entities;
 using MediatR;
 
-namespace CleanArchitectureSolution.Application.TodoItems.Commands.UpdateTodoItem;
+namespace CleanTableTennisApp.Application.TodoItems.Commands.UpdateTodoItem;
 
 public class UpdateTodoItemCommand : IRequest
 {

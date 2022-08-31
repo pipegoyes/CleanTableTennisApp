@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using CleanArchitectureSolution.Application.Common.Interfaces;
-using CleanArchitectureSolution.Application.Common.Mappings;
-using CleanArchitectureSolution.Application.Common.Models;
+using CleanTableTennisApp.Application.Common.Interfaces;
+using CleanTableTennisApp.Application.Common.Mappings;
+using CleanTableTennisApp.Application.Common.Models;
 using MediatR;
 
-namespace CleanArchitectureSolution.Application.TodoItems.Queries.GetTodoItemsWithPagination;
+namespace CleanTableTennisApp.Application.TodoItems.Queries.GetTodoItemsWithPagination;
 
 public class GetTodoItemsWithPaginationQuery : IRequest<PaginatedList<TodoItemBriefDto>>
 {

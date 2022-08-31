@@ -1,4 +1,4 @@
-﻿namespace CleanArchitectureSolution.Application.Common.Models;
+﻿namespace CleanTableTennisApp.Application.Common.Models;
 
 public class Result
 {

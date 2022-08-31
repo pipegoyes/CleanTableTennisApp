@@ -2,7 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace CleanArchitectureSolution.WebUI.Controllers;
+namespace CleanTableTennisApp.WebUI.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

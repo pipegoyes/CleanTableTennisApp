@@ -1,8 +1,8 @@
-﻿using CleanArchitectureSolution.Application.Common.Interfaces;
+﻿using CleanTableTennisApp.Application.Common.Interfaces;
 using MediatR.Pipeline;
 using Microsoft.Extensions.Logging;
 
-namespace CleanArchitectureSolution.Application.Common.Behaviours;
+namespace CleanTableTennisApp.Application.Common.Behaviours;
 
 public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest> where TRequest : notnull
 {
@@ -28,7 +28,7 @@ public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest> where T
             userName = await _identityService.GetUserNameAsync(userId);
         }
 
-        _logger.LogInformation("CleanArchitectureSolution Request: {Name} {@UserId} {@UserName} {@Request}",
+        _logger.LogInformation("CleanTableTennisApp Request: {Name} {@UserId} {@UserName} {@Request}",
             requestName, userId, userName, request);
     }
 }

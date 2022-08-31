@@ -1,4 +1,4 @@
-﻿namespace CleanArchitectureSolution.Domain.Enums;
+﻿namespace CleanTableTennisApp.Domain.Enums;
 
 public enum PriorityLevel
 {

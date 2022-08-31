@@ -1,9 +1,9 @@
-﻿using CleanArchitectureSolution.Application.Common.Interfaces;
-using CleanArchitectureSolution.Domain.Entities;
-using CleanArchitectureSolution.Domain.Events;
+﻿using CleanTableTennisApp.Application.Common.Interfaces;
+using CleanTableTennisApp.Domain.Entities;
+using CleanTableTennisApp.Domain.Events;
 using MediatR;
 
-namespace CleanArchitectureSolution.Application.TodoItems.Commands.CreateTodoItem;
+namespace CleanTableTennisApp.Application.TodoItems.Commands.CreateTodoItem;
 
 public class CreateTodoItemCommand : IRequest<int>
 {

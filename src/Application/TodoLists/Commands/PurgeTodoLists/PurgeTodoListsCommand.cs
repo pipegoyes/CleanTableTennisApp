@@ -1,8 +1,8 @@
-﻿using CleanArchitectureSolution.Application.Common.Interfaces;
-using CleanArchitectureSolution.Application.Common.Security;
+﻿using CleanTableTennisApp.Application.Common.Interfaces;
+using CleanTableTennisApp.Application.Common.Security;
 using MediatR;
 
-namespace CleanArchitectureSolution.Application.TodoLists.Commands.PurgeTodoLists;
+namespace CleanTableTennisApp.Application.TodoLists.Commands.PurgeTodoLists;
 
 [Authorize(Roles = "Administrator")]
 [Authorize(Policy = "CanPurge")]

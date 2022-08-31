@@ -1,7 +1,7 @@
-﻿using CleanArchitectureSolution.Application.Common.Mappings;
-using CleanArchitectureSolution.Domain.Entities;
+﻿using CleanTableTennisApp.Application.Common.Mappings;
+using CleanTableTennisApp.Domain.Entities;
 
-namespace CleanArchitectureSolution.Application.TodoItems.Queries.GetTodoItemsWithPagination;
+namespace CleanTableTennisApp.Application.TodoItems.Queries.GetTodoItemsWithPagination;
 
 public class TodoItemBriefDto : IMapFrom<TodoItem>
 {

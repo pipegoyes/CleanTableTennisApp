@@ -1,10 +1,10 @@
-﻿using CleanArchitectureSolution.Application.Common.Interfaces;
-using CleanArchitectureSolution.Application.Common.Models;
-using CleanArchitectureSolution.Domain.Common;
+﻿using CleanTableTennisApp.Application.Common.Interfaces;
+using CleanTableTennisApp.Application.Common.Models;
+using CleanTableTennisApp.Domain.Common;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace CleanArchitectureSolution.Infrastructure.Services;
+namespace CleanTableTennisApp.Infrastructure.Services;
 
 public class DomainEventService : IDomainEventService
 {

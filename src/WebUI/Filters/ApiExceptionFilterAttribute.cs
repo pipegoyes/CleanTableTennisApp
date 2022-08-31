@@ -1,9 +1,9 @@
-﻿using CleanArchitectureSolution.Application.Common.Exceptions;
+﻿using CleanTableTennisApp.Application.Common.Exceptions;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace CleanArchitectureSolution.WebUI.Filters;
+namespace CleanTableTennisApp.WebUI.Filters;
 
 public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
 {

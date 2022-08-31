@@ -1,11 +1,11 @@
 ﻿using System.Runtime.Serialization;
 using AutoMapper;
-using CleanArchitectureSolution.Application.Common.Mappings;
-using CleanArchitectureSolution.Application.TodoLists.Queries.GetTodos;
-using CleanArchitectureSolution.Domain.Entities;
+using CleanTableTennisApp.Application.Common.Mappings;
+using CleanTableTennisApp.Application.TodoLists.Queries.GetTodos;
+using CleanTableTennisApp.Domain.Entities;
 using NUnit.Framework;
 
-namespace CleanArchitectureSolution.Application.UnitTests.Common.Mappings;
+namespace CleanTableTennisApp.Application.UnitTests.Common.Mappings;
 
 public class MappingTests
 {

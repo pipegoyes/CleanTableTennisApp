@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace CleanArchitectureSolution.Application.IntegrationTests;
+namespace CleanTableTennisApp.Application.IntegrationTests;
 
 using static Testing;
 

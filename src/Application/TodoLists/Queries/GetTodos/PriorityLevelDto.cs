@@ -1,4 +1,4 @@
-﻿namespace CleanArchitectureSolution.Application.TodoLists.Queries.GetTodos;
+﻿namespace CleanTableTennisApp.Application.TodoLists.Queries.GetTodos;
 
 public class PriorityLevelDto
 {

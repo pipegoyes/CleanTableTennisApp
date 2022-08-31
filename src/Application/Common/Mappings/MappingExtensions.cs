@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using CleanArchitectureSolution.Application.Common.Models;
+using CleanTableTennisApp.Application.Common.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace CleanArchitectureSolution.Application.Common.Mappings;
+namespace CleanTableTennisApp.Application.Common.Mappings;
 
 public static class MappingExtensions
 {

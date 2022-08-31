@@ -1,4 +1,4 @@
-﻿namespace CleanArchitectureSolution.Application.TodoLists.Queries.ExportTodos;
+﻿namespace CleanTableTennisApp.Application.TodoLists.Queries.ExportTodos;
 
 public class ExportTodosVm
 {

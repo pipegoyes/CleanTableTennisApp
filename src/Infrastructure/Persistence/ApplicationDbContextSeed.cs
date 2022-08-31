@@ -1,9 +1,9 @@
-﻿using CleanArchitectureSolution.Domain.Entities;
-using CleanArchitectureSolution.Domain.ValueObjects;
-using CleanArchitectureSolution.Infrastructure.Identity;
+﻿using CleanTableTennisApp.Domain.Entities;
+using CleanTableTennisApp.Domain.ValueObjects;
+using CleanTableTennisApp.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 
-namespace CleanArchitectureSolution.Infrastructure.Persistence;
+namespace CleanTableTennisApp.Infrastructure.Persistence;
 
 public static class ApplicationDbContextSeed
 {

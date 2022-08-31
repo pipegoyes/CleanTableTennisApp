@@ -1,14 +1,14 @@
 ﻿using System.Reflection;
-using CleanArchitectureSolution.Application.Common.Interfaces;
-using CleanArchitectureSolution.Domain.Common;
-using CleanArchitectureSolution.Domain.Entities;
-using CleanArchitectureSolution.Infrastructure.Identity;
+using CleanTableTennisApp.Application.Common.Interfaces;
+using CleanTableTennisApp.Domain.Common;
+using CleanTableTennisApp.Domain.Entities;
+using CleanTableTennisApp.Infrastructure.Identity;
 using Duende.IdentityServer.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
-namespace CleanArchitectureSolution.Infrastructure.Persistence;
+namespace CleanTableTennisApp.Infrastructure.Persistence;
 
 public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, IApplicationDbContext
 {

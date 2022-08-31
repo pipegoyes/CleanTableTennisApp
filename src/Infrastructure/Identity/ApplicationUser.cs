@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace CleanArchitectureSolution.Infrastructure.Identity;
+namespace CleanTableTennisApp.Infrastructure.Identity;
 
 public class ApplicationUser : IdentityUser
 {

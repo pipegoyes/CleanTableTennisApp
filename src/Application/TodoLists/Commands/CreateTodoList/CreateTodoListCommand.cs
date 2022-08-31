@@ -1,8 +1,8 @@
-﻿using CleanArchitectureSolution.Application.Common.Interfaces;
-using CleanArchitectureSolution.Domain.Entities;
+﻿using CleanTableTennisApp.Application.Common.Interfaces;
+using CleanTableTennisApp.Domain.Entities;
 using MediatR;
 
-namespace CleanArchitectureSolution.Application.TodoLists.Commands.CreateTodoList;
+namespace CleanTableTennisApp.Application.TodoLists.Commands.CreateTodoList;
 
 public class CreateTodoListCommand : IRequest<int>
 {

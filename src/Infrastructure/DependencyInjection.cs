@@ -1,15 +1,15 @@
-﻿using CleanArchitectureSolution.Application.Common.Interfaces;
-using CleanArchitectureSolution.Infrastructure.Files;
-using CleanArchitectureSolution.Infrastructure.Identity;
-using CleanArchitectureSolution.Infrastructure.Persistence;
-using CleanArchitectureSolution.Infrastructure.Services;
+﻿using CleanTableTennisApp.Application.Common.Interfaces;
+using CleanTableTennisApp.Infrastructure.Files;
+using CleanTableTennisApp.Infrastructure.Identity;
+using CleanTableTennisApp.Infrastructure.Persistence;
+using CleanTableTennisApp.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CleanArchitectureSolution.Infrastructure;
+namespace CleanTableTennisApp.Infrastructure;
 
 public static class DependencyInjection
 {
@@ -18,7 +18,7 @@ public static class DependencyInjection
         if (configuration.GetValue<bool>("UseInMemoryDatabase"))
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseInMemoryDatabase("CleanArchitectureSolutionDb"));
+                options.UseInMemoryDatabase("CleanTableTennisAppDb"));
         }
         else
         {

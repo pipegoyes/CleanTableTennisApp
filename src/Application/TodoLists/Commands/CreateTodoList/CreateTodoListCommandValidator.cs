@@ -1,8 +1,8 @@
-﻿using CleanArchitectureSolution.Application.Common.Interfaces;
+﻿using CleanTableTennisApp.Application.Common.Interfaces;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace CleanArchitectureSolution.Application.TodoLists.Commands.CreateTodoList;
+namespace CleanTableTennisApp.Application.TodoLists.Commands.CreateTodoList;
 
 public class CreateTodoListCommandValidator : AbstractValidator<CreateTodoListCommand>
 {

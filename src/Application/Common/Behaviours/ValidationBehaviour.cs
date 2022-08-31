@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 using MediatR;
-using ValidationException = CleanArchitectureSolution.Application.Common.Exceptions.ValidationException;
+using ValidationException = CleanTableTennisApp.Application.Common.Exceptions.ValidationException;
 
-namespace CleanArchitectureSolution.Application.Common.Behaviours;
+namespace CleanTableTennisApp.Application.Common.Behaviours;
 
 public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
      where TRequest : notnull

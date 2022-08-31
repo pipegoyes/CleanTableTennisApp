@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace CleanArchitectureSolution.Application.Common.Mappings;
+namespace CleanTableTennisApp.Application.Common.Mappings;
 
 public interface IMapFrom<T>
 {

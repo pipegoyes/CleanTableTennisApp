@@ -1,4 +1,4 @@
-export const ApplicationName = 'CleanArchitectureSolution.WebUI';
+export const ApplicationName = 'CleanTableTennisApp.WebUI';
 
 export const ReturnUrlType = 'returnUrl';
 

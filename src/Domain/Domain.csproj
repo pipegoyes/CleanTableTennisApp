@@ -2,8 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
-        <RootNamespace>CleanArchitectureSolution.Domain</RootNamespace>
-        <AssemblyName>CleanArchitectureSolution.Domain</AssemblyName>
+        <RootNamespace>CleanTableTennisApp.Domain</RootNamespace>
+        <AssemblyName>CleanTableTennisApp.Domain</AssemblyName>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>

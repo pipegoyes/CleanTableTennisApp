@@ -1,9 +1,9 @@
-﻿using CleanArchitectureSolution.Application.Common.Models;
-using CleanArchitectureSolution.Domain.Events;
+﻿using CleanTableTennisApp.Application.Common.Models;
+using CleanTableTennisApp.Domain.Events;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace CleanArchitectureSolution.Application.TodoItems.EventHandlers;
+namespace CleanTableTennisApp.Application.TodoItems.EventHandlers;
 
 public class TodoItemCompletedEventHandler : INotificationHandler<DomainEventNotification<TodoItemCompletedEvent>>
 {
@@ -18,7 +18,7 @@ public class TodoItemCompletedEventHandler : INotificationHandler<DomainEventNot
     {
         var domainEvent = notification.DomainEvent;
 
-        _logger.LogInformation("CleanArchitectureSolution Domain Event: {DomainEvent}", domainEvent.GetType().Name);
+        _logger.LogInformation("CleanTableTennisApp Domain Event: {DomainEvent}", domainEvent.GetType().Name);
 
         return Task.CompletedTask;
     }

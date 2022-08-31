@@ -1,15 +1,15 @@
-using CleanArchitectureSolution.Application;
-using CleanArchitectureSolution.Application.Common.Interfaces;
-using CleanArchitectureSolution.Infrastructure;
-using CleanArchitectureSolution.Infrastructure.Persistence;
-using CleanArchitectureSolution.WebUI.Filters;
-using CleanArchitectureSolution.WebUI.Services;
+using CleanTableTennisApp.Application;
+using CleanTableTennisApp.Application.Common.Interfaces;
+using CleanTableTennisApp.Infrastructure;
+using CleanTableTennisApp.Infrastructure.Persistence;
+using CleanTableTennisApp.WebUI.Filters;
+using CleanTableTennisApp.WebUI.Services;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using NSwag;
 using NSwag.Generation.Processors.Security;
 
-namespace CleanArchitectureSolution.WebUI;
+namespace CleanTableTennisApp.WebUI;
 
 public class Startup
 {
@@ -51,7 +51,7 @@ public class Startup
 
         services.AddOpenApiDocument(configure =>
         {
-            configure.Title = "CleanArchitectureSolution API";
+            configure.Title = "CleanTableTennisApp API";
             configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
             {
                 Type = OpenApiSecuritySchemeType.ApiKey,

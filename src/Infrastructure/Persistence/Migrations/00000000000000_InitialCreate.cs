@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace CleanArchitectureSolution.Infrastructure.Persistence.Migrations
+namespace CleanTableTennisApp.Infrastructure.Persistence.Migrations
 {
     public partial class InitialCreate : Migration
     {
