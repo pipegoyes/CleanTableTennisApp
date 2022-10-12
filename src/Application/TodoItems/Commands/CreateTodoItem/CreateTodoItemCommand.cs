@@ -5,6 +5,42 @@ using MediatR;
 
 namespace CleanTableTennisApp.Application.TodoItems.Commands.CreateTodoItem;
 
+public enum DoublePosition
+{
+    None,
+    FirstDouble,
+    SecondDouble
+}
+
+public class PlayerRequest
+{
+    public string? FullName { get; set; }
+    public DoublePosition DoublePosition { get; set; }
+}
+
+public class TeamRequest
+{
+    public string? Name { get; set; }
+    public IList<PlayerRequest> Players { get; set; } = new List<PlayerRequest>();
+}
+
+public class CreateTeamMatchCommand : IRequest<int>
+{
+    public TeamRequest HostTeam { get; set; } = new TeamRequest();
+    public TeamRequest GuestTeam { get; set; } = new TeamRequest();
+}
+
+public class CreateTeamMatchHandler : IRequestHandler<CreateTeamMatchCommand, int>
+{
+    public Task<int> Handle(CreateTeamMatchCommand request, CancellationToken cancellationToken)
+    {
+        // request.HostTeam.Name
+        // todo requests objects could be more strict with data (avoid nullability)
+
+        throw new NotImplementedException();
+    }
+}
+
 public class CreateTodoItemCommand : IRequest<int>
 {
     public int ListId { get; set; }

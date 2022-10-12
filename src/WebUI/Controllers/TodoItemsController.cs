@@ -9,6 +9,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CleanTableTennisApp.WebUI.Controllers;
 
+public class TeamMatchController : ApiControllerBase
+{
+    public async Task Create(CreateTeamMatchCommand command)
+    {
+        return await Mediator.Send(command);
+    }
+}
+
 [Authorize]
 public class TodoItemsController : ApiControllerBase
 {
