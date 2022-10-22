@@ -1,0 +1,14 @@
+{
+  "solution": {
+    "path": "CleanTableTennisApp.sln",
+    "projects": [
+      "src\\Application\\Application.csproj",
+      "src\\Domain\\Domain.csproj",
+      "src\\Infrastructure\\Infrastructure.csproj",
+      "src\\WebUI\\WebUI.csproj",
+      "tests\\Application.IntegrationTests\\Application.IntegrationTests.csproj",
+      "tests\\Application.UnitTests\\Application.UnitTests.csproj",
+      "tests\\Domain.UnitTests\\Domain.UnitTests.csproj"
+    ]
+  }
+}
