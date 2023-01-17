@@ -6,6 +6,39 @@
     "version": "1.0.0"
   },
   "paths": {
+    "/api/TeamMatch": {
+      "get": {
+        "tags": [
+          "TeamMatch"
+        ],
+        "operationId": "TeamMatch_Create",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTeamMatchCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/TodoItems": {
       "get": {
         "tags": [
@@ -440,6 +473,61 @@
   },
   "components": {
     "schemas": {
+      "CreateTeamMatchCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "hostTeam": {
+            "$ref": "#/components/schemas/TeamRequest"
+          },
+          "guestTeam": {
+            "$ref": "#/components/schemas/TeamRequest"
+          }
+        }
+      },
+      "TeamRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "players": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PlayerRequest"
+            }
+          }
+        }
+      },
+      "PlayerRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "nullable": true
+          },
+          "doublePosition": {
+            "$ref": "#/components/schemas/DoublePosition"
+          }
+        }
+      },
+      "DoublePosition": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "None",
+          "FirstDouble",
+          "SecondDouble"
+        ],
+        "enum": [
+          0,
+          1,
+          2
+        ]
+      },
       "PaginatedListOfTodoItemBriefDto": {
         "type": "object",
         "additionalProperties": false,
