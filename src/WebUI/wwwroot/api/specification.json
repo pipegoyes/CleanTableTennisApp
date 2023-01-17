@@ -7,7 +7,7 @@
   },
   "paths": {
     "/api/TeamMatch": {
-      "get": {
+      "post": {
         "tags": [
           "TeamMatch"
         ],
