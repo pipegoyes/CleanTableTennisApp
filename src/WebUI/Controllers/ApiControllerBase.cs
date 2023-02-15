@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CleanTableTennisApp.WebUI.Controllers;
 
-[ApiController]
+[Controller]
 [Route("api/[controller]")]
 public abstract class ApiControllerBase : ControllerBase
 {

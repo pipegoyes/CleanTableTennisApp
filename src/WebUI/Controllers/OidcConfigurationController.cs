@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CleanTableTennisApp.WebUI.Controllers;
 
 [ApiExplorerSettings(IgnoreApi = true)]
-public class OidcConfigurationController : Controller
+public class OidcConfigurationController : ControllerBase
 {
     private readonly ILogger<OidcConfigurationController> logger;
 
