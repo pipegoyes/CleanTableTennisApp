@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-
 using CleanTableTennisApp.Application.Common.Interfaces;
 
 namespace CleanTableTennisApp.WebUI.Services;

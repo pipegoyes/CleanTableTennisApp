@@ -2,10 +2,6 @@
 
 public class Colour : ValueObject
 {
-    static Colour()
-    {
-    }
-
     private Colour()
     {
     }
@@ -43,7 +39,7 @@ public class Colour : ValueObject
 
     public static Colour Grey => new("#999999");
 
-    public string Code { get; private set; } = "#000000";
+    public string Code { get; private init; } = "#000000";
 
     public static implicit operator string(Colour colour)
     {

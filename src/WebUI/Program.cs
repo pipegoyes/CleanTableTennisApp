@@ -21,7 +21,7 @@ public class Program
 
                 if (context.Database.IsSqlServer())
                 {
-                    context.Database.Migrate();
+                    await context.Database.MigrateAsync();
                 }
 
                 var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();

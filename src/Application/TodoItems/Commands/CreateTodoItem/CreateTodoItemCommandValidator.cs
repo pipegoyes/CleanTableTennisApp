@@ -1,4 +1,6 @@
-﻿using FluentValidation;
+﻿using CleanTableTennisApp.Application.Requests;
+using CleanTableTennisApp.Domain.Enums;
+using FluentValidation;
 
 namespace CleanTableTennisApp.Application.TodoItems.Commands.CreateTodoItem;
 
@@ -8,8 +10,7 @@ public class CreateTeamMatchCommandValidator : AbstractValidator<CreateTeamMatch
     {
         RuleFor(x => x.HostTeam).NotNull().SetValidator(new TeamRequestValidator());
         RuleFor(x => x.GuestTeam).NotNull().SetValidator(new TeamRequestValidator());
-        RuleFor(s => s).Must(s => s.HostTeam.Name != s.GuestTeam.Name)
-            .When(s => s.HostTeam != null && s.GuestTeam != null);
+        RuleFor(s => s).Must(s => s.HostTeam.Name != s.GuestTeam.Name);
 
         // todo validate same name in two teams
     }
@@ -24,8 +25,8 @@ public class TeamRequestValidator : AbstractValidator<TeamRequest>
             .NotNull()
             .Must(s => s.Count == 4)
             .Must(s => !IsPlayerNameRepeated(s))
-            .Must(s => s.Where(s => s.DoublePosition == DoublePosition.FirstDouble).Count() == 2)
-            .Must(s => s.Where(s => s.DoublePosition == DoublePosition.SecondDouble).Count() == 2);
+            .Must(s => s.Count(s => s.DoublePosition == DoublePosition.FirstDouble) == 2)
+            .Must(s => s.Count(s => s.DoublePosition == DoublePosition.SecondDouble) == 2);
         RuleForEach(s => s.Players).SetValidator(new PlayerRequestValidator());
     }
 
