@@ -3,10 +3,12 @@ using CleanTableTennisApp.Application.Common.Interfaces;
 using CleanTableTennisApp.Infrastructure;
 using CleanTableTennisApp.Infrastructure.Persistence;
 using CleanTableTennisApp.WebUI.Filters;
+using CleanTableTennisApp.WebUI.RequestExamples;
 using CleanTableTennisApp.WebUI.Services;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using NSwag;
+using NSwag.Examples;
 using NSwag.Generation.Processors.Security;
 
 namespace CleanTableTennisApp.WebUI;
@@ -38,6 +40,8 @@ public class Startup
         services.AddControllersWithViews(options =>
             options.Filters.Add<ApiExceptionFilterAttribute>())
                 .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
+        
+        services.AddExampleProviders(typeof(CreateTeamMatchExample).Assembly);
 
         services.AddRazorPages();
 
@@ -49,7 +53,7 @@ public class Startup
         services.AddSpaStaticFiles(configuration => 
             configuration.RootPath = "ClientApp/dist");
 
-        services.AddOpenApiDocument(configure =>
+        services.AddOpenApiDocument((configure, provider) =>
         {
             configure.Title = "CleanTableTennisApp API";
             configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
@@ -61,6 +65,7 @@ public class Startup
             });
 
             configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+            configure.AddExamples(provider);
         });
     }
 
@@ -101,8 +106,8 @@ public class Startup
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllerRoute(
-                name: "default",
-                pattern: "{controller}/{action=Index}/{id?}");
+                "default",
+                "{controller}/{action=Index}/{id?}");
             endpoints.MapRazorPages();
         });
 

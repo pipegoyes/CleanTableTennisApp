@@ -11,16 +11,6 @@ using static Testing;
 public class GetTodosTests : TestBase
 {
     [Test]
-    public async Task ShouldReturnPriorityLevels()
-    {
-        var query = new GetTodosQuery();
-
-        var result = await SendAsync(query);
-
-        result.PriorityLevels.Should().NotBeEmpty();
-    }
-
-    [Test]
     public async Task ShouldReturnAllListsAndItems()
     {
         await AddAsync(new TodoList
@@ -45,5 +35,15 @@ public class GetTodosTests : TestBase
 
         result.Lists.Should().HaveCount(1);
         result.Lists.First().Items.Should().HaveCount(7);
+    }
+
+    [Test]
+    public async Task ShouldReturnPriorityLevels()
+    {
+        var query = new GetTodosQuery();
+
+        var result = await SendAsync(query);
+
+        result.PriorityLevels.Should().NotBeEmpty();
     }
 }

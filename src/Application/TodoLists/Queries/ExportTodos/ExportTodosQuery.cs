@@ -14,8 +14,8 @@ public class ExportTodosQuery : IRequest<ExportTodosVm>
 public class ExportTodosQueryHandler : IRequestHandler<ExportTodosQuery, ExportTodosVm>
 {
     private readonly IApplicationDbContext _context;
-    private readonly IMapper _mapper;
     private readonly ICsvFileBuilder _fileBuilder;
+    private readonly IMapper _mapper;
 
     public ExportTodosQueryHandler(IApplicationDbContext context, IMapper mapper, ICsvFileBuilder fileBuilder)
     {

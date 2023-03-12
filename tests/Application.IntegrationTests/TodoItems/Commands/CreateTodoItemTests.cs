@@ -12,15 +12,6 @@ using static Testing;
 public class CreateTodoItemTests : TestBase
 {
     [Test]
-    public async Task ShouldRequireMinimumFields()
-    {
-        var command = new CreateTodoItemCommand();
-
-        await FluentActions.Invoking(() =>
-            SendAsync(command)).Should().ThrowAsync<ValidationException>();
-    }
-
-    [Test]
     public async Task ShouldCreateTodoItem()
     {
         var userId = await RunAsDefaultUserAsync();
@@ -47,5 +38,14 @@ public class CreateTodoItemTests : TestBase
         item.Created.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(10000));
         item.LastModifiedBy.Should().BeNull();
         item.LastModified.Should().BeNull();
+    }
+
+    [Test]
+    public async Task ShouldRequireMinimumFields()
+    {
+        var command = new CreateTodoItemCommand();
+
+        await FluentActions.Invoking(() =>
+            SendAsync(command)).Should().ThrowAsync<ValidationException>();
     }
 }

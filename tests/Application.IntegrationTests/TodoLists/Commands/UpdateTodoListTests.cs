@@ -12,13 +12,6 @@ using static Testing;
 public class UpdateTodoListTests : TestBase
 {
     [Test]
-    public async Task ShouldRequireValidTodoListId()
-    {
-        var command = new UpdateTodoListCommand { Id = 99, Title = "New Title" };
-        await FluentActions.Invoking(() => SendAsync(command)).Should().ThrowAsync<NotFoundException>();
-    }
-
-    [Test]
     public async Task ShouldRequireUniqueTitle()
     {
         var listId = await SendAsync(new CreateTodoListCommand
@@ -41,6 +34,13 @@ public class UpdateTodoListTests : TestBase
             SendAsync(command))
                 .Should().ThrowAsync<ValidationException>().Where(ex => ex.Errors.ContainsKey("Title")))
                 .And.Errors["Title"].Should().Contain("The specified title already exists.");
+    }
+
+    [Test]
+    public async Task ShouldRequireValidTodoListId()
+    {
+        var command = new UpdateTodoListCommand { Id = 99, Title = "New Title" };
+        await FluentActions.Invoking(() => SendAsync(command)).Should().ThrowAsync<NotFoundException>();
     }
 
     [Test]

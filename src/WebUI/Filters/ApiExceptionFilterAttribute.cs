@@ -6,7 +6,6 @@ namespace CleanTableTennisApp.WebUI.Filters;
 
 public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
 {
-
     private readonly IDictionary<Type, Action<ExceptionContext>> _exceptionHandlers;
 
     public ApiExceptionFilterAttribute()

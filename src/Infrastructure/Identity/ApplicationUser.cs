@@ -3,5 +3,4 @@
 namespace CleanTableTennisApp.Infrastructure.Identity;
 
 public class ApplicationUser : IdentityUser
-{
-}
+{}

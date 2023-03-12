@@ -9,10 +9,6 @@ namespace CleanTableTennisApp.Application.UnitTests.Common.Behaviours;
 
 public class RequestLoggerTests
 {
-    private Mock<ILogger<CreateTodoItemCommand>> _logger = null!;
-    private Mock<ICurrentUserService> _currentUserService = null!;
-    private Mock<IIdentityService> _identityService = null!;
-
     [SetUp]
     public void Setup()
     {
@@ -42,4 +38,8 @@ public class RequestLoggerTests
 
         _identityService.Verify(i => i.GetUserNameAsync(It.IsAny<string>()), Times.Never);
     }
+
+    private Mock<ICurrentUserService> _currentUserService = null!;
+    private Mock<IIdentityService> _identityService = null!;
+    private Mock<ILogger<CreateTodoItemCommand>> _logger = null!;
 }

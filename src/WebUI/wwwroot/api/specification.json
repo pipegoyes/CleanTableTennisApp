@@ -475,6 +475,50 @@
     "schemas": {
       "CreateTeamMatchCommand": {
         "type": "object",
+        "example": {
+          "hostTeam": {
+            "name": "Host",
+            "players": [
+              {
+                "fullName": "First player",
+                "doublePosition": 1
+              },
+              {
+                "fullName": "Second player",
+                "doublePosition": 1
+              },
+              {
+                "fullName": "Third player",
+                "doublePosition": 2
+              },
+              {
+                "fullName": "Fourth player",
+                "doublePosition": 2
+              }
+            ]
+          },
+          "guestTeam": {
+            "name": "Guest",
+            "players": [
+              {
+                "fullName": "First player",
+                "doublePosition": 1
+              },
+              {
+                "fullName": "Second player",
+                "doublePosition": 1
+              },
+              {
+                "fullName": "Third player",
+                "doublePosition": 2
+              },
+              {
+                "fullName": "Fourth player",
+                "doublePosition": 2
+              }
+            ]
+          }
+        },
         "additionalProperties": false,
         "properties": {
           "hostTeam": {

@@ -8,8 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace CleanTableTennisApp.Application.TodoLists.Queries.GetTodos;
 
 public class GetTodosQuery : IRequest<TodosVm>
-{
-}
+{}
 
 public class GetTodosQueryHandler : IRequestHandler<GetTodosQuery, TodosVm>
 {

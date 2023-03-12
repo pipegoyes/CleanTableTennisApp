@@ -1,14 +1,7 @@
-﻿using CleanTableTennisApp.Application.Requests;
+﻿using CleanTableTennisApp.Application.TeamMatch.Commands;
 using MediatR;
 
 namespace CleanTableTennisApp.Application.TodoItems.Commands.CreateTodoItem;
-
-public class CreateTeamMatchCommand : IRequest<int>
-{
-    public TeamRequest HostTeam { get; set; } = new();
-    public TeamRequest GuestTeam { get; set; } = new();
-}
-
 
 public class CreateTeamMatchHandler : IRequestHandler<CreateTeamMatchCommand, int>
 {

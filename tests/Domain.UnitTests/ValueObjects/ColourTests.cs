@@ -8,21 +8,11 @@ namespace CleanTableTennisApp.Domain.UnitTests.ValueObjects;
 public class ColourTests
 {
     [Test]
-    public void ShouldReturnCorrectColourCode()
+    public void ShouldPerformExplicitConversionGivenSupportedColourCode()
     {
-        var code = "#FFFFFF";
+        var colour = (Colour)"#FFFFFF";
 
-        var colour = Colour.From(code);
-
-        colour.Code.Should().Be(code);
-    }
-
-    [Test]
-    public void ToStringReturnsCode()
-    {
-        var colour = Colour.White;
-
-        colour.ToString().Should().Be(colour.Code);
+        colour.Should().Be(Colour.White);
     }
 
     [Test]
@@ -34,11 +24,13 @@ public class ColourTests
     }
 
     [Test]
-    public void ShouldPerformExplicitConversionGivenSupportedColourCode()
+    public void ShouldReturnCorrectColourCode()
     {
-        var colour = (Colour)"#FFFFFF";
+        var code = "#FFFFFF";
 
-        colour.Should().Be(Colour.White);
+        var colour = Colour.From(code);
+
+        colour.Code.Should().Be(code);
     }
 
     [Test]
@@ -46,5 +38,13 @@ public class ColourTests
     {
         FluentActions.Invoking(() => Colour.From("##FF33CC"))
             .Should().Throw<UnsupportedColourException>();
+    }
+
+    [Test]
+    public void ToStringReturnsCode()
+    {
+        var colour = Colour.White;
+
+        colour.ToString().Should().Be(colour.Code);
     }
 }

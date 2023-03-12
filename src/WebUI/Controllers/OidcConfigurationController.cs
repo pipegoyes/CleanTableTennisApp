@@ -11,7 +11,7 @@ public class OidcConfigurationController : Controller
     public OidcConfigurationController(IClientRequestParametersProvider clientRequestParametersProvider, ILogger<OidcConfigurationController> logger)
     {
         ClientRequestParametersProvider = clientRequestParametersProvider;
-        this._logger = logger;
+        _logger = logger;
     }
 
     public IClientRequestParametersProvider ClientRequestParametersProvider { get; }

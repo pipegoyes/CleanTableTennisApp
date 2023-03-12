@@ -12,13 +12,6 @@ using static Testing;
 public class DeleteTodoListTests : TestBase
 {
     [Test]
-    public async Task ShouldRequireValidTodoListId()
-    {
-        var command = new DeleteTodoListCommand { Id = 99 };
-        await FluentActions.Invoking(() => SendAsync(command)).Should().ThrowAsync<NotFoundException>();
-    }
-
-    [Test]
     public async Task ShouldDeleteTodoList()
     {
         var listId = await SendAsync(new CreateTodoListCommand
@@ -34,5 +27,12 @@ public class DeleteTodoListTests : TestBase
         var list = await FindAsync<TodoList>(listId);
 
         list.Should().BeNull();
+    }
+
+    [Test]
+    public async Task ShouldRequireValidTodoListId()
+    {
+        var command = new DeleteTodoListCommand { Id = 99 };
+        await FluentActions.Invoking(() => SendAsync(command)).Should().ThrowAsync<NotFoundException>();
     }
 }

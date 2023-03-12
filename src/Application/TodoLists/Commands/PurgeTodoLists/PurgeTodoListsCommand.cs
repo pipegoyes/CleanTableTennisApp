@@ -7,8 +7,7 @@ namespace CleanTableTennisApp.Application.TodoLists.Commands.PurgeTodoLists;
 [Authorize(Roles = "Administrator")]
 [Authorize(Policy = "CanPurge")]
 public class PurgeTodoListsCommand : IRequest
-{
-}
+{}
 
 public class PurgeTodoListsCommandHandler : IRequestHandler<PurgeTodoListsCommand>
 {

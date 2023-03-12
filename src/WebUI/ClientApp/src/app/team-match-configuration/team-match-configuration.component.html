@@ -1,25 +1,27 @@
 <p>Set up basic configuration</p>
 
-<form [formGroup]="teamMatchForm" (ngSubmit)="onSubmit()">
+<form (ngSubmit)="onSubmit()" [formGroup]="teamMatchForm">
     <div class="input-group mb-3">
-        <input type="text" placeholder="Host Team" class="form-control" formControlName="hostTeamName" />
+        <input class="form-control" formControlName="hostTeamName" placeholder="Host Team" type="text"/>
     </div>
     <div class="class">
-        <input type="text" placeholder="Guest Team" class="form-control" formControlName="guestTeamName" />
+        <input class="form-control" formControlName="guestTeamName" placeholder="Guest Team" type="text"/>
     </div>
 
     <div class="main-part">
         <tabset>
-            <tab heading="Host Team" formArrayName="hostPlayers">
-                <div class="input-group mb-3" *ngFor="let player of getHostPlayers.controls; index as i">
+            <tab formArrayName="hostPlayers" heading="Host Team">
+                <div *ngFor="let player of getHostPlayers.controls; index as i" class="input-group mb-3">
                     <span class="input-group-text">{{i}}</span>
-                    <input type="text" class="form-control" placeholder="Player" aria-label="Player {{i + 1}}" aria-describedby="basic-addon1" [formControlName]="i" >
+                    <input [formControlName]="i" aria-describedby="basic-addon1" aria-label="Player {{i + 1}}" class="form-control"
+                           placeholder="Player" type="text">
                 </div>
             </tab>
-            <tab heading="Guest Team" formArrayName="guestPlayers">
-                <div class="input-group mb-3" *ngFor="let player of getGuestPlayers.controls; index as j">
+            <tab formArrayName="guestPlayers" heading="Guest Team">
+                <div *ngFor="let player of getGuestPlayers.controls; index as j" class="input-group mb-3">
                     <span class="input-group-text">{{j}}</span>
-                    <input type="text" class="form-control" placeholder="Player" aria-label="Player {{j + 1}}" aria-describedby="basic-addon1" [formControlName]="j" >
+                    <input [formControlName]="j" aria-describedby="basic-addon1" aria-label="Player {{j + 1}}" class="form-control"
+                           placeholder="Player" type="text">
                 </div>
             </tab>
         </tabset>
@@ -29,7 +31,9 @@
     <div class="input-group">
         <label>1. Player</label>
         <select [(ngModel)]="firstDoublePlayer">
-            <option *ngFor="let player of getHostPlayers.controls; index as i" [ngValue]="player.value">{{i + 1}} - {{player.value}}</option>
+            <option *ngFor="let player of getHostPlayers.controls; index as i" [ngValue]="player.value">{{i + 1}} -
+                {{player.value}}
+            </option>
         </select>
         <label>2. Player</label>
         <select>
@@ -38,6 +42,6 @@
     </div>
 
     <div>
-        <button type="submit" class="btn btn-primary">Start game</button>
+        <button class="btn btn-primary" type="submit">Start game</button>
     </div>
 </form>
