@@ -22,6 +22,7 @@
     <ItemGroup>
         <Folder Include="Requests\"/>
         <Folder Include="TeamMatch\Commands\"/>
+      <Folder Include="TeamMatch\Validators\" />
     </ItemGroup>
 
 </Project>

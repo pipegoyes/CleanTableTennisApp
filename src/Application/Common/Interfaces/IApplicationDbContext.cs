@@ -10,6 +10,9 @@ public interface IApplicationDbContext
     DbSet<TodoItem> TodoItems { get; }
 
     DbSet<Team> Teams { get; }
+    DbSet<Player> Players { get; }
+    DbSet<Match> Matches { get; }
+    DbSet<Domain.Entities.TeamMatch> TeamMatches { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

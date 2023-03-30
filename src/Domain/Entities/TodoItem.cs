@@ -4,17 +4,25 @@
 
 public class Match : AuditableEntity
 {
+    public Match()
+    {
+    }
+
     public Match(TeamMatch teamMatch)
     {
         TeamMatch = teamMatch;
     }
 
     public int Id { get; set; }
-    public TeamMatch TeamMatch { get; set; }
+    public TeamMatch? TeamMatch { get; set; }
 }
 
 public class TeamMatch : AuditableEntity
 {
+    public TeamMatch()
+    {
+    }
+
     public TeamMatch(Team hostTeam, Team guestTeam)
     {
         HostTeam = hostTeam;
@@ -22,8 +30,8 @@ public class TeamMatch : AuditableEntity
     }
 
     public int Id { get; set; }
-    public Team HostTeam { get; set; }
-    public Team GuestTeam { get; set; }
+    public Team? HostTeam { get; set; }
+    public Team? GuestTeam { get; set; }
     public DateTime? FinishedAt { get; set; }
 }
 
@@ -40,13 +48,17 @@ public class Team : AuditableEntity
 
 public class Player: AuditableEntity
 {
+    public Player()
+    {
+    }
+
     public Player(string name)
     {
         Name = name;
     }
 
     public int Id { get; set; }
-    public string Name { get; set; }
+    public string? Name { get; set; }
 }
 
 public class TodoItem : AuditableEntity, IHasDomainEvent

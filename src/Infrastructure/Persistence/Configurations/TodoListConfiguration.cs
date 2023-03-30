@@ -16,3 +16,20 @@ public class TodoListConfiguration : IEntityTypeConfiguration<TodoList>
             .OwnsOne(b => b.Colour);
     }
 }
+
+public class TeamConfiguration : IEntityTypeConfiguration<Team>
+{
+    public void Configure(EntityTypeBuilder<Team> builder)
+    {
+        builder.Property(s => s.Name)
+            .IsRequired();
+
+    }
+}
+
+public class TeamMatchConfiguration : IEntityTypeConfiguration<TeamMatch>
+{
+    public void Configure(EntityTypeBuilder<TeamMatch> builder)
+    {
+    }
+}
