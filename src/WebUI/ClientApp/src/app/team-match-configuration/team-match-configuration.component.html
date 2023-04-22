@@ -1,5 +1,7 @@
 <p>Set up basic configuration</p>
 
+<p-steps [model]="items" [readonly]="false"></p-steps>
+
 <form (ngSubmit)="onSubmit()" [formGroup]="teamMatchForm">
     <div class="input-group mb-3">
         <input class="form-control" formControlName="hostTeamName" placeholder="Host Team" type="text"/>

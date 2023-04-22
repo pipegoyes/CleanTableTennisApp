@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {StepsModule} from 'primeng/steps';
+import {MenuItem} from 'primeng/api';
 
 @Component({
   selector: 'app-team-match-configuration',
@@ -7,6 +9,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./team-match-configuration.component.scss']
 })
 export class TeamMatchConfigurationComponent implements OnInit {
+  items: MenuItem[];
   firstDoublePlayer = "";
   teamMatchForm = this.builder.group({
     hostTeamName: this.builder.control("Host"),
@@ -25,6 +28,7 @@ export class TeamMatchConfigurationComponent implements OnInit {
     ]),
   });
 
+
   get getHostPlayers(){
     return this.teamMatchForm.get("hostPlayers") as FormArray;
   }
@@ -36,6 +40,11 @@ export class TeamMatchConfigurationComponent implements OnInit {
   constructor(private builder : FormBuilder) { }
 
   ngOnInit(): void {
+    this.items = [
+      {label: 'Step 1'},
+      {label: 'Step 2'},
+      {label: 'Step 3'}
+  ];
   }
 
   onSubmit(): void {
