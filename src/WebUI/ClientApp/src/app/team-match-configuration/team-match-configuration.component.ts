@@ -38,8 +38,8 @@ export class TeamMatchConfigurationComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit() {
-    // console.log(this.teamMatchForm.value);
+  onSubmit(): void {
+    console.log(this.teamMatchForm.value);
     // console.log(this.firstDoublePlayer);
   }
 
