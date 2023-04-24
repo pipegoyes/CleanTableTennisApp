@@ -13,7 +13,8 @@ export class TeamInformationComponent implements OnInit {
 
   ngOnInit(): void {
     this.teamInformation = {
-      hostName: ""
+      hostName: "",
+      guestName: ""
     };
   }
 

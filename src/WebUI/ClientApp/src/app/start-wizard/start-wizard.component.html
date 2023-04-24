@@ -2,30 +2,3 @@
     <p-steps [model]="items" [readonly]="true"></p-steps>
 </div>
 <router-outlet></router-outlet>
-
-<!-- <div class="">
-    <p-card>
-        <ng-template pTemplate="title">
-            Team information
-        </ng-template>
-        <ng-template pTemplate="content">
-            <div class="p-fluid">
-                <div class="p-field">
-                    <label for="hostName">Host team</label>
-                    <input #hostName="ngModel" id="hostName" type="text" required pInputText [(ngModel)]="teamInformation.hostName" [ngClass]="{'ng-dirty': (hostName.invalid && submitted) || (hostName.dirty && hostName.invalid)}"> 
-                    <small *ngIf="(hostName.invalid && submitted) || (hostName.dirty && hostName.invalid)" class="p-error">Host name is required.</small>
-                </div>
-            </div>
-        </ng-template>
-
-        <ng-template pTemplate="footer">
-            <div class="p-grid p-nogutter p-justify-end">
-                <input type="button" (onClick)="nextPage()" value="Next" /> 
-            </div>
-        </ng-template>
-    </p-card>
-</div> -->
-
-<!-- TODO how to use router link havin another in root/home 
-    <router-outlet></router-outlet> 
--->

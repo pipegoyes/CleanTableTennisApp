@@ -24,6 +24,7 @@ import { TeamInformationComponent } from './team-information/team-information.co
 import {CardModule } from 'primeng/card';
 import { StartWizardComponent } from './start-wizard/start-wizard.component';
 import { Button } from 'protractor';
+import {InputTextModule} from 'primeng/inputtext';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +51,8 @@ import { Button } from 'protractor';
     TabsModule.forRoot(),
     ReactiveFormsModule,
     StepsModule,
-    CardModule
+    CardModule,
+    InputTextModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },

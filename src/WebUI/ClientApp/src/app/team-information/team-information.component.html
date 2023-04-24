@@ -9,6 +9,11 @@
                 <input #hostName="ngModel" id="hostName" type="text" required pInputText [(ngModel)]="teamInformation.hostName" [ngClass]="{'ng-dirty': (hostName.invalid && submitted) || (hostName.dirty && hostName.invalid)}"> 
                 <small *ngIf="(hostName.invalid && submitted) || (hostName.dirty && hostName.invalid)" class="p-error">Host name is required.</small>
             </div>
+            <div class="p-field">
+                <label for="guestName">Guest team</label>
+                <input #guestName="ngModel" id="guestName" type="text" required pInputText [(ngModel)]="teamInformation.guestName" [ngClass]="{'ng-dirty': (guestName.invalid && submitted) || (guestName.dirty && guestName.invalid)}"> 
+                <small *ngIf="(guestName.invalid && submitted) || (guestName.dirty && guestName.invalid)" class="p-error">Guest name is required.</small>
+            </div>
         </div>
     </ng-template>
 </p-card>
