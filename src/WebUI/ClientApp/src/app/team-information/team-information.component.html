@@ -1,16 +1,14 @@
-<div class="">
-    <p-card>
-        <ng-template pTemplate="title">
-            Team information
-        </ng-template>
-        <ng-template pTemplate="content">
-            <div class="p-fluid">
-                <div class="p-field">
-                    <label for="hostName">Host team</label>
-                    <input #hostName="ngModel" id="hostName" type="text" required pInputText [(ngModel)]="teamInformation.hostName" [ngClass]="{'ng-dirty': (hostName.invalid && submitted) || (hostName.dirty && hostName.invalid)}"> 
-                    <small *ngIf="(hostName.invalid && submitted) || (hostName.dirty && hostName.invalid)" class="p-error">Host name is required.</small>
-                </div>
+<p-card>
+    <ng-template pTemplate="title">
+        Team information
+    </ng-template>
+    <ng-template pTemplate="content">
+        <div class="p-fluid">
+            <div class="p-field">
+                <label for="hostName">Host team</label>
+                <input #hostName="ngModel" id="hostName" type="text" required pInputText [(ngModel)]="teamInformation.hostName" [ngClass]="{'ng-dirty': (hostName.invalid && submitted) || (hostName.dirty && hostName.invalid)}"> 
+                <small *ngIf="(hostName.invalid && submitted) || (hostName.dirty && hostName.invalid)" class="p-error">Host name is required.</small>
             </div>
-        </ng-template>
-    </p-card>
-</div>
+        </div>
+    </ng-template>
+</p-card>

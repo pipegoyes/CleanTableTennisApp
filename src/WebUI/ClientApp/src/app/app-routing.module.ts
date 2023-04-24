@@ -15,7 +15,19 @@ export const routes: Routes = [
   { path: 'counter', component: CounterComponent },
   { path: 'fetch-data', component: FetchDataComponent },
   { path: 'match-config', component: TeamMatchConfigurationComponent },
-  { path: 'start-wizard', component: StartWizardComponent },
+  { path: 'start-wizard', component: StartWizardComponent, children: [
+    {
+      path: '',
+      redirectTo: 'team-information',
+      pathMatch: 'full'
+    },
+    {
+      path: 'team-information',
+      component: TeamInformationComponent
+    }
+  ]
+},
+  // { path: 'start-wizard', component: TeamInformationComponent, outlet: "wizard-detail" },
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'todo', component: TodoComponent, canActivate: [AuthorizeGuard] },
   { path: 'token', component: TokenComponent, canActivate: [AuthorizeGuard] }
