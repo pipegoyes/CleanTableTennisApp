@@ -23,8 +23,8 @@ import { StepsModule } from 'primeng/steps';
 import { TeamInformationComponent } from './team-information/team-information.component';
 import {CardModule } from 'primeng/card';
 import { StartWizardComponent } from './start-wizard/start-wizard.component';
-import { Button } from 'protractor';
 import {InputTextModule} from 'primeng/inputtext';
+import {ButtonModule} from 'primeng/button';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,7 +52,8 @@ import {InputTextModule} from 'primeng/inputtext';
     ReactiveFormsModule,
     StepsModule,
     CardModule,
-    InputTextModule
+    InputTextModule,
+    ButtonModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
