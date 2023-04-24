@@ -4,6 +4,7 @@ import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { HomeComponent } from './home/home.component';
+import { PlayersComponent } from './players/players.component';
 import { StartWizardComponent } from './start-wizard/start-wizard.component';
 import { TeamInformationComponent } from './team-information/team-information.component';
 import { TeamMatchConfigurationComponent } from './team-match-configuration/team-match-configuration.component';
@@ -24,6 +25,10 @@ export const routes: Routes = [
     {
       path: 'team-information',
       component: TeamInformationComponent
+    },
+    {
+      path: 'players',
+      component: PlayersComponent
     }
   ]
 },

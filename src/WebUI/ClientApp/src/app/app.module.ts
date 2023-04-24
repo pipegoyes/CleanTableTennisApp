@@ -25,6 +25,7 @@ import {CardModule } from 'primeng/card';
 import { StartWizardComponent } from './start-wizard/start-wizard.component';
 import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
+import { PlayersComponent } from './players/players.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +39,7 @@ import {ButtonModule} from 'primeng/button';
     PlayersConfigComponent,
     TeamInformationComponent,
     StartWizardComponent,
+    PlayersComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
