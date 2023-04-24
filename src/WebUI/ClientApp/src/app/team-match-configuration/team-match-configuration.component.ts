@@ -41,7 +41,7 @@ export class TeamMatchConfigurationComponent implements OnInit {
 
   ngOnInit(): void {
     this.items = [
-      {label: 'Step 1'},
+      {label: 'Team information', routerLink: "team-information"},
       {label: 'Step 2'},
       {label: 'Step 3'}
   ];

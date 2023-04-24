@@ -20,7 +20,9 @@ import { TeamMatchConfigurationComponent } from './team-match-configuration/team
 import { TabsModule } from 'ngx-bootstrap';
 import { PlayersConfigComponent } from './players-config/players-config.component';
 import { StepsModule } from 'primeng/steps';
-
+import { TeamInformationComponent } from './team-information/team-information.component';
+import {CardModule } from 'primeng/card';
+import { StartWizardComponent } from './start-wizard/start-wizard.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +34,8 @@ import { StepsModule } from 'primeng/steps';
     TokenComponent,
     TeamMatchConfigurationComponent,
     PlayersConfigComponent,
+    TeamInformationComponent,
+    StartWizardComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -44,7 +48,8 @@ import { StepsModule } from 'primeng/steps';
     ModalModule.forRoot(),
     TabsModule.forRoot(),
     ReactiveFormsModule,
-    StepsModule
+    StepsModule,
+    CardModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
