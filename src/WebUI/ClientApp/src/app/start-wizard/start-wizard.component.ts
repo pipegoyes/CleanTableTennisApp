@@ -10,35 +10,22 @@ export class StartWizardComponent implements OnInit {
 
   items: MenuItem[];
 
-  teamInformation : any;
-
   constructor() { }
 
   ngOnInit(): void {
-    this.teamInformation = {
-      hostName: ""
-    };
-
     this.items = [{
-        label: 'Team Information',
+        label: 'Teams',
         routerLink: 'start-wizard'
     },
     {
-        label: 'Host players',
+        label: 'Host Players',
         routerLink: 'host-players'
+    },
+    {
+        label: 'Guest Players',
+        routerLink: 'players'
     },
   ];
 
   }
-
-  nextPage() {
-    if (this.teamInformation.hostName) {
-        // this.ticketService.ticketInformation.personalInformation = this.personalInformation;
-        // this.router.navigate(['host-players']);
-        return;
-    }
-
-    // this.submitted = true;
-}
-
 }

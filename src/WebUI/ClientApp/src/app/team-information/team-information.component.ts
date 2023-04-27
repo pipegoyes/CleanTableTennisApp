@@ -22,9 +22,7 @@ export class TeamInformationComponent implements OnInit {
 
   nextPage(): void{
     if (this.teamInformation.hostName && this.teamInformation.guestName){
-      // this.ticketService.ticketInformation.personalInformation = this.personalInformation;
-      this.router.navigate(['start-wizard/players']);
-
+      this.router.navigate(['start-wizard/host-players']);
       return;
   }
 
