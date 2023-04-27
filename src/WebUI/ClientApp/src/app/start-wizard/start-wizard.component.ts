@@ -23,7 +23,7 @@ export class StartWizardComponent implements OnInit {
     },
     {
         label: 'Guest Players',
-        routerLink: 'players'
+        routerLink: 'guest-players'
     },
   ];
 

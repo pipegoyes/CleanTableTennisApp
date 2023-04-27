@@ -6,29 +6,28 @@
         <div class="p-fluid">
             <div class="p-field">
                 <label for="player1">Player 1</label>
-                <input #player1="ngModel" id="player1" type="text" required pInputText [(ngModel)]="hostPlayers.player1" [ngClass]="{'ng-dirty': (hostPlayers.player1.invalid && submitted) || (hostPlayers.player1.dirty && hostPlayers.player1.invalid)}"> 
+                <input #player1="ngModel" id="player1" type="text" required pInputText [(ngModel)]="guestPlayers.player1" [ngClass]="{'ng-dirty': (guestPlayers.player1.invalid && submitted) || (guestPlayers.player1.dirty && guestPlayers.player1.invalid)}"> 
                 <small *ngIf="(player1.invalid && submitted) || (player1.dirty && player1.invalid)" class="p-error">Player 1 name is required.</small>
             </div>
             <div class="p-field">
                 <label for="player2">Player 2</label>
-                <input #player2="ngModel" id="player2" type="text" required pInputText [(ngModel)]="hostPlayers.player2" [ngClass]="{'ng-dirty': (hostPlayers.player2.invalid && submitted) || (hostPlayers.player2.dirty && hostPlayers.player2.invalid)}"> 
+                <input #player2="ngModel" id="player2" type="text" required pInputText [(ngModel)]="guestPlayers.player2" [ngClass]="{'ng-dirty': (guestPlayers.player2.invalid && submitted) || (guestPlayers.player2.dirty && guestPlayers.player2.invalid)}"> 
                 <small *ngIf="(player2.invalid && submitted) || (player2.dirty && player2.invalid)" class="p-error">Player 2 name is required.</small>
             </div>
             <div class="p-field">
                 <label for="player3">Player 3</label>
-                <input #player3="ngModel" id="player3" type="text" required pInputText [(ngModel)]="hostPlayers.player3" [ngClass]="{'ng-dirty': (hostPlayers.player3.invalid && submitted) || (hostPlayers.player3.dirty && hostPlayers.player3.invalid)}"> 
+                <input #player3="ngModel" id="player3" type="text" required pInputText [(ngModel)]="guestPlayers.player3" [ngClass]="{'ng-dirty': (guestPlayers.player3.invalid && submitted) || (guestPlayers.player3.dirty && guestPlayers.player3.invalid)}"> 
                 <small *ngIf="(player3.invalid && submitted) || (player3.dirty && player3.invalid)" class="p-error">Player 3 name is required.</small>
             </div>
             <div class="p-field">
                 <label for="player4">Player 4</label>
-                <input #player4="ngModel" id="player4" type="text" required pInputText [(ngModel)]="hostPlayers.player4" [ngClass]="{'ng-dirty': (hostPlayers.player4.invalid && submitted) || (hostPlayers.player4.dirty && hostPlayers.player4.invalid)}"> 
+                <input #player4="ngModel" id="player4" type="text" required pInputText [(ngModel)]="guestPlayers.player4" [ngClass]="{'ng-dirty': (guestPlayers.player4.invalid && submitted) || (guestPlayers.player4.dirty && guestPlayers.player4.invalid)}"> 
                 <small *ngIf="(player4.invalid && submitted) || (player4.dirty && player4.invalid)" class="p-error">Player 4 name is required.</small>
             </div>
         </div>
     </ng-template>
     <ng-template pTemplate="footer">
-        <div class="wizard-footer-buttons">
-            <p-button label="Back" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button>
+        <div class="p-grid p-nogutter p-justify-end">
             <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
         </div>
     </ng-template>

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { GuestPlayersComponent } from './guest-players/guest-players.component';
 import { HomeComponent } from './home/home.component';
 import { HostPlayersComponent } from './host-players/host-players.component';
 import { PlayersComponent } from './players/players.component';
@@ -20,20 +21,23 @@ export const routes: Routes = [
   { path: 'start-wizard', component: StartWizardComponent, children: [
     {
       path: '',
-      redirectTo: 'team-information',
+      redirectTo: 'teams',
       pathMatch: 'full'
     },
     {
-      path: 'team-information',
+      path: 'teams',
       component: TeamInformationComponent
     },
     {
       path: 'host-players',
       component: HostPlayersComponent
+    },
+    {
+      path: 'guest-players',
+      component: GuestPlayersComponent
     }
   ]
 },
-  // { path: 'start-wizard', component: TeamInformationComponent, outlet: "wizard-detail" },
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'todo', component: TodoComponent, canActivate: [AuthorizeGuard] },
   { path: 'token', component: TokenComponent, canActivate: [AuthorizeGuard] }

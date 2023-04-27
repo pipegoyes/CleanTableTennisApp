@@ -27,6 +27,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
 import { PlayersComponent } from './players/players.component';
 import { HostPlayersComponent } from './host-players/host-players.component';
+import { GuestPlayersComponent } from './guest-players/guest-players.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +43,7 @@ import { HostPlayersComponent } from './host-players/host-players.component';
     StartWizardComponent,
     PlayersComponent,
     HostPlayersComponent,
+    GuestPlayersComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

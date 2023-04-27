@@ -25,13 +25,14 @@ export class HostPlayersComponent implements OnInit {
 
   nextPage(): void{
     if (this.hostPlayers.player1 && this.hostPlayers.player2 && this.hostPlayers.player3 && this.hostPlayers.player4){
-        this.router.navigate(['start-wizard/players']);
+        this.router.navigate(['start-wizard/guest-players']);
         return;
     }
     this.submitted = true;
   }
 
-}
-export interface Player{
-  name?: string;
+  prevPage(): void{
+    this.router.navigate(['start-wizard/teams'])
+  }
+
 }
