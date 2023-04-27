@@ -31,4 +31,8 @@ export class GuestPlayersComponent implements OnInit {
     this.submitted = true;
   }
 
+  prevPage(): void{
+    this.router.navigate(['start-wizard/host-players'])
+  }
+
 }
