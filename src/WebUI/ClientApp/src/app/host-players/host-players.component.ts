@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { WizardService } from '../wizard.service';
 
 @Component({
   selector: 'app-host-players',
@@ -12,7 +13,7 @@ export class HostPlayersComponent implements OnInit {
 
   submitted: boolean = false;
   
-  constructor(private router: Router) { }
+  constructor(private router: Router, private wizardService: WizardService) { }
 
   ngOnInit(): void {
     this.hostPlayers = {
@@ -25,6 +26,7 @@ export class HostPlayersComponent implements OnInit {
 
   nextPage(): void{
     if (this.hostPlayers.player1 && this.hostPlayers.player2 && this.hostPlayers.player3 && this.hostPlayers.player4){
+        this.wizardService.setHostPlayers(this.hostPlayers);
         this.router.navigate(['start-wizard/guest-players']);
         return;
     }
