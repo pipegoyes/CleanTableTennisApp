@@ -8,17 +8,14 @@ import { WizardService } from '../wizard.service';
 })
 export class TeamInformationComponent implements OnInit {
 
-  teamInformation: any;
+  teamInformation: TeamInformation;
 
   submitted: boolean = false;
 
   constructor(private router: Router, private wizardService: WizardService) { }
 
   ngOnInit(): void {
-    this.teamInformation = {
-      hostName: "",
-      guestName: ""
-    };
+    this.teamInformation = this.wizardService.getTeamInformation();
   }
 
   nextPage(): void{
@@ -31,4 +28,8 @@ export class TeamInformationComponent implements OnInit {
   this.submitted = true;
   }
 
+}
+export class TeamInformation{
+  hostName: string = ""
+  guestName: string = ""
 }

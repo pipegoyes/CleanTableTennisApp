@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { WizardService } from '../wizard.service';
+import { Players, WizardService } from '../wizard.service';
 
 @Component({
   selector: 'app-host-players',
@@ -9,19 +9,14 @@ import { WizardService } from '../wizard.service';
 })
 export class HostPlayersComponent implements OnInit {
 
-  hostPlayers: any;
+  hostPlayers: Players;
 
   submitted: boolean = false;
   
   constructor(private router: Router, private wizardService: WizardService) { }
 
   ngOnInit(): void {
-    this.hostPlayers = {
-      player1: "",
-      player2: "",
-      player3: "",
-      player4: ""
-    }
+    this.hostPlayers = this.wizardService.getHostPlayers();
   }
 
   nextPage(): void{
