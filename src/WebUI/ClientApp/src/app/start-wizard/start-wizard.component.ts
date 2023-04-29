@@ -25,6 +25,10 @@ export class StartWizardComponent implements OnInit {
         label: 'Guest Players',
         routerLink: 'guest-players'
     },
+    {
+        label: 'Doubles',
+        routerLink: 'doubles'
+    },
   ];
 
   }

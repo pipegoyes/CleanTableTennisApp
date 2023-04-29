@@ -23,7 +23,7 @@ export class GuestPlayersComponent implements OnInit {
     if (this.guestPlayers.player1 && this.guestPlayers.player2 && this.guestPlayers.player3 && this.guestPlayers.player4){
         this.wizardService.setGuestPlayers(this.guestPlayers);
         this.wizardService.saveTeamMatch();
-        this.router.navigate(['start-wizard/guest-players']);
+        this.router.navigate(['start-wizard/doubles']);
         return;
     }
     this.submitted = true;

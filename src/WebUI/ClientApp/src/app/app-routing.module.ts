@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { CounterComponent } from './counter/counter.component';
+import { DoublesComponent } from './doubles/doubles.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { GuestPlayersComponent } from './guest-players/guest-players.component';
 import { HomeComponent } from './home/home.component';
@@ -35,6 +36,10 @@ export const routes: Routes = [
     {
       path: 'guest-players',
       component: GuestPlayersComponent
+    },
+    {
+      path: 'doubles',
+      component: DoublesComponent
     }
   ]
 },

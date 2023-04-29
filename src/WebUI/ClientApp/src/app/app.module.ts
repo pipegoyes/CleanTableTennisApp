@@ -28,6 +28,7 @@ import {ButtonModule} from 'primeng/button';
 import { PlayersComponent } from './players/players.component';
 import { HostPlayersComponent } from './host-players/host-players.component';
 import { GuestPlayersComponent } from './guest-players/guest-players.component';
+import { DoublesComponent } from './doubles/doubles.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +45,7 @@ import { GuestPlayersComponent } from './guest-players/guest-players.component';
     PlayersComponent,
     HostPlayersComponent,
     GuestPlayersComponent,
+    DoublesComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
