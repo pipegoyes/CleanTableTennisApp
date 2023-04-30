@@ -1,1 +1,23 @@
-<p>doubles works!</p>
+<p-card>
+    <ng-template pTemplate="title">
+        Doubles
+    </ng-template>
+
+    <ng-template pTemplate="content">
+        <h5>Host</h5>
+        <h6>First double</h6>
+        <p-selectButton [options]="selectHostPlayers" [(ngModel)]="selectedFirstDoubleHost" multiple="true" optionLabel="label" optionValue="value"></p-selectButton>
+        
+        <h6>Second double</h6>
+        <p-selectButton [options]="selectHostPlayers" [(ngModel)]="selectedSecondDoubleHost" multiple="true" optionLabel="label" optionValue="value"></p-selectButton>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <div class="wizard-footer-buttons">
+            <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+        </div>
+    </ng-template>
+
+</p-card>
+
+

@@ -29,6 +29,8 @@ import { PlayersComponent } from './players/players.component';
 import { HostPlayersComponent } from './host-players/host-players.component';
 import { GuestPlayersComponent } from './guest-players/guest-players.component';
 import { DoublesComponent } from './doubles/doubles.component';
+import {SelectButtonModule} from 'primeng/selectbutton';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,7 +63,8 @@ import { DoublesComponent } from './doubles/doubles.component';
     StepsModule,
     CardModule,
     InputTextModule,
-    ButtonModule
+    ButtonModule,
+    SelectButtonModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
