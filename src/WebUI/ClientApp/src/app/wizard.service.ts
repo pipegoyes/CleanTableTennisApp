@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Doubles } from './doubles/doubles.component';
 import { TeamInformation } from './team-information/team-information.component';
 
 @Injectable({
@@ -14,8 +13,8 @@ export class WizardService {
       teamInformation: new TeamInformation(),
       hostPlayers: new Players(),
       guestPlayers: new Players(),
-      hostDoubles: new Doubles(),
-      guestDoubles: new Doubles()
+      hostFirstDouble: null,
+      hostSecondDouble: null
     }
 
   }
@@ -32,13 +31,18 @@ export class WizardService {
     this.wizardInformation.guestPlayers = guestPlayers;
   }
 
-  setDoubles(hostDoubles: Doubles, guestDoubles: Doubles) {
-    this.wizardInformation.hostDoubles = hostDoubles;
-    this.wizardInformation.guestDoubles = guestDoubles;
+  setHostDoubles(hostFirstDouble: string[], hostSecondDouble: string[]) {
+    this.wizardInformation.hostFirstDouble = hostFirstDouble;
+    this.wizardInformation.hostSecondDouble = hostSecondDouble;
   }
 
-  getHostDoubles(): Doubles{
-    return this.wizardInformation.hostDoubles;
+  setGuestDoubles(guestFirstDouble: string[], guestSecondDouble: string[]) {
+    this.wizardInformation.guestFirstDouble = guestFirstDouble;
+    this.wizardInformation.guestSecondDouble = guestSecondDouble;
+  }
+
+  getHostFirstDouble(): string[]{
+    return this.wizardInformation.hostu;
   }
 
   getTeamInformation(): TeamInformation {

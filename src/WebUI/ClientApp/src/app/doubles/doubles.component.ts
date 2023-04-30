@@ -14,52 +14,60 @@ export class DoublesComponent implements OnInit {
 
   selectedFirstDoubleHost: string[]; 
   selectedSecondDoubleHost: string[]; 
-
-  hostDoubles: Doubles;
-  guestDoubles: Doubles;
+  
+  selectedFirstDoubleGuest: string[]; 
+  selectedSecondDoubleGuest: string[]; 
 
   submitted: boolean = false;
 
   constructor(private router: Router, private wizardService: WizardService) { }
 
   ngOnInit(): void {
-    // this.hostDoubles = this.wizardService.getHostDoubles();
     var hostPlayers = this.wizardService.getHostPlayers();
-
-    this.selectHostPlayers = [{
-      label: hostPlayers.player1,
-      value: hostPlayers.player1
-    },{
-      label: hostPlayers.player2,
-      value: hostPlayers.player2
-    },{
-      label: hostPlayers.player3,
-      value: hostPlayers.player3
-    },{
-      label: hostPlayers.player4,
-      value: hostPlayers.player4
-    }]
+    var guestPlayers = this.wizardService.getGuestPlayers();
+    this.selectHostPlayers = this.toSelectPlayers(hostPlayers);
+    this.selectGuestPlayers = this.toSelectPlayers(guestPlayers);
   }
 
   nextPage(): void{
-    if (this.hostDoubles.firstDouble.player1 && this.hostDoubles.firstDouble.player2 &&
-        this.hostDoubles.secondDouble.player1 && this.hostDoubles.secondDouble.player2 ){
-      this.wizardService.setDoubles(this.hostDoubles, this.guestDoubles);
-      this.router.navigate(['start-wizard/resumes']);
+    if (this.validateHostDoubles() && this.validateGuestDoubles() ){
+      this.wizardService.setHostDoubles(this.selectedFirstDoubleHost, this.selectedSecondDoubleHost);
+      this.wizardService.setGuestDoubles(this.selectedFirstDoubleGuest, this.selectedSecondDoubleGuest);
+      this.wizardService.saveTeamMatch();
+      this.router.navigate(['start-wizard/resume']);
       return;
+    }
+
+    this.submitted = true;
   }
 
-  this.submitted = true;
+  prevPage(): void{
+    this.router.navigate(['start-wizard/guest-players'])
   }
-}
-export class Doubles{
-  firstDouble: DoubleCouple = new DoubleCouple()
-  secondDouble: DoubleCouple = new DoubleCouple()
-}
 
-export class DoubleCouple{
-  player1: string = ""
-  player2: string = ""
+  private toSelectPlayers(players: Players): SelectPlayer[]{
+    return [{
+      label: players.player1,
+      value: players.player1
+    },{
+      label: players.player2,
+      value: players.player2
+    },{
+      label: players.player3,
+      value: players.player3
+    },{
+      label: players.player4,
+      value: players.player4
+    }]
+  }
+
+  private validateGuestDoubles() {
+    return true;
+  }
+
+  private validateHostDoubles(): boolean{
+    return this.selectedFirstDoubleHost.length == 2 && this.selectedSecondDoubleHost.length == 2;
+  }
 }
 
 export interface SelectPlayer{

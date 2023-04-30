@@ -10,11 +10,19 @@
         
         <h6>Second double</h6>
         <p-selectButton [options]="selectHostPlayers" [(ngModel)]="selectedSecondDoubleHost" multiple="true" optionLabel="label" optionValue="value"></p-selectButton>
+
+        <h5>Guest</h5>
+        <h6>First double</h6>
+        <p-selectButton [options]="selectGuestPlayers" [(ngModel)]="selectedFirstDoubleGuest" multiple="true" optionLabel="label" optionValue="value"></p-selectButton>
+        
+        <h6>Second double</h6>
+        <p-selectButton [options]="selectGuestPlayers" [(ngModel)]="selectedSecondDoubleGuest" multiple="true" optionLabel="label" optionValue="value"></p-selectButton>
     </ng-template>
 
     <ng-template pTemplate="footer">
         <div class="wizard-footer-buttons">
-            <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+            <p-button label="Back" (onClick)="prevPage()" icon="pi pi-angle-right" iconPos="left"></p-button>
+            <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>        
         </div>
     </ng-template>
 
