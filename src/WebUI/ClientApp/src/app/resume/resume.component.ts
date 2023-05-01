@@ -19,7 +19,7 @@ export class ResumeComponent implements OnInit {
     this.teamInformation = this.wizardService.getTeamInformation();
     this.hostPlayers = this.wizardService.getHostPlayers();
     this.hostFirstDouble = this.wizardService.getHostFirstDouble();
-    this.hostSecondDouble = this.wizardService.getHostFirstDouble();
+    this.hostSecondDouble = this.wizardService.getHostSecondDouble();
   }
 
   send(): void {
