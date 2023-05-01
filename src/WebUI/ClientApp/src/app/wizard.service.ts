@@ -18,7 +18,23 @@ export class WizardService {
       guestFirstDouble: null,
       guestSecondDouble: null
     }
+    this.wizardInformation = this.getDummyWizard();
+  }
 
+  getDummyWizard(): any{
+    return {
+      teamInformation: {
+        hostName: "Kostheim",
+      },
+      hostPlayers: {
+        player1: "Felipe Goyes",
+        player2: "Torsten Oelhof",
+        player3: "Simon Henz",
+        player4: "Manfred Moses"
+      },
+      hostFirstDouble: ["Felipe Goyes", "Torsten Oelhof"],
+      hostSecondDouble: ["Simon Henz", "Manfred Moses"]
+    }
   }
 
   setTeamInformation(teamIformation: TeamInformation): void{
@@ -44,7 +60,11 @@ export class WizardService {
   }
 
   getHostFirstDouble(): string[]{
-    return this.wizardInformation.hostu;
+    return this.wizardInformation.hostFirstDouble;
+  }
+
+  getHostSecondDouble(): string[]{
+    return this.wizardInformation.hostSecondDouble;
   }
 
   getTeamInformation(): TeamInformation {

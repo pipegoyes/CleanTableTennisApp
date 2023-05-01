@@ -4,13 +4,26 @@
     </ng-template>
 
     <ng-template pTemplate="content">
-        
+        <div>
+            <p>Host team: {{teamInformation.hostName}}</p>
+            <p>Players</p>
+            <p>1. {{hostPlayers.player1}}</p>
+            <p>2. {{hostPlayers.player2}}</p>
+            <p>3. {{hostPlayers.player3}}</p>
+            <p>4. {{hostPlayers.player4}}</p>
+
+            <div class="p-text-bold">
+                Doubles
+            </div>
+            <p>First double: {{hostFirstDouble}}</p>
+            <p>Second double: {{hostSecondDouble}}</p>
+        </div>
     </ng-template>
 
     <ng-template pTemplate="footer">
         <div class="wizard-footer-buttons">
             <p-button label="Back" (onClick)="prevPage()" icon="pi pi-angle-right" iconPos="left"></p-button>
-            <p-button label="Next" (onClick)="send()" icon="pi pi-angle-right" iconPos="right"></p-button>        
+            <p-button label="Start playing" (onClick)="send()" icon="pi pi-angle-right" iconPos="right"></p-button>        
         </div>
     </ng-template>
 
