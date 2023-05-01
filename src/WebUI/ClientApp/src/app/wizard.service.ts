@@ -18,7 +18,7 @@ export class WizardService {
       guestFirstDouble: null,
       guestSecondDouble: null
     }
-    this.wizardInformation = this.getDummyWizard();
+    // this.wizardInformation = this.getDummyWizard();
   }
 
   getDummyWizard(): any{
