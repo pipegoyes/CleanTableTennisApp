@@ -10,16 +10,29 @@ import { Players, WizardService } from '../wizard.service';
 export class ResumeComponent implements OnInit {
 
   teamInformation: any;
+  
   hostPlayers: Players;
+  guestPlayers: Players;
+
+  guestFirstDouble: string[];
+  guestSecondDouble: string[];
+
   hostFirstDouble: string[];
   hostSecondDouble: string[];
+
   constructor(private router: Router, private wizardService: WizardService) { }
 
   ngOnInit(): void {
     this.teamInformation = this.wizardService.getTeamInformation();
+    
     this.hostPlayers = this.wizardService.getHostPlayers();
+    this.guestPlayers = this.wizardService.getGuestPlayers();
+
     this.hostFirstDouble = this.wizardService.getHostFirstDouble();
     this.hostSecondDouble = this.wizardService.getHostSecondDouble();
+
+    this.guestFirstDouble = this.wizardService.getGuestFirstDouble();
+    this.guestSecondDouble = this.wizardService.getGuestSecondDouble();
   }
 
   send(): void {

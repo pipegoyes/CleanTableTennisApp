@@ -18,13 +18,14 @@ export class WizardService {
       guestFirstDouble: null,
       guestSecondDouble: null
     }
-    // this.wizardInformation = this.getDummyWizard();
+    this.wizardInformation = this.getDummyWizard();
   }
 
   getDummyWizard(): any{
     return {
       teamInformation: {
         hostName: "Kostheim",
+        guestName: "Naurod"
       },
       hostPlayers: {
         player1: "Felipe Goyes",
@@ -32,8 +33,16 @@ export class WizardService {
         player3: "Simon Henz",
         player4: "Manfred Moses"
       },
+      guestPlayers: {
+        player1: "Felipe Goyes",
+        player2: "Torsten Oelhof",
+        player3: "Simon Henz",
+        player4: "Manfred Moses"
+      },
       hostFirstDouble: ["Felipe Goyes", "Torsten Oelhof"],
-      hostSecondDouble: ["Simon Henz", "Manfred Moses"]
+      hostSecondDouble: ["Simon Henz", "Manfred Moses"],
+      guestFirstDouble: ["Felipe Goyes", "Torsten Oelhof"],
+      guestSecondDouble: ["Simon Henz", "Manfred Moses"],
     }
   }
 
@@ -65,6 +74,14 @@ export class WizardService {
 
   getHostSecondDouble(): string[]{
     return this.wizardInformation.hostSecondDouble;
+  }
+
+  getGuestFirstDouble(): string[]{
+    return this.wizardInformation.guestFirstDouble;
+  }
+
+  getGuestSecondDouble(): string[]{
+    return this.wizardInformation.guestSecondDouble;
   }
 
   getTeamInformation(): TeamInformation {

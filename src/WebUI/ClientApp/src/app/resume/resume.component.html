@@ -4,19 +4,46 @@
     </ng-template>
 
     <ng-template pTemplate="content">
-        <div>
-            <p>Host team: {{teamInformation.hostName}}</p>
-            <p>Players</p>
-            <p>1. {{hostPlayers.player1}}</p>
-            <p>2. {{hostPlayers.player2}}</p>
-            <p>3. {{hostPlayers.player3}}</p>
-            <p>4. {{hostPlayers.player4}}</p>
-
-            <div class="p-text-bold">
-                Doubles
+        <div class="p-grid">
+            <div class="p-col-12 p-md-6">
+                <div class="p-text-bold p-text-italic">
+                    <p>Host team: {{teamInformation.hostName}}</p>
+                </div>
+                
+                <div class="p-text-bold">
+                    <p>Players</p>
+                </div>
+                <p>1. {{hostPlayers.player1}}</p>
+                <p>2. {{hostPlayers.player2}}</p>
+                <p>3. {{hostPlayers.player3}}</p>
+                <p>4. {{hostPlayers.player4}}</p>
+    
+                <div class="p-text-bold">
+                    <p>Doubles</p>
+                </div>
+                <p>First double: {{hostFirstDouble}}</p>
+                <p>Second double: {{hostSecondDouble}}</p>
             </div>
-            <p>First double: {{hostFirstDouble}}</p>
-            <p>Second double: {{hostSecondDouble}}</p>
+    
+            <div class="p-col-12 p-md-6">
+                <div class="p-text-bold p-text-italic">
+                    <p>Guest team: {{teamInformation.guestName}}</p>
+                </div>
+                
+                <div class="p-text-bold">
+                    <p>Players</p>
+                </div>
+                <p>1. {{guestPlayers.player1}}</p>
+                <p>2. {{guestPlayers.player2}}</p>
+                <p>3. {{guestPlayers.player3}}</p>
+                <p>4. {{guestPlayers.player4}}</p>
+    
+                <div class="p-text-bold">
+                    <p>Doubles</p>
+                </div>
+                <p>First double: {{guestFirstDouble}}</p>
+                <p>Second double: {{guestSecondDouble}}</p>
+            </div>
         </div>
     </ng-template>
 
