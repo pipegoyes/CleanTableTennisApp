@@ -8,6 +8,7 @@ import { GuestPlayersComponent } from './guest-players/guest-players.component';
 import { HomeComponent } from './home/home.component';
 import { HostPlayersComponent } from './host-players/host-players.component';
 import { PlayersComponent } from './players/players.component';
+import { ResumeComponent } from './resume/resume.component';
 import { StartWizardComponent } from './start-wizard/start-wizard.component';
 import { TeamInformationComponent } from './team-information/team-information.component';
 import { TeamMatchConfigurationComponent } from './team-match-configuration/team-match-configuration.component';
@@ -40,6 +41,10 @@ export const routes: Routes = [
     {
       path: 'doubles',
       component: DoublesComponent
+    },
+    {
+      path: 'resume',
+      component: ResumeComponent
     }
   ]
 },

@@ -29,6 +29,10 @@ export class StartWizardComponent implements OnInit {
         label: 'Doubles',
         routerLink: 'doubles'
     },
+    {
+      label: "Resume",
+      routerLink: "resume"
+    }
   ];
 
   }

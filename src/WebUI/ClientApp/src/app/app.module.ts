@@ -30,6 +30,7 @@ import { HostPlayersComponent } from './host-players/host-players.component';
 import { GuestPlayersComponent } from './guest-players/guest-players.component';
 import { DoublesComponent } from './doubles/doubles.component';
 import {SelectButtonModule} from 'primeng/selectbutton';
+import { ResumeComponent } from './resume/resume.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import {SelectButtonModule} from 'primeng/selectbutton';
     HostPlayersComponent,
     GuestPlayersComponent,
     DoublesComponent,
+    ResumeComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

@@ -14,7 +14,9 @@ export class WizardService {
       hostPlayers: new Players(),
       guestPlayers: new Players(),
       hostFirstDouble: null,
-      hostSecondDouble: null
+      hostSecondDouble: null,
+      guestFirstDouble: null,
+      guestSecondDouble: null
     }
 
   }
