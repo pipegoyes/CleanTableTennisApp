@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { WizardService } from '../wizard.service';
+
 @Component({
   selector: 'app-team-information',
   templateUrl: './team-information.component.html',

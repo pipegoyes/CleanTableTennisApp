@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { TeamInformation } from './team-information/team-information.component';
+import { WizardInformation } from './models/WizardInformation';
+import { Players } from './models/Players';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WizardService {
   
-  wizardInformation: any;
+  wizardInformation: WizardInformation;
 
   constructor() { 
     this.wizardInformation = {
@@ -21,7 +23,7 @@ export class WizardService {
     this.wizardInformation = this.getDummyWizard();
   }
 
-  getDummyWizard(): any{
+  getDummyWizard(): WizardInformation{
     return {
       teamInformation: {
         hostName: "Kostheim",
@@ -101,9 +103,4 @@ export class WizardService {
   }
 }
 
-export class Players{
-  player1: string = ""
-  player2: string = ""
-  player3: string = ""
-  player4: string = ""
-}
+

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Players, WizardService } from '../wizard.service';
+import { WizardService } from '../wizard.service';
+import { Players } from "../models/Players";
 
 @Component({
   selector: 'app-resume',
