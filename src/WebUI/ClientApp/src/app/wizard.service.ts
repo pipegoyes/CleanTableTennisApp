@@ -36,15 +36,15 @@ export class WizardService {
         player4: "Manfred Moses"
       },
       guestPlayers: {
-        player1: "Felipe Goyes",
-        player2: "Torsten Oelhof",
-        player3: "Simon Henz",
-        player4: "Manfred Moses"
+        player1: "Another Goyes",
+        player2: "Another Oelhof",
+        player3: "Another Henz",
+        player4: "Another Moses"
       },
       hostFirstDouble: ["Felipe Goyes", "Torsten Oelhof"],
       hostSecondDouble: ["Simon Henz", "Manfred Moses"],
-      guestFirstDouble: ["Felipe Goyes", "Torsten Oelhof"],
-      guestSecondDouble: ["Simon Henz", "Manfred Moses"],
+      guestFirstDouble: ["Another Goyes", "Another Oelhof"],
+      guestSecondDouble: ["Another Henz", "Another Moses"],
     }
   }
 

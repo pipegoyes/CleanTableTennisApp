@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { WizardService } from '../wizard.service';
 import { Players } from "../models/Players";
+import { TeamMatchService } from '../team-match.service';
 
 @Component({
   selector: 'app-resume',
@@ -21,7 +22,7 @@ export class ResumeComponent implements OnInit {
   hostFirstDouble: string[];
   hostSecondDouble: string[];
 
-  constructor(private router: Router, private wizardService: WizardService) { }
+  constructor(private router: Router, private wizardService: WizardService, private teamMatchService: TeamMatchService) { }
 
   ngOnInit(): void {
     this.teamInformation = this.wizardService.getTeamInformation();
@@ -37,7 +38,9 @@ export class ResumeComponent implements OnInit {
   }
 
   send(): void {
-    this.wizardService.saveTeamMatch();
+    console.log("About to save")
+    this.teamMatchService.save(this.wizardService.wizardInformation);
+    console.log("after saving")
   }
 
   prevPage(): void {

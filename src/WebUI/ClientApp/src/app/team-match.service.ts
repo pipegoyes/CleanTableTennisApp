@@ -1,21 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Players } from './models/Players';
 import { WizardInformation } from './models/WizardInformation';
-import { CreateTeamMatchCommand, DoublePosition, PlayerRequest, TeamRequest } from './web-api-client';
+import { CreateTeamMatchCommand, DoublePosition, ITeamMatchClient, PlayerRequest, TeamMatchClient, TeamRequest } from './web-api-client';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeamMatchService {
 
-  constructor() { }
+  constructor(private teamMatchClient: TeamMatchClient) { }
 
 
   public save(wizardInformation: WizardInformation){
-    var teamMatchRequest = this.ToRequest(wizardInformation);
+    var teamMatchCommand = this.ToTeamMatchCommand(wizardInformation);
+    this.teamMatchClient.create(teamMatchCommand);
   }
 
-  private ToRequest(wizardInformation: WizardInformation): CreateTeamMatchCommand{
+  private ToTeamMatchCommand(wizardInformation: WizardInformation): CreateTeamMatchCommand{
 
     var teamMatchCommand = new CreateTeamMatchCommand();
     teamMatchCommand.hostTeam = this.CreateTeamRequest(
@@ -29,6 +30,8 @@ export class TeamMatchService {
       wizardInformation.guestPlayers,
       wizardInformation.guestFirstDouble,
       wizardInformation.guestSecondDouble);
+
+      console.log("JSON: "+ teamMatchCommand.toJSON()); 
 
     return teamMatchCommand;
   }
