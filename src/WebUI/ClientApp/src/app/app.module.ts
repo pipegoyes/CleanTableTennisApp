@@ -31,6 +31,8 @@ import { GuestPlayersComponent } from './guest-players/guest-players.component';
 import { DoublesComponent } from './doubles/doubles.component';
 import {SelectButtonModule} from 'primeng/selectbutton';
 import { ResumeComponent } from './resume/resume.component';
+import { environment } from 'src/environments/environment';
+import { API_BASE_URL } from './web-api-client';
 
 @NgModule({
   declarations: [
@@ -70,6 +72,7 @@ import { ResumeComponent } from './resume/resume.component';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
+    { provide: API_BASE_URL, useValue: environment.apiUrl }
   ],
   bootstrap: [AppComponent]
 })

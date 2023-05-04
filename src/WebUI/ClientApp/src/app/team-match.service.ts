@@ -13,7 +13,9 @@ export class TeamMatchService {
 
   public save(wizardInformation: WizardInformation){
     var teamMatchCommand = this.ToTeamMatchCommand(wizardInformation);
-    this.teamMatchClient.create(teamMatchCommand);
+    this.teamMatchClient.create(teamMatchCommand).subscribe((s) => {
+      console.log("subscribed: "+ s);
+    });
   }
 
   private ToTeamMatchCommand(wizardInformation: WizardInformation): CreateTeamMatchCommand{
@@ -30,8 +32,6 @@ export class TeamMatchService {
       wizardInformation.guestPlayers,
       wizardInformation.guestFirstDouble,
       wizardInformation.guestSecondDouble);
-
-      console.log("JSON: "+ teamMatchCommand.toJSON()); 
 
     return teamMatchCommand;
   }
