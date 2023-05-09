@@ -1,5 +1,5 @@
 using CleanTableTennisApp.Application.Requests;
-using CleanTableTennisApp.Application.TeamMatch.Commands;
+using CleanTableTennisApp.Application.Wizard.Commands;
 using CleanTableTennisApp.Domain.Enums;
 using NSwag.Examples;
 

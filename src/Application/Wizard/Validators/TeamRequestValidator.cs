@@ -2,7 +2,7 @@ using CleanTableTennisApp.Application.Requests;
 using CleanTableTennisApp.Domain.Enums;
 using FluentValidation;
 
-namespace CleanTableTennisApp.Application.TeamMatch.Validators;
+namespace CleanTableTennisApp.Application.Wizard.Validators;
 
 public class TeamRequestValidator : AbstractValidator<TeamRequest>
 {

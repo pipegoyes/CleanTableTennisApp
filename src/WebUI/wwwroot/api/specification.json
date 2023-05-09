@@ -534,8 +534,7 @@
         "additionalProperties": false,
         "properties": {
           "name": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "players": {
             "type": "array",
@@ -550,8 +549,7 @@
         "additionalProperties": false,
         "properties": {
           "fullName": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "doublePosition": {
             "$ref": "#/components/schemas/DoublePosition"

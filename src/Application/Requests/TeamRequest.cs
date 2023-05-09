@@ -2,6 +2,6 @@
 
 public class TeamRequest
 {
-    public string? Name { get; set; }
+    public string Name { get; set; } = string.Empty;
     public IList<PlayerRequest> Players { get; set; } = new List<PlayerRequest>();
 }

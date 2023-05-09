@@ -758,7 +758,7 @@ export interface ICreateTeamMatchCommand {
 }
 
 export class TeamRequest implements ITeamRequest {
-    name?: string | undefined;
+    name?: string;
     players?: PlayerRequest[];
 
     constructor(data?: ITeamRequest) {
@@ -801,12 +801,12 @@ export class TeamRequest implements ITeamRequest {
 }
 
 export interface ITeamRequest {
-    name?: string | undefined;
+    name?: string;
     players?: PlayerRequest[];
 }
 
 export class PlayerRequest implements IPlayerRequest {
-    fullName?: string | undefined;
+    fullName?: string;
     doublePosition?: DoublePosition;
 
     constructor(data?: IPlayerRequest) {
@@ -841,7 +841,7 @@ export class PlayerRequest implements IPlayerRequest {
 }
 
 export interface IPlayerRequest {
-    fullName?: string | undefined;
+    fullName?: string;
     doublePosition?: DoublePosition;
 }
 

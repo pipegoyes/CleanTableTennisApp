@@ -1,7 +1,7 @@
 using CleanTableTennisApp.Application.Requests;
 using MediatR;
 
-namespace CleanTableTennisApp.Application.TeamMatch.Commands;
+namespace CleanTableTennisApp.Application.Wizard.Commands;
 
 public class CreateTeamMatchCommand : IRequest<int>
 {

@@ -1,4 +1,4 @@
-﻿using CleanTableTennisApp.Application.TeamMatch.Commands;
+﻿using CleanTableTennisApp.Application.Wizard.Commands;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanTableTennisApp.WebUI.Controllers;

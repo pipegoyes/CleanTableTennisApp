@@ -1,9 +1,9 @@
 ﻿using CleanTableTennisApp.Application.Common.Behaviours;
 using CleanTableTennisApp.Application.Common.Interfaces;
 using CleanTableTennisApp.Application.Requests;
-using CleanTableTennisApp.Application.TeamMatch.Commands;
-using CleanTableTennisApp.Application.TeamMatch.Validators;
 using CleanTableTennisApp.Application.TodoItems.Commands.CreateTodoItem;
+using CleanTableTennisApp.Application.Wizard.Commands;
+using CleanTableTennisApp.Application.Wizard.Validators;
 using CleanTableTennisApp.Domain.Enums;
 using FluentAssertions;
 using FluentValidation.TestHelper;

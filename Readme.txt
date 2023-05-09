@@ -9,3 +9,6 @@ NPM version:
 
 Angular CLI
 12.0.1
+
+Package manager CLI
+Add-Migration "Name" -Project Infrastructure 

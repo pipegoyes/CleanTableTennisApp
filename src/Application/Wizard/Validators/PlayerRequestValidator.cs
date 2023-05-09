@@ -1,7 +1,7 @@
 using CleanTableTennisApp.Application.Requests;
 using FluentValidation;
 
-namespace CleanTableTennisApp.Application.TeamMatch.Validators;
+namespace CleanTableTennisApp.Application.Wizard.Validators;
 
 public class PlayerRequestValidator : AbstractValidator<PlayerRequest>
 {

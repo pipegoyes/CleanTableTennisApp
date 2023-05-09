@@ -1,5 +1,6 @@
 ﻿using CleanTableTennisApp.Application.Common.Interfaces;
-using CleanTableTennisApp.Application.TeamMatch.Commands;
+using CleanTableTennisApp.Application.Requests;
+using CleanTableTennisApp.Application.Wizard.Commands;
 using CleanTableTennisApp.Domain.Entities;
 using MediatR;
 
@@ -16,15 +17,30 @@ public class CreateTeamMatchHandler : IRequestHandler<CreateTeamMatchCommand, in
 
     public async Task<int> Handle(CreateTeamMatchCommand request, CancellationToken cancellationToken)
     {
-        // request.HostTeam.Name
-        // todo requests objects could be more strict with data (avoid nullability)
+        var hostTeam = await AddTeamIfNotExists(request.HostTeam.Name, cancellationToken);
+        AddPlayers(hostTeam, request.HostTeam.Players);
 
-        var hostTeam = await AddTeamIfNotExists(request.HostTeam.Name, cancellationToken); 
         var guestTeam = await AddTeamIfNotExists(request.GuestTeam.Name, cancellationToken);
-        var newTeamMatch = new Domain.Entities.TeamMatch(hostTeam, guestTeam);
+        AddPlayers(guestTeam, request.GuestTeam.Players);
+
+        //var firstDouble = new Match()
+
+        var newTeamMatch = new TeamMatch(hostTeam, guestTeam);
         _context.TeamMatches.Add(newTeamMatch);
+
         await _context.SaveChangesAsync(cancellationToken);
         return newTeamMatch.Id;
+    }
+
+    private static void AddPlayers(Team hostTeam, IList<PlayerRequest> players)
+    {
+        foreach (PlayerRequest player in players)
+        {
+            if (hostTeam.Players.All(s => s.Name != player.FullName))
+            {
+                hostTeam.Players.Add(new Player(player.FullName));
+            }
+        }
     }
 
     private async Task<Team> AddTeamIfNotExists(string teamName, CancellationToken cancellationToken)

@@ -1,7 +1,7 @@
-using CleanTableTennisApp.Application.TeamMatch.Commands;
+using CleanTableTennisApp.Application.Wizard.Commands;
 using FluentValidation;
 
-namespace CleanTableTennisApp.Application.TeamMatch.Validators;
+namespace CleanTableTennisApp.Application.Wizard.Validators;
 
 public class CreateTeamMatchCommandValidator : AbstractValidator<CreateTeamMatchCommand>
 {
