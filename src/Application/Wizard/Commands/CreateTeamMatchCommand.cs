@@ -1,6 +1,7 @@
 using CleanTableTennisApp.Application.Common.Interfaces;
 using CleanTableTennisApp.Application.Requests;
 using CleanTableTennisApp.Domain.Entities;
+using CleanTableTennisApp.Domain.Enums;
 using MediatR;
 
 namespace CleanTableTennisApp.Application.Wizard.Commands;
@@ -30,14 +31,32 @@ public class CreateTeamMatchHandler : IRequestHandler<CreateTeamMatchCommand, in
         var guestTeam = await AddTeamIfNotExists(request.GuestTeam.Name, cancellationToken);
         AddPlayers(guestTeam, request.GuestTeam.Players);
 
-        var newTeamMatch = new TeamMatch(hostTeam, guestTeam);
-        _context.TeamMatches.Add(newTeamMatch);
+        var teamMatch = new TeamMatch(hostTeam, guestTeam);
+        _context.TeamMatches.Add(teamMatch);
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        var allMatchesCreated = await _mediator.Send(new CreateAllSingleMatchesCommand { TeamMatchId = newTeamMatch.Id }, cancellationToken);
+        var allMatchesCreated = await _mediator.Send(new CreateAllSingleMatchesCommand { TeamMatchId = teamMatch.Id }, cancellationToken);
 
-        return newTeamMatch.Id;
+        var guestNamesWithDoublePosition = request.GuestTeam.Players.ToDictionary(s => s.FullName, r => r.DoublePosition);
+        var hostNamesWithDoublePosition = request.HostTeam.Players.ToDictionary(s => s.FullName, r => r.DoublePosition);
+
+        var createDoubleMatchesCommand = new CreateDoubleMatchesCommand
+        {
+            TeamMatchId = teamMatch.Id,
+            GuestPlayers = ToDoublePlayerRequests(guestTeam.Players, guestNamesWithDoublePosition),
+            HostPlayers = ToDoublePlayerRequests(hostTeam.Players, hostNamesWithDoublePosition)
+        };
+        var allDoubleMatchesCreated = await _mediator.Send(createDoubleMatchesCommand, cancellationToken);
+
+        //todo what do to with responses ?
+
+        return teamMatch.Id;
+    }
+
+    private IList<DoublePlayerRequest> ToDoublePlayerRequests(ICollection<Player> players, IDictionary<string, DoublePosition> namesWithDoublePosition)
+    {
+        return players.Select(s => new DoublePlayerRequest { DoublePosition = namesWithDoublePosition[s.Name], PlayerId = s.Id }).ToArray();
     }
 
     private static void AddPlayers(Team hostTeam, IList<PlayerRequest> players)
