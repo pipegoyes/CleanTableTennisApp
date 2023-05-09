@@ -62,7 +62,7 @@ namespace CleanTableTennisApp.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("TeamMatchId");
 
-                    b.ToTable("Matches");
+                    b.ToTable("Matches", (string)null);
                 });
 
             modelBuilder.Entity("CleanTableTennisApp.Domain.Entities.Player", b =>
@@ -95,7 +95,7 @@ namespace CleanTableTennisApp.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("Players");
+                    b.ToTable("Players", (string)null);
                 });
 
             modelBuilder.Entity("CleanTableTennisApp.Domain.Entities.Team", b =>
@@ -124,7 +124,7 @@ namespace CleanTableTennisApp.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Teams");
+                    b.ToTable("Teams", (string)null);
                 });
 
             modelBuilder.Entity("CleanTableTennisApp.Domain.Entities.TeamMatch", b =>
@@ -162,7 +162,7 @@ namespace CleanTableTennisApp.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("HostTeamId");
 
-                    b.ToTable("TeamMatches");
+                    b.ToTable("TeamMatches", (string)null);
                 });
 
             modelBuilder.Entity("CleanTableTennisApp.Domain.Entities.TodoItem", b =>
@@ -209,7 +209,7 @@ namespace CleanTableTennisApp.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ListId");
 
-                    b.ToTable("TodoItems");
+                    b.ToTable("TodoItems", (string)null);
                 });
 
             modelBuilder.Entity("CleanTableTennisApp.Domain.Entities.TodoList", b =>
@@ -239,7 +239,7 @@ namespace CleanTableTennisApp.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TodoLists");
+                    b.ToTable("TodoLists", (string)null);
                 });
 
             modelBuilder.Entity("CleanTableTennisApp.Infrastructure.Identity.ApplicationUser", b =>
@@ -390,7 +390,7 @@ namespace CleanTableTennisApp.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("Use");
 
-                    b.ToTable("Keys");
+                    b.ToTable("Keys", (string)null);
                 });
 
             modelBuilder.Entity("Duende.IdentityServer.EntityFramework.Entities.PersistedGrant", b =>
@@ -647,7 +647,7 @@ namespace CleanTableTennisApp.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("CleanTableTennisApp.Domain.Entities.TodoList", b =>
                 {
-                    b.OwnsOne("CleanTableTennisApp.Domain.ValueObjects.Colour", "Colour", b1 =>
+                    b.OwnsOne("CleanTableTennisApp.Domain.Entities.TodoList.Colour#CleanTableTennisApp.Domain.ValueObjects.Colour", "Colour", b1 =>
                         {
                             b1.Property<int>("TodoListId")
                                 .HasColumnType("int");
@@ -658,7 +658,7 @@ namespace CleanTableTennisApp.Infrastructure.Persistence.Migrations
 
                             b1.HasKey("TodoListId");
 
-                            b1.ToTable("TodoLists");
+                            b1.ToTable("TodoLists", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("TodoListId");

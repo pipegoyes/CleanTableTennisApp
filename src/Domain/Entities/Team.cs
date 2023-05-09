@@ -5,6 +5,7 @@ public class Team : AuditableEntity
     public Team(string name)
     {
         Name = name;
+        Players = new List<Player>();
     }
 
     public int Id { get; set; }

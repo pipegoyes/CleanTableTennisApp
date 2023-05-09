@@ -6,9 +6,17 @@ public class Match : AuditableEntity
     {
     }
 
-    public Match(TeamMatch teamMatch)
+    public Match(Player hostPlayer, Player guestPlayer, short order)
     {
-        TeamMatch = teamMatch;
+        HostPlayer = hostPlayer;
+        GuestPlayer = guestPlayer;
+        Order = order;
+    }
+
+    public Match(Player hostPlayer, Player guestPlayer)
+    {
+        HostPlayer = hostPlayer;
+        GuestPlayer = guestPlayer;
     }
 
     public int Id { get; set; }
