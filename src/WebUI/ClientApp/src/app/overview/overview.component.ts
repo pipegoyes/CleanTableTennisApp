@@ -11,10 +11,20 @@ import { map } from 'rxjs/operators';
 export class OverviewComponent implements OnInit {
 
   private teamMatchIdEncoded: string;
+  matches : any[];
+
 
   constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.matches = [{
+      hostPlayer: "Felipe Goyes",
+      guestPlayer: "Another Player",
+      hostPoints: 3,
+      guestPoints: 1,
+      type: "single",
+      scoreId: "scoreId"
+    }]
     this.activatedRoute.params.pipe(map(p => p.teamMatchId)).subscribe(teamMatchId => {
       this.teamMatchIdEncoded = teamMatchId;
     });

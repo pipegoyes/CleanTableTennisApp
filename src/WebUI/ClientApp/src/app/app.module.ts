@@ -34,6 +34,7 @@ import { ResumeComponent } from './resume/resume.component';
 import { environment } from 'src/environments/environment';
 import { API_BASE_URL } from './web-api-client';
 import { OverviewComponent } from './overview/overview.component';
+import {TableModule} from 'primeng/table';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { OverviewComponent } from './overview/overview.component';
     CardModule,
     InputTextModule,
     ButtonModule,
-    SelectButtonModule
+    SelectButtonModule,
+    TableModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
