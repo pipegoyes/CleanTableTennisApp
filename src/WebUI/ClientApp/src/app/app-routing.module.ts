@@ -7,6 +7,7 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { GuestPlayersComponent } from './guest-players/guest-players.component';
 import { HomeComponent } from './home/home.component';
 import { HostPlayersComponent } from './host-players/host-players.component';
+import { OverviewComponent } from './overview/overview.component';
 import { PlayersComponent } from './players/players.component';
 import { ResumeComponent } from './resume/resume.component';
 import { StartWizardComponent } from './start-wizard/start-wizard.component';
@@ -18,7 +19,7 @@ import { TokenComponent } from './token/token.component';
 export const routes: Routes = [
 
   { path: 'counter', component: CounterComponent },
-  { path: 'fetch-data', component: FetchDataComponent },
+  { path: 'overview/:teamMatchId', component: OverviewComponent },
   { path: 'match-config', component: TeamMatchConfigurationComponent },
   { path: 'start-wizard', component: StartWizardComponent, children: [
     {

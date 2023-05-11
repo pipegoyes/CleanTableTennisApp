@@ -38,9 +38,9 @@ export class ResumeComponent implements OnInit {
   }
 
   send(): void {
-    console.log("About to save")
-    this.teamMatchService.save(this.wizardService.wizardInformation);
-    console.log("after saving")
+    this.teamMatchService.save(this.wizardService.wizardInformation).subscribe(teamMatchId => {
+      this.router.navigate(['overview', teamMatchId])
+    });
   }
 
   prevPage(): void {

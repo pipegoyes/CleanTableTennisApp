@@ -6,7 +6,7 @@ namespace CleanTableTennisApp.WebUI.Controllers;
 public class TeamMatchController : ApiControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult<int>> Create([FromBody] CreateTeamMatchCommand command)
+    public async Task<ActionResult<string>> Create([FromBody] CreateTeamMatchCommand command)
     {
         return await Mediator.Send(command);
     }

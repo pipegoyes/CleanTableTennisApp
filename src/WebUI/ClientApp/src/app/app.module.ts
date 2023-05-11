@@ -33,6 +33,7 @@ import {SelectButtonModule} from 'primeng/selectbutton';
 import { ResumeComponent } from './resume/resume.component';
 import { environment } from 'src/environments/environment';
 import { API_BASE_URL } from './web-api-client';
+import { OverviewComponent } from './overview/overview.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { API_BASE_URL } from './web-api-client';
     GuestPlayersComponent,
     DoublesComponent,
     ResumeComponent,
+    OverviewComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

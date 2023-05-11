@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Players } from './models/Players';
 import { WizardInformation } from './models/WizardInformation';
 import { CreateTeamMatchCommand, DoublePosition, ITeamMatchClient, PlayerRequest, TeamMatchClient, TeamRequest } from './web-api-client';
@@ -11,11 +12,9 @@ export class TeamMatchService {
   constructor(private teamMatchClient: TeamMatchClient) { }
 
 
-  public save(wizardInformation: WizardInformation){
+  public save(wizardInformation: WizardInformation): Observable<string> {
     var teamMatchCommand = this.ToTeamMatchCommand(wizardInformation);
-    this.teamMatchClient.create(teamMatchCommand).subscribe((s) => {
-      console.log("subscribed: "+ s);
-    });
+    return this.teamMatchClient.create(teamMatchCommand);
   }
 
   private ToTeamMatchCommand(wizardInformation: WizardInformation): CreateTeamMatchCommand{

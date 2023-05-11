@@ -1,4 +1,5 @@
 using CleanTableTennisApp.Application;
+using CleanTableTennisApp.Application.Common.Enconders;
 using CleanTableTennisApp.Application.Common.Interfaces;
 using CleanTableTennisApp.Infrastructure;
 using CleanTableTennisApp.Infrastructure.Persistence;
@@ -31,6 +32,7 @@ public class Startup
         services.AddDatabaseDeveloperPageExceptionFilter();
 
         services.AddSingleton<ICurrentUserService, CurrentUserService>();
+        services.AddSingleton<IUrlSafeIntEncoder, UrlSafeIntEncoder>();
 
         services.AddHttpContextAccessor();
 

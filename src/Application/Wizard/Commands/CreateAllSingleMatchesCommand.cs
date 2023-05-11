@@ -25,33 +25,33 @@ public class CreateAllSingleMatchesHandler : IRequestHandler<CreateAllSingleMatc
         var hostPlayers = teamMatch.HostTeam.Players.ToArray();
         var guestPlayers = teamMatch.GuestTeam.Players.ToArray();
 
-        CreateSingleMatches(hostPlayers, guestPlayers);
+        CreateSingleMatches(hostPlayers, guestPlayers, teamMatch);
 
         return await _context.SaveChangesAsync(cancellationToken) > 0;
     }
 
-    private void CreateSingleMatches(Player[] hostPlayers, Player[] guestPlayers)
+    private void CreateSingleMatches(Player[] hostPlayers, Player[] guestPlayers, TeamMatch teamMatch)
     {
         int numberOfTuples = hostPlayers.Length / 2;
         for (int i = 0; i < hostPlayers.Length - 1; i += numberOfTuples)
         {
             var firstTuplePlayersHost = new TuplePlayers(hostPlayers[i], hostPlayers[i + 1]);
             var firstTuplePlayersGuest = new TuplePlayers(guestPlayers[i], guestPlayers[i + 1]);
-            var firstTupleMatch = CreateMatches(firstTuplePlayersHost, firstTuplePlayersGuest);
+            var singleMatches = CreateMatches(firstTuplePlayersHost, firstTuplePlayersGuest, teamMatch);
 
-            _context.Matches.AddRange(firstTupleMatch);
+            _context.Matches.AddRange(singleMatches);
         }
     }
 
-    private Match[] CreateMatches(TuplePlayers hostTuplePlayers, TuplePlayers guestTuplePlayers)
+    private Match[] CreateMatches(TuplePlayers hostTuplePlayers, TuplePlayers guestTuplePlayers, TeamMatch teamMatch)
     {
         var result = new List<Match>
         {
-            new(hostTuplePlayers.FirstPlayer, guestTuplePlayers.SecondPlayer),
-            new(hostTuplePlayers.FirstPlayer, guestTuplePlayers.FirstPlayer),
+            new(hostTuplePlayers.FirstPlayer, guestTuplePlayers.SecondPlayer, teamMatch),
+            new(hostTuplePlayers.FirstPlayer, guestTuplePlayers.FirstPlayer, teamMatch),
 
-            new(hostTuplePlayers.SecondPlayer, guestTuplePlayers.FirstPlayer),
-            new(hostTuplePlayers.SecondPlayer, guestTuplePlayers.SecondPlayer),
+            new(hostTuplePlayers.SecondPlayer, guestTuplePlayers.FirstPlayer, teamMatch),
+            new(hostTuplePlayers.SecondPlayer, guestTuplePlayers.SecondPlayer, teamMatch),
         };
         return result.ToArray();
     }

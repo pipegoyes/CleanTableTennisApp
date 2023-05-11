@@ -1,3 +1,4 @@
+using CleanTableTennisApp.Application.Common.Enconders;
 using CleanTableTennisApp.Application.Common.Interfaces;
 using CleanTableTennisApp.Application.Requests;
 using CleanTableTennisApp.Domain.Entities;
@@ -6,24 +7,26 @@ using MediatR;
 
 namespace CleanTableTennisApp.Application.Wizard.Commands;
 
-public class CreateTeamMatchCommand : IRequest<int>
+public class CreateTeamMatchCommand : IRequest<string>
 {
     public TeamRequest HostTeam { get; set; } = new();
     public TeamRequest GuestTeam { get; set; } = new();
 }
 
-public class CreateTeamMatchHandler : IRequestHandler<CreateTeamMatchCommand, int>
+public class CreateTeamMatchHandler : IRequestHandler<CreateTeamMatchCommand, string>
 {
     private readonly IApplicationDbContext _context;
     private readonly IMediator _mediator;
+    private readonly IUrlSafeIntEncoder _urlSafeIntEncoder;
 
-    public CreateTeamMatchHandler(IApplicationDbContext context, IMediator mediator)
+    public CreateTeamMatchHandler(IApplicationDbContext context, IMediator mediator, IUrlSafeIntEncoder urlSafeIntEncoder)
     {
         _context = context;
         _mediator = mediator;
+        _urlSafeIntEncoder = urlSafeIntEncoder;
     }
 
-    public async Task<int> Handle(CreateTeamMatchCommand request, CancellationToken cancellationToken)
+    public async Task<string> Handle(CreateTeamMatchCommand request, CancellationToken cancellationToken)
     {
         var hostTeam = await AddTeamIfNotExists(request.HostTeam.Name, cancellationToken);
         AddPlayers(hostTeam, request.HostTeam.Players);
@@ -51,7 +54,7 @@ public class CreateTeamMatchHandler : IRequestHandler<CreateTeamMatchCommand, in
 
         //todo what do to with responses ?
 
-        return teamMatch.Id;
+        return _urlSafeIntEncoder.Encode(teamMatch.Id);
     }
 
     private IList<DoublePlayerRequest> ToDoublePlayerRequests(ICollection<Player> players, IDictionary<string, DoublePosition> namesWithDoublePosition)
