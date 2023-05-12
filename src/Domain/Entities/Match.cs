@@ -1,4 +1,6 @@
-﻿namespace CleanTableTennisApp.Domain.Entities;
+﻿using System.Xml.Schema;
+
+namespace CleanTableTennisApp.Domain.Entities;
 
 public class Match : AuditableEntity
 {
@@ -18,4 +20,5 @@ public class Match : AuditableEntity
     public Player GuestPlayer { get; set; }
     public TeamMatch TeamMatch { get; set; }
     public short Order { get; set; }
+    public ICollection<Score> Scores { get; set; }
 }

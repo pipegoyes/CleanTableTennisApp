@@ -17,6 +17,8 @@ export class OverviewComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+
+    // todo create score entity to get scoreId 
     this.matches = [{
       hostPlayer: "Felipe Goyes",
       guestPlayer: "Another Player",
