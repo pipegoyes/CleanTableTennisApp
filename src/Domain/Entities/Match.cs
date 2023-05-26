@@ -6,6 +6,7 @@ public class Match : AuditableEntity
 {
     public Match()
     {
+        Scores = new List<Score>();
     }
 
     public Match(Player hostPlayer, Player guestPlayer, TeamMatch teamMatch)
@@ -13,6 +14,7 @@ public class Match : AuditableEntity
         HostPlayer = hostPlayer;
         GuestPlayer = guestPlayer;
         TeamMatch = teamMatch;
+        Scores = new List<Score>();
     }
 
     public int Id { get; set; }

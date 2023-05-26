@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { MatchService } from '../match.service';
 
 
 @Component({
@@ -11,24 +12,27 @@ import { map } from 'rxjs/operators';
 export class OverviewComponent implements OnInit {
 
   private teamMatchIdEncoded: string;
-  matches : any[];
+  matches : any[] = [];
 
 
-  constructor(private activatedRoute: ActivatedRoute) { }
+  constructor(private activatedRoute: ActivatedRoute, private matchService: MatchService) { }
 
   ngOnInit(): void {
 
     // todo create score entity to get scoreId 
-    this.matches = [{
-      hostPlayer: "Felipe Goyes",
-      guestPlayer: "Another Player",
-      hostPoints: 3,
-      guestPoints: 1,
-      type: "single",
-      scoreId: "scoreId"
-    }]
-    this.activatedRoute.params.pipe(map(p => p.teamMatchId)).subscribe(teamMatchId => {
-      this.teamMatchIdEncoded = teamMatchId;
+    // this.matches = [{
+    //   hostPlayer: "Felipe Goyes",
+    //   guestPlayer: "Another Player",
+    //   hostPoints: 3,
+    //   guestPoints: 1,
+    // }];
+
+    this.activatedRoute.params.pipe(map(p => p.teamMatchId)).subscribe(teamMatchIdEncoded => {
+      this.teamMatchIdEncoded = teamMatchIdEncoded;
+
+      this.matchService.GetAllMatches(teamMatchIdEncoded).subscribe(o => {
+        this.matches = o.overviewSingleMatchDtos;
+      });
     });
   }
 

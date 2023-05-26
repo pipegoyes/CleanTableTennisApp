@@ -20,8 +20,10 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Folder Include="Common\Dtos\" />
         <Folder Include="Common\Enconders\" />
         <Folder Include="Requests\" />
+        <Folder Include="Wizard\Queries\" />
     </ItemGroup>
 
 </Project>

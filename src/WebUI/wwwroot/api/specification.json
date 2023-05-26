@@ -38,6 +38,37 @@
         }
       }
     },
+    "/api/Match": {
+      "get": {
+        "tags": [
+          "Match"
+        ],
+        "operationId": "Match_GetAllMatches",
+        "parameters": [
+          {
+            "name": "TeamMatchIdEncoded",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OverviewDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/TodoItems": {
       "get": {
         "tags": [
@@ -568,6 +599,42 @@
           1,
           2
         ]
+      },
+      "OverviewDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "overviewSingleMatchDtos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OverviewSingleMatchDto"
+            }
+          }
+        }
+      },
+      "OverviewSingleMatchDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "matchId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hostPlayerName": {
+            "type": "string"
+          },
+          "guestPlayerName": {
+            "type": "string"
+          },
+          "hostPoints": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "guestPoints": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
       },
       "PaginatedListOfTodoItemBriefDto": {
         "type": "object",
