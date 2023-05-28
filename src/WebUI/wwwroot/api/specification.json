@@ -525,9 +525,8 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "matchId": {
-            "type": "integer",
-            "format": "int32"
+          "matchIdEncoded": {
+            "type": "string"
           },
           "hostPlayerName": {
             "type": "string"
@@ -549,9 +548,8 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "matchId": {
-            "type": "integer",
-            "format": "int32"
+          "matchIdEncoded": {
+            "type": "string"
           },
           "hostLeftPlayerName": {
             "type": "string"

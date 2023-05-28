@@ -842,7 +842,7 @@ export interface IOverviewDto {
 }
 
 export class OverviewSingleMatchDto implements IOverviewSingleMatchDto {
-    matchId?: number;
+    matchIdEncoded?: string;
     hostPlayerName?: string;
     guestPlayerName?: string;
     hostPoints?: number;
@@ -859,7 +859,7 @@ export class OverviewSingleMatchDto implements IOverviewSingleMatchDto {
 
     init(_data?: any) {
         if (_data) {
-            this.matchId = _data["matchId"];
+            this.matchIdEncoded = _data["matchIdEncoded"];
             this.hostPlayerName = _data["hostPlayerName"];
             this.guestPlayerName = _data["guestPlayerName"];
             this.hostPoints = _data["hostPoints"];
@@ -876,7 +876,7 @@ export class OverviewSingleMatchDto implements IOverviewSingleMatchDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["matchId"] = this.matchId;
+        data["matchIdEncoded"] = this.matchIdEncoded;
         data["hostPlayerName"] = this.hostPlayerName;
         data["guestPlayerName"] = this.guestPlayerName;
         data["hostPoints"] = this.hostPoints;
@@ -886,7 +886,7 @@ export class OverviewSingleMatchDto implements IOverviewSingleMatchDto {
 }
 
 export interface IOverviewSingleMatchDto {
-    matchId?: number;
+    matchIdEncoded?: string;
     hostPlayerName?: string;
     guestPlayerName?: string;
     hostPoints?: number;
@@ -894,7 +894,7 @@ export interface IOverviewSingleMatchDto {
 }
 
 export class OverviewDoubleMatchDto implements IOverviewDoubleMatchDto {
-    matchId?: number;
+    matchIdEncoded?: string;
     hostLeftPlayerName?: string;
     hostRightPlayerName?: string;
     guestLeftPlayerName?: string;
@@ -913,7 +913,7 @@ export class OverviewDoubleMatchDto implements IOverviewDoubleMatchDto {
 
     init(_data?: any) {
         if (_data) {
-            this.matchId = _data["matchId"];
+            this.matchIdEncoded = _data["matchIdEncoded"];
             this.hostLeftPlayerName = _data["hostLeftPlayerName"];
             this.hostRightPlayerName = _data["hostRightPlayerName"];
             this.guestLeftPlayerName = _data["guestLeftPlayerName"];
@@ -932,7 +932,7 @@ export class OverviewDoubleMatchDto implements IOverviewDoubleMatchDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["matchId"] = this.matchId;
+        data["matchIdEncoded"] = this.matchIdEncoded;
         data["hostLeftPlayerName"] = this.hostLeftPlayerName;
         data["hostRightPlayerName"] = this.hostRightPlayerName;
         data["guestLeftPlayerName"] = this.guestLeftPlayerName;
@@ -944,7 +944,7 @@ export class OverviewDoubleMatchDto implements IOverviewDoubleMatchDto {
 }
 
 export interface IOverviewDoubleMatchDto {
-    matchId?: number;
+    matchIdEncoded?: string;
     hostLeftPlayerName?: string;
     hostRightPlayerName?: string;
     guestLeftPlayerName?: string;

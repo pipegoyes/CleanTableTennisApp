@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+import { compileClassMetadata } from '@angular/compiler';
+import { Component, NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { CounterComponent } from './counter/counter.component';
@@ -10,6 +11,7 @@ import { HostPlayersComponent } from './host-players/host-players.component';
 import { OverviewComponent } from './overview/overview.component';
 import { PlayersComponent } from './players/players.component';
 import { ResumeComponent } from './resume/resume.component';
+import { ScoresComponent } from './scores/scores.component';
 import { StartWizardComponent } from './start-wizard/start-wizard.component';
 import { TeamInformationComponent } from './team-information/team-information.component';
 import { TeamMatchConfigurationComponent } from './team-match-configuration/team-match-configuration.component';
@@ -20,6 +22,7 @@ export const routes: Routes = [
 
   { path: 'counter', component: CounterComponent },
   { path: 'overview/:teamMatchId', component: OverviewComponent },
+  { path: 'overview/:teamMatchId/single-scores/:matchId', component: ScoresComponent},
   { path: 'match-config', component: TeamMatchConfigurationComponent },
   { path: 'start-wizard', component: StartWizardComponent, children: [
     {

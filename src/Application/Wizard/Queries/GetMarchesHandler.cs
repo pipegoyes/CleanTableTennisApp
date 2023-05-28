@@ -55,7 +55,7 @@ public class GetMarchesHandler : IRequestHandler<GetMatchesQuery, OverviewDto>
     {
         return new OverviewDoubleMatchDto()
         {
-            MatchId = doubleMatch.Id,
+            MatchIdEncoded = _encoder.Encode(doubleMatch.Id),
             HostLeftPlayerName = doubleMatch.HostPlayerLeft.Name,
             HostRightPlayerName = doubleMatch.HostPlayerRight.Name,
             GuestLeftPlayerName = doubleMatch.GuestPlayerLeft.Name,
@@ -69,7 +69,7 @@ public class GetMarchesHandler : IRequestHandler<GetMatchesQuery, OverviewDto>
     {
         return new OverviewSingleMatchDto
         {
-            MatchId = singleMatch.Id,
+            MatchIdEncoded = _encoder.Encode(singleMatch.Id),
             HostPlayerName = singleMatch.HostPlayer.Name,
             GuestPlayerName = singleMatch.GuestPlayer.Name,
             HostPoints = singleMatch.Scores.Count(s => s.GamePointsHost > s.GamePointsGuest),

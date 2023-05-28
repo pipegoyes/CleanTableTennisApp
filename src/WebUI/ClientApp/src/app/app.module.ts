@@ -35,6 +35,7 @@ import { environment } from 'src/environments/environment';
 import { API_BASE_URL } from './web-api-client';
 import { OverviewComponent } from './overview/overview.component';
 import {TableModule} from 'primeng/table';
+import { ScoresComponent } from './scores/scores.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import {TableModule} from 'primeng/table';
     DoublesComponent,
     ResumeComponent,
     OverviewComponent,
+    ScoresComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
