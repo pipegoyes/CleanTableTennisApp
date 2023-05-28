@@ -26,16 +26,46 @@ public class GetMarchesHandler : IRequestHandler<GetMatchesQuery, OverviewDto>
     public async Task<OverviewDto> Handle(GetMatchesQuery request, CancellationToken cancellationToken)
     {
         var teamMatchId = _encoder.Decode(request.TeamMatchIdEncoded);
-        var teamMatch = await _context.TeamMatches
+        var teamMatchWithSingleMatches = await _context.TeamMatches
             .Include(s => s.SingleMatches)
             .ThenInclude(s => s.HostPlayer)
             .Include(s => s.SingleMatches)
             .ThenInclude(s => s.GuestPlayer)
             .FirstAsync(s => s.Id == teamMatchId, cancellationToken);
-        return new OverviewDto { OverviewSingleMatchDtos = teamMatch.SingleMatches.Select(ToOverviewSingleMatchDto).ToList() };
+
+        var teamMatchWithDoubleMatches = await _context.TeamMatches
+            .Include(s => s.DoubleMatches)
+            .ThenInclude(s => s.HostPlayerLeft)
+            .Include(s => s.DoubleMatches)
+            .ThenInclude(s => s.HostPlayerRight)
+            .Include(s => s.DoubleMatches)
+            .ThenInclude(s => s.GuestPlayerLeft)
+            .Include(s => s.DoubleMatches)
+            .ThenInclude(s => s.GuestPlayerRight)
+            .FirstAsync(s => s.Id == teamMatchId, cancellationToken);
+
+        return new OverviewDto
+        {
+            OverviewSingleMatchDtos = teamMatchWithSingleMatches.SingleMatches.Select(ToSingleMatchDto).ToList(),
+            OverviewDoubleMatchDtos = teamMatchWithDoubleMatches.DoubleMatches.Select(toDoubleMatchDto).ToList(),
+        };
     }
 
-    private OverviewSingleMatchDto ToOverviewSingleMatchDto(Match singleMatch)
+    private OverviewDoubleMatchDto toDoubleMatchDto(DoubleMatch doubleMatch)
+    {
+        return new OverviewDoubleMatchDto()
+        {
+            MatchId = doubleMatch.Id,
+            HostLeftPlayerName = doubleMatch.HostPlayerLeft.Name,
+            HostRightPlayerName = doubleMatch.HostPlayerRight.Name,
+            GuestLeftPlayerName = doubleMatch.GuestPlayerLeft.Name,
+            GuestRightPlayerName = doubleMatch.GuestPlayerRight.Name,
+            HostPoints = doubleMatch.Scores.Count(s => s.GamePointsHost > s.GamePointsGuest),
+            GuestPoints = doubleMatch.Scores.Count(s => s.GamePointsGuest > s.GamePointsHost)
+        };
+    }
+
+    private OverviewSingleMatchDto ToSingleMatchDto(Match singleMatch)
     {
         return new OverviewSingleMatchDto
         {

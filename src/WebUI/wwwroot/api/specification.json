@@ -6,6 +6,37 @@
     "version": "1.0.0"
   },
   "paths": {
+    "/api/Match": {
+      "get": {
+        "tags": [
+          "Match"
+        ],
+        "operationId": "Match_GetAllMatches",
+        "parameters": [
+          {
+            "name": "TeamMatchIdEncoded",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OverviewDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/TeamMatch": {
       "post": {
         "tags": [
@@ -31,37 +62,6 @@
               "application/json": {
                 "schema": {
                   "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Match": {
-      "get": {
-        "tags": [
-          "Match"
-        ],
-        "operationId": "Match_GetAllMatches",
-        "parameters": [
-          {
-            "name": "TeamMatchIdEncoded",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 1
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/OverviewDto"
                 }
               }
             }
@@ -503,6 +503,78 @@
   },
   "components": {
     "schemas": {
+      "OverviewDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "overviewSingleMatchDtos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OverviewSingleMatchDto"
+            }
+          },
+          "overviewDoubleMatchDtos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OverviewDoubleMatchDto"
+            }
+          }
+        }
+      },
+      "OverviewSingleMatchDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "matchId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hostPlayerName": {
+            "type": "string"
+          },
+          "guestPlayerName": {
+            "type": "string"
+          },
+          "hostPoints": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "guestPoints": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "OverviewDoubleMatchDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "matchId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hostLeftPlayerName": {
+            "type": "string"
+          },
+          "hostRightPlayerName": {
+            "type": "string"
+          },
+          "guestLeftPlayerName": {
+            "type": "string"
+          },
+          "guestRightPlayerName": {
+            "type": "string"
+          },
+          "hostPoints": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "guestPoints": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "CreateTeamMatchCommand": {
         "type": "object",
         "example": {
@@ -599,42 +671,6 @@
           1,
           2
         ]
-      },
-      "OverviewDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "overviewSingleMatchDtos": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/OverviewSingleMatchDto"
-            }
-          }
-        }
-      },
-      "OverviewSingleMatchDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "matchId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "hostPlayerName": {
-            "type": "string"
-          },
-          "guestPlayerName": {
-            "type": "string"
-          },
-          "hostPoints": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "guestPoints": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
       },
       "PaginatedListOfTodoItemBriefDto": {
         "type": "object",

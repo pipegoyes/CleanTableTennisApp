@@ -14,6 +14,74 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
+export interface IMatchClient {
+    getAllMatches(teamMatchIdEncoded: string | null | undefined): Observable<OverviewDto>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class MatchClient implements IMatchClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    getAllMatches(teamMatchIdEncoded: string | null | undefined): Observable<OverviewDto> {
+        let url_ = this.baseUrl + "/api/Match?";
+        if (teamMatchIdEncoded !== undefined && teamMatchIdEncoded !== null)
+            url_ += "TeamMatchIdEncoded=" + encodeURIComponent("" + teamMatchIdEncoded) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllMatches(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllMatches(<any>response_);
+                } catch (e) {
+                    return <Observable<OverviewDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<OverviewDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAllMatches(response: HttpResponseBase): Observable<OverviewDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = OverviewDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<OverviewDto>(<any>null);
+    }
+}
+
 export interface ITeamMatchClient {
     create(command: CreateTeamMatchCommand): Observable<string>;
 }
@@ -81,74 +149,6 @@ export class TeamMatchClient implements ITeamMatchClient {
             }));
         }
         return _observableOf<string>(<any>null);
-    }
-}
-
-export interface IMatchClient {
-    getAllMatches(teamMatchIdEncoded: string | null | undefined): Observable<OverviewDto>;
-}
-
-@Injectable({
-    providedIn: 'root'
-})
-export class MatchClient implements IMatchClient {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
-    }
-
-    getAllMatches(teamMatchIdEncoded: string | null | undefined): Observable<OverviewDto> {
-        let url_ = this.baseUrl + "/api/Match?";
-        if (teamMatchIdEncoded !== undefined && teamMatchIdEncoded !== null)
-            url_ += "TeamMatchIdEncoded=" + encodeURIComponent("" + teamMatchIdEncoded) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllMatches(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetAllMatches(<any>response_);
-                } catch (e) {
-                    return <Observable<OverviewDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<OverviewDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetAllMatches(response: HttpResponseBase): Observable<OverviewDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = OverviewDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<OverviewDto>(<any>null);
     }
 }
 
@@ -785,6 +785,174 @@ export class WeatherForecastClient implements IWeatherForecastClient {
     }
 }
 
+export class OverviewDto implements IOverviewDto {
+    overviewSingleMatchDtos?: OverviewSingleMatchDto[];
+    overviewDoubleMatchDtos?: OverviewDoubleMatchDto[];
+
+    constructor(data?: IOverviewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["overviewSingleMatchDtos"])) {
+                this.overviewSingleMatchDtos = [] as any;
+                for (let item of _data["overviewSingleMatchDtos"])
+                    this.overviewSingleMatchDtos!.push(OverviewSingleMatchDto.fromJS(item));
+            }
+            if (Array.isArray(_data["overviewDoubleMatchDtos"])) {
+                this.overviewDoubleMatchDtos = [] as any;
+                for (let item of _data["overviewDoubleMatchDtos"])
+                    this.overviewDoubleMatchDtos!.push(OverviewDoubleMatchDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): OverviewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new OverviewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.overviewSingleMatchDtos)) {
+            data["overviewSingleMatchDtos"] = [];
+            for (let item of this.overviewSingleMatchDtos)
+                data["overviewSingleMatchDtos"].push(item.toJSON());
+        }
+        if (Array.isArray(this.overviewDoubleMatchDtos)) {
+            data["overviewDoubleMatchDtos"] = [];
+            for (let item of this.overviewDoubleMatchDtos)
+                data["overviewDoubleMatchDtos"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface IOverviewDto {
+    overviewSingleMatchDtos?: OverviewSingleMatchDto[];
+    overviewDoubleMatchDtos?: OverviewDoubleMatchDto[];
+}
+
+export class OverviewSingleMatchDto implements IOverviewSingleMatchDto {
+    matchId?: number;
+    hostPlayerName?: string;
+    guestPlayerName?: string;
+    hostPoints?: number;
+    guestPoints?: number;
+
+    constructor(data?: IOverviewSingleMatchDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.matchId = _data["matchId"];
+            this.hostPlayerName = _data["hostPlayerName"];
+            this.guestPlayerName = _data["guestPlayerName"];
+            this.hostPoints = _data["hostPoints"];
+            this.guestPoints = _data["guestPoints"];
+        }
+    }
+
+    static fromJS(data: any): OverviewSingleMatchDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new OverviewSingleMatchDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["matchId"] = this.matchId;
+        data["hostPlayerName"] = this.hostPlayerName;
+        data["guestPlayerName"] = this.guestPlayerName;
+        data["hostPoints"] = this.hostPoints;
+        data["guestPoints"] = this.guestPoints;
+        return data; 
+    }
+}
+
+export interface IOverviewSingleMatchDto {
+    matchId?: number;
+    hostPlayerName?: string;
+    guestPlayerName?: string;
+    hostPoints?: number;
+    guestPoints?: number;
+}
+
+export class OverviewDoubleMatchDto implements IOverviewDoubleMatchDto {
+    matchId?: number;
+    hostLeftPlayerName?: string;
+    hostRightPlayerName?: string;
+    guestLeftPlayerName?: string;
+    guestRightPlayerName?: string;
+    hostPoints?: number;
+    guestPoints?: number;
+
+    constructor(data?: IOverviewDoubleMatchDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.matchId = _data["matchId"];
+            this.hostLeftPlayerName = _data["hostLeftPlayerName"];
+            this.hostRightPlayerName = _data["hostRightPlayerName"];
+            this.guestLeftPlayerName = _data["guestLeftPlayerName"];
+            this.guestRightPlayerName = _data["guestRightPlayerName"];
+            this.hostPoints = _data["hostPoints"];
+            this.guestPoints = _data["guestPoints"];
+        }
+    }
+
+    static fromJS(data: any): OverviewDoubleMatchDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new OverviewDoubleMatchDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["matchId"] = this.matchId;
+        data["hostLeftPlayerName"] = this.hostLeftPlayerName;
+        data["hostRightPlayerName"] = this.hostRightPlayerName;
+        data["guestLeftPlayerName"] = this.guestLeftPlayerName;
+        data["guestRightPlayerName"] = this.guestRightPlayerName;
+        data["hostPoints"] = this.hostPoints;
+        data["guestPoints"] = this.guestPoints;
+        return data; 
+    }
+}
+
+export interface IOverviewDoubleMatchDto {
+    matchId?: number;
+    hostLeftPlayerName?: string;
+    hostRightPlayerName?: string;
+    guestLeftPlayerName?: string;
+    guestRightPlayerName?: string;
+    hostPoints?: number;
+    guestPoints?: number;
+}
+
 export class CreateTeamMatchCommand implements ICreateTeamMatchCommand {
     hostTeam?: TeamRequest;
     guestTeam?: TeamRequest;
@@ -917,102 +1085,6 @@ export enum DoublePosition {
     None = 0,
     FirstDouble = 1,
     SecondDouble = 2,
-}
-
-export class OverviewDto implements IOverviewDto {
-    overviewSingleMatchDtos?: OverviewSingleMatchDto[];
-
-    constructor(data?: IOverviewDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            if (Array.isArray(_data["overviewSingleMatchDtos"])) {
-                this.overviewSingleMatchDtos = [] as any;
-                for (let item of _data["overviewSingleMatchDtos"])
-                    this.overviewSingleMatchDtos!.push(OverviewSingleMatchDto.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): OverviewDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new OverviewDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.overviewSingleMatchDtos)) {
-            data["overviewSingleMatchDtos"] = [];
-            for (let item of this.overviewSingleMatchDtos)
-                data["overviewSingleMatchDtos"].push(item.toJSON());
-        }
-        return data; 
-    }
-}
-
-export interface IOverviewDto {
-    overviewSingleMatchDtos?: OverviewSingleMatchDto[];
-}
-
-export class OverviewSingleMatchDto implements IOverviewSingleMatchDto {
-    matchId?: number;
-    hostPlayerName?: string;
-    guestPlayerName?: string;
-    hostPoints?: number;
-    guestPoints?: number;
-
-    constructor(data?: IOverviewSingleMatchDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.matchId = _data["matchId"];
-            this.hostPlayerName = _data["hostPlayerName"];
-            this.guestPlayerName = _data["guestPlayerName"];
-            this.hostPoints = _data["hostPoints"];
-            this.guestPoints = _data["guestPoints"];
-        }
-    }
-
-    static fromJS(data: any): OverviewSingleMatchDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new OverviewSingleMatchDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["matchId"] = this.matchId;
-        data["hostPlayerName"] = this.hostPlayerName;
-        data["guestPlayerName"] = this.guestPlayerName;
-        data["hostPoints"] = this.hostPoints;
-        data["guestPoints"] = this.guestPoints;
-        return data; 
-    }
-}
-
-export interface IOverviewSingleMatchDto {
-    matchId?: number;
-    hostPlayerName?: string;
-    guestPlayerName?: string;
-    hostPoints?: number;
-    guestPoints?: number;
 }
 
 export class PaginatedListOfTodoItemBriefDto implements IPaginatedListOfTodoItemBriefDto {

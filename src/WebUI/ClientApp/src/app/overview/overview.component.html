@@ -1,4 +1,4 @@
-<p-table [value]="matches">
+<p-table [value]="singleMatches">
     <ng-template pTemplate="header">
         <tr>
             <th>Host Player</th>
@@ -14,3 +14,12 @@
         </tr>
     </ng-template>
 </p-table>
+<p-table [value]="doubleMatches">
+    <ng-template pTemplate="body" let-doubleMatch>
+        <tr>
+            <td>{{doubleMatch.hostLeftPlayerName}} and {{doubleMatch.hostRightPlayerName}}</td>
+            <td>{{doubleMatch.guestLeftPlayerName}} and {{doubleMatch.guestRightPlayerName}}</td>
+            <td>{{doubleMatch.hostPoints}} - {{doubleMatch.guestPoints}}</td>
+        </tr>
+    </ng-template>
+</p-table>"

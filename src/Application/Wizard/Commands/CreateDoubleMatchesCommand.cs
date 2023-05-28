@@ -47,7 +47,7 @@ public class CreateDoubleMatchesHandler : IRequestHandler<CreateDoubleMatchesCom
             HostPlayerRight = _context.Players.Single(s => s.Id == hostPlayers[1].PlayerId),
 
             GuestPlayerLeft = _context.Players.Single(s => s.Id == guestPlayers[0].PlayerId),
-            GuestPlayerRigth = _context.Players.Single(s => s.Id == guestPlayers[1].PlayerId),
+            GuestPlayerRight = _context.Players.Single(s => s.Id == guestPlayers[1].PlayerId),
         };
         teamMatch.DoubleMatches.Add(doubleMatch);
     }
