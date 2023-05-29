@@ -39,8 +39,19 @@ public class CreateTeamMatchHandler : IRequestHandler<CreateTeamMatchCommand, st
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        var allMatchesCreated = await _mediator.Send(new CreateAllSingleMatchesCommand { TeamMatchId = teamMatch.Id }, cancellationToken);
+        var createDoubleMatchesCommand = CreateDoubleMatchesCommand(request, teamMatch, guestTeam, hostTeam);
 
+        var allSingleMatchesCreated = await _mediator.Send(new CreateAllSingleMatchesCommand { TeamMatchId = teamMatch.Id }, cancellationToken);
+        var allDoubleMatchesCreated = await _mediator.Send(createDoubleMatchesCommand, cancellationToken);
+        var singleScoresCreated = await _mediator.Send(new CreateEmptySingleScoresCommand { TeamMatchId = teamMatch.Id }, cancellationToken);
+        var doubleScoresCreated = await _mediator.Send(new CreateEmptyDoubleScoresCommand { TeamMatchId = teamMatch.Id }, cancellationToken);
+
+        //todo what do to with responses ?
+        return _urlSafeIntEncoder.Encode(teamMatch.Id);
+    }
+
+    private CreateDoubleMatchesCommand CreateDoubleMatchesCommand(CreateTeamMatchCommand request, TeamMatch teamMatch, Team guestTeam, Team hostTeam)
+    {
         var guestNamesWithDoublePosition = request.GuestTeam.Players.ToDictionary(s => s.FullName, r => r.DoublePosition);
         var hostNamesWithDoublePosition = request.HostTeam.Players.ToDictionary(s => s.FullName, r => r.DoublePosition);
 
@@ -50,11 +61,7 @@ public class CreateTeamMatchHandler : IRequestHandler<CreateTeamMatchCommand, st
             GuestPlayers = ToDoublePlayerRequests(guestTeam.Players, guestNamesWithDoublePosition),
             HostPlayers = ToDoublePlayerRequests(hostTeam.Players, hostNamesWithDoublePosition)
         };
-        var allDoubleMatchesCreated = await _mediator.Send(createDoubleMatchesCommand, cancellationToken);
-
-        //todo what do to with responses ?
-
-        return _urlSafeIntEncoder.Encode(teamMatch.Id);
+        return createDoubleMatchesCommand;
     }
 
     private IList<DoublePlayerRequest> ToDoublePlayerRequests(ICollection<Player> players, IDictionary<string, DoublePosition> namesWithDoublePosition)

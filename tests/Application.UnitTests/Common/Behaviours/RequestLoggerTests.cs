@@ -26,14 +26,14 @@ public class CreateTeamMatchCommandValidatorTest
     [Test]
     public void Validate_FullyInitializedRequest_Success()
     {
-        var teamMatchCommand = new CreateTeamMatchCommand()
+        var teamMatchCommand = new CreateTeamMatchCommand
         {
-            GuestTeam = new TeamRequest()
+            GuestTeam = new TeamRequest
             {
                 Name = "Guest",
-                Players = new List<PlayerRequest>()
+                Players = new List<PlayerRequest>
                 {
-                    new PlayerRequest()
+                    new PlayerRequest
                     {
                         DoublePosition = DoublePosition.FirstDouble, FullName = "Felipe Goyes",
                     }

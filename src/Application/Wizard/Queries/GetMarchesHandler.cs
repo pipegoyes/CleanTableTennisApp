@@ -53,7 +53,7 @@ public class GetMarchesHandler : IRequestHandler<GetMatchesQuery, OverviewDto>
 
     private OverviewDoubleMatchDto toDoubleMatchDto(DoubleMatch doubleMatch)
     {
-        return new OverviewDoubleMatchDto()
+        return new OverviewDoubleMatchDto
         {
             MatchIdEncoded = _encoder.Encode(doubleMatch.Id),
             HostLeftPlayerName = doubleMatch.HostPlayerLeft.Name,

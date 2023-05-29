@@ -21,14 +21,23 @@ public class CreateEmptySingleScoresHandler : IRequestHandler<CreateEmptySingleS
 
     public async Task<bool> Handle(CreateEmptySingleScoresCommand request, CancellationToken cancellationToken)
     {
-        var teamMatch = await _context.TeamMatches.FirstAsync(s => s.Id == request.TeamMatchId, cancellationToken);
+        var teamMatch = await _context.TeamMatches
+            .Include(s => s.SingleMatches)
+            .FirstAsync(s => s.Id == request.TeamMatchId, cancellationToken);
 
         foreach (Match singleMatch in teamMatch.SingleMatches)
         {
-            var score = new Score() { GamePointsGuest = 0, GamePointsHost = 0, };
-            singleMatch.Scores.Add(score);
+            AddScoreToMatch(singleMatch);
+            AddScoreToMatch(singleMatch);
+            AddScoreToMatch(singleMatch);
         }
 
         return await _context.SaveChangesAsync(cancellationToken) > 0;
+    }
+
+    private static void AddScoreToMatch(Match singleMatch)
+    {
+        var score = new Score { GamePointsGuest = 0, GamePointsHost = 0, };
+        singleMatch.Scores.Add(score);
     }
 }

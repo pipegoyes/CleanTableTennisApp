@@ -6,7 +6,7 @@ public class DoubleMatch : AuditableEntity
 {
     public DoubleMatch()
     {
-        this.Scores = new List<Score>();
+        this.Scores = new List<DoubleMatchScore>();
     }
     public int Id { get; set; }
     public Player HostPlayerRight { get; set; }
@@ -14,5 +14,5 @@ public class DoubleMatch : AuditableEntity
     public Player GuestPlayerRight { get; set; }
     public Player GuestPlayerLeft { get; set; }
     public int TeamMatchId { get; set; }
-    public ICollection<Score> Scores { get; set; }
+    public ICollection<DoubleMatchScore> Scores { get; set; }
 }
