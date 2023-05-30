@@ -1,1 +1,20 @@
-<p>scores works!</p>
+<p-card>
+    <ng-template pTemplate="title">
+        Match scores
+    </ng-template>
+
+    <ng-template pTemplate="content">
+        <app-set-score setNumber="1" [hostPoints]="set1.hostPoints" [guestPoints]="set1.guestPoints"></app-set-score>
+        <app-set-score setNumber="2" [hostPoints]="set2.hostPoints" [guestPoints]="set2.guestPoints"></app-set-score>
+        <app-set-score setNumber="3" [hostPoints]="set3.hostPoints" [guestPoints]="set3.guestPoints"></app-set-score>
+        <app-set-score setNumber="4" [hostPoints]="set4.hostPoints" [guestPoints]="set4.guestPoints"></app-set-score>
+        <app-set-score setNumber="5" [hostPoints]="set5.hostPoints" [guestPoints]="set5.guestPoints"></app-set-score>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <div class="p-grid p-nogutter p-justify-between">
+            <p-button label="Back" (onClick)="goToOverview()" icon="pi pi-angle-left" iconPos="left"></p-button>
+            <p-button label="Save" (onClick)="save()" icon="pi pi-play" iconPos="right"></p-button>        
+        </div>
+    </ng-template>
+</p-card>

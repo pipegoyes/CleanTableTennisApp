@@ -1,0 +1,10 @@
+<div class="set-container">
+    <h5>Set {{setNumber}}.</h5>
+    <div class="p-grid p-nogutter p-justify-between">
+        <p-dropdown [options]="points" [(ngModel)]="hostPoints" placeholder="Host points" styleClass="score-min-size"></p-dropdown>
+        <div>
+            <span>vs.</span>
+        </div> 
+        <p-dropdown [options]="points" [(ngModel)]="guestPoints" placeholder="Guest points" styleClass="score-min-size"></p-dropdown>
+    </div>
+</div>

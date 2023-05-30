@@ -36,6 +36,8 @@ import { API_BASE_URL } from './web-api-client';
 import { OverviewComponent } from './overview/overview.component';
 import {TableModule} from 'primeng/table';
 import { ScoresComponent } from './scores/scores.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { SetScoreComponent } from './set-score/set-score.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,7 @@ import { ScoresComponent } from './scores/scores.component';
     ResumeComponent,
     OverviewComponent,
     ScoresComponent,
+    SetScoreComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -75,6 +78,7 @@ import { ScoresComponent } from './scores/scores.component';
     ButtonModule,
     SelectButtonModule,
     TableModule,
+    DropdownModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
