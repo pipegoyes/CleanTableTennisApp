@@ -152,6 +152,76 @@ export class TeamMatchClient implements ITeamMatchClient {
     }
 }
 
+export interface IScoresClient {
+    update(command: UpdateMatchScoreCommand): Observable<boolean>;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class ScoresClient implements IScoresClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    update(command: UpdateMatchScoreCommand): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/Scores";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(command);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdate(<any>response_);
+                } catch (e) {
+                    return <Observable<boolean>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<boolean>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processUpdate(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(<any>null);
+    }
+}
+
 export interface ITodoItemsClient {
     getTodoItemsWithPagination(listId: number | undefined, pageNumber: number | undefined, pageSize: number | undefined): Observable<PaginatedListOfTodoItemBriefDto>;
     create(command: CreateTodoItemCommand): Observable<number>;
@@ -1085,6 +1155,98 @@ export enum DoublePosition {
     None = 0,
     FirstDouble = 1,
     SecondDouble = 2,
+}
+
+export class UpdateMatchScoreCommand implements IUpdateMatchScoreCommand {
+    matchIdEncoded?: string;
+    scoreRequests?: ScoreRequest[];
+
+    constructor(data?: IUpdateMatchScoreCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.matchIdEncoded = _data["matchIdEncoded"];
+            if (Array.isArray(_data["scoreRequests"])) {
+                this.scoreRequests = [] as any;
+                for (let item of _data["scoreRequests"])
+                    this.scoreRequests!.push(ScoreRequest.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): UpdateMatchScoreCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateMatchScoreCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["matchIdEncoded"] = this.matchIdEncoded;
+        if (Array.isArray(this.scoreRequests)) {
+            data["scoreRequests"] = [];
+            for (let item of this.scoreRequests)
+                data["scoreRequests"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface IUpdateMatchScoreCommand {
+    matchIdEncoded?: string;
+    scoreRequests?: ScoreRequest[];
+}
+
+export class ScoreRequest implements IScoreRequest {
+    scoreIdEncoded?: string;
+    hostPoints?: number;
+    guestPoints?: number;
+
+    constructor(data?: IScoreRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.scoreIdEncoded = _data["scoreIdEncoded"];
+            this.hostPoints = _data["hostPoints"];
+            this.guestPoints = _data["guestPoints"];
+        }
+    }
+
+    static fromJS(data: any): ScoreRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new ScoreRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["scoreIdEncoded"] = this.scoreIdEncoded;
+        data["hostPoints"] = this.hostPoints;
+        data["guestPoints"] = this.guestPoints;
+        return data; 
+    }
+}
+
+export interface IScoreRequest {
+    scoreIdEncoded?: string;
+    hostPoints?: number;
+    guestPoints?: number;
 }
 
 export class PaginatedListOfTodoItemBriefDto implements IPaginatedListOfTodoItemBriefDto {

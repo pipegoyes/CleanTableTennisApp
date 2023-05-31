@@ -69,6 +69,38 @@
         }
       }
     },
+    "/api/Scores": {
+      "post": {
+        "tags": [
+          "Scores"
+        ],
+        "operationId": "Scores_Update",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMatchScoreCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/TodoItems": {
       "get": {
         "tags": [
@@ -669,6 +701,38 @@
           1,
           2
         ]
+      },
+      "UpdateMatchScoreCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "matchIdEncoded": {
+            "type": "string"
+          },
+          "scoreRequests": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScoreRequest"
+            }
+          }
+        }
+      },
+      "ScoreRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "scoreIdEncoded": {
+            "type": "string"
+          },
+          "hostPoints": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "guestPoints": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
       },
       "PaginatedListOfTodoItemBriefDto": {
         "type": "object",

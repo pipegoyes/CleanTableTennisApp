@@ -1,13 +1,17 @@
 using CleanTableTennisApp.Application;
 using CleanTableTennisApp.Application.Common.Enconders;
 using CleanTableTennisApp.Application.Common.Interfaces;
+using CleanTableTennisApp.Application.Wizard.Validators;
+using CleanTableTennisApp.Domain.Entities;
 using CleanTableTennisApp.Infrastructure;
 using CleanTableTennisApp.Infrastructure.Persistence;
 using CleanTableTennisApp.WebUI.Filters;
 using CleanTableTennisApp.WebUI.RequestExamples;
 using CleanTableTennisApp.WebUI.Services;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using NSwag;
 using NSwag.Examples;
 using NSwag.Generation.Processors.Security;
@@ -33,6 +37,7 @@ public class Startup
 
         services.AddSingleton<ICurrentUserService, CurrentUserService>();
         services.AddSingleton<IUrlSafeIntEncoder, UrlSafeIntEncoder>();
+        services.AddSingleton<IValidator<ICollection<Score>>, ScoresValidator>();
 
         services.AddHttpContextAccessor();
 
