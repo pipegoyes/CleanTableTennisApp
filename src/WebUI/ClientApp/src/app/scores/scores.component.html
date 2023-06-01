@@ -4,11 +4,9 @@
     </ng-template>
 
     <ng-template pTemplate="content">
-        <app-set-score setNumber="1" [(hostPoints)]="set1.hostPoints" [(guestPoints)]="set1.guestPoints"></app-set-score>
-        <app-set-score setNumber="2" [hostPoints]="set2.hostPoints" [guestPoints]="set2.guestPoints"></app-set-score>
-        <app-set-score setNumber="3" [hostPoints]="set3.hostPoints" [guestPoints]="set3.guestPoints"></app-set-score>
-        <app-set-score setNumber="4" [hostPoints]="set4.hostPoints" [guestPoints]="set4.guestPoints"></app-set-score>
-        <app-set-score setNumber="5" [hostPoints]="set5.hostPoints" [guestPoints]="set5.guestPoints"></app-set-score>
+        <ng-container *ngFor="let set of sets; let i = index">
+            <app-set-score setNumber="i" [(hostPoints)]="set.hostPoints" [guestPoints]="set.guestPoints" (hostPointsEvent)="onHostPointsChanged($event, i)" (guestPointsEvent)="onGuestPointsChanged($event, i)"></app-set-score>
+        </ng-container>
     </ng-template>
 
     <ng-template pTemplate="footer">

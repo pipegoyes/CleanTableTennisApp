@@ -13,11 +13,8 @@ import { IScoreRequest, ScoreRequest } from '../web-api-client';
 export class ScoresComponent implements OnInit {
 
   points: number[] = [0,1,2,3,4,5,6,7];
-  set1: ScoreRequest;
-  set2: ScoreRequest;
-  set3: ScoreRequest;
-  set4: ScoreRequest;
-  set5: ScoreRequest;
+  maxNumberOfSets: number = 5;
+  sets: ScoreRequest[] = [];
 
   teamMatchIdObs : Observable<string>;
   matchIdObs : Observable<string>;
@@ -25,13 +22,7 @@ export class ScoresComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private scoreService: ScoreService) { }
 
   ngOnInit(): void {
-    this.set1 = this.createSet();
-    this.set2 = this.createSet();
-    this.set3 = this.createSet();
-    this.set4 = this.createSet();
-    this.set5 = this.createSet();
-
-
+    this.initializeSets();
     this.teamMatchIdObs = this.activatedRoute.params.pipe(map(p => p.teamMatchId));
     this.matchIdObs = this.activatedRoute.params.pipe(map(p => p.matchId));
   
@@ -52,11 +43,26 @@ export class ScoresComponent implements OnInit {
 
   save(): void{    
     this.matchIdObs.subscribe(i => {
-      this.scoreService.update(i, [this.set1, this.set2, this.set3, this.set4,this.set5]).subscribe(s =>{
+      this.scoreService.update(i, this.sets).subscribe(s =>{
         console.log("Works?"+ s)
       })
     });
-    
+  }
+
+  onHostPointsChanged(value : any, index : number) : any{
+    this.sets[index].hostPoints = value;
+    console.log("value"+ value + " index "+ index)
+  }
+
+  onGuestPointsChanged(value : any, index : number) : any{
+    this.sets[index].guestPoints = value;
+    console.log("value"+ value + " index "+ index)
+  }
+
+  private initializeSets(){
+    for (let index = 0; index < this.maxNumberOfSets; index++) {
+      this.sets[index] = this.createSet();
+    }
   }
 
 }
