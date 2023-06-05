@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CleanTableTennisApp.WebUI.Controllers;
 
-public class TeamMatchController : ApiControllerBase
+public class ScoresController : ApiControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult<string>> Create([FromBody] CreateTeamMatchCommand command)
+    public async Task<ActionResult<bool>> Update([FromBody] UpdateMatchScoreCommand command)
     {
         return await Mediator.Send(command);
     }

@@ -37,38 +37,6 @@
         }
       }
     },
-    "/api/TeamMatch": {
-      "post": {
-        "tags": [
-          "TeamMatch"
-        ],
-        "operationId": "TeamMatch_Create",
-        "requestBody": {
-          "x-name": "command",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateTeamMatchCommand"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/Scores": {
       "post": {
         "tags": [
@@ -94,6 +62,38 @@
               "application/json": {
                 "schema": {
                   "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/TeamMatch": {
+      "post": {
+        "tags": [
+          "TeamMatch"
+        ],
+        "operationId": "TeamMatch_Create",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTeamMatchCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
                 }
               }
             }
@@ -605,6 +605,38 @@
           }
         }
       },
+      "UpdateMatchScoreCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "matchIdEncoded": {
+            "type": "string"
+          },
+          "scoreRequests": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScoreRequest"
+            }
+          }
+        }
+      },
+      "ScoreRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "scoreIdEncoded": {
+            "type": "string"
+          },
+          "hostPoints": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "guestPoints": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "CreateTeamMatchCommand": {
         "type": "object",
         "example": {
@@ -701,38 +733,6 @@
           1,
           2
         ]
-      },
-      "UpdateMatchScoreCommand": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "matchIdEncoded": {
-            "type": "string"
-          },
-          "scoreRequests": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ScoreRequest"
-            }
-          }
-        }
-      },
-      "ScoreRequest": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "scoreIdEncoded": {
-            "type": "string"
-          },
-          "hostPoints": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "guestPoints": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
       },
       "PaginatedListOfTodoItemBriefDto": {
         "type": "object",
