@@ -5,7 +5,7 @@
 
     <ng-template pTemplate="content">
         <ng-container *ngFor="let set of sets; let i = index">
-            <app-set-score setNumber="i" [(hostPoints)]="set.hostPoints" [guestPoints]="set.guestPoints" (hostPointsEvent)="onHostPointsChanged($event, i)" (guestPointsEvent)="onGuestPointsChanged($event, i)"></app-set-score>
+            <app-set-score setNumber="i" [(hostPoints)]="set.hostPoints" [(guestPoints)]="set.guestPoints" (hostPointsEvent)="onHostPointsChanged($event, i)" (guestPointsEvent)="onGuestPointsChanged($event, i)"></app-set-score>
         </ng-container>
     </ng-template>
 

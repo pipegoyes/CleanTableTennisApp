@@ -1,6 +1,6 @@
 ﻿namespace CleanTableTennisApp.Application.Requests;
 
-public class ScoreRequest
+public class ScoreDto
 {
     public string ScoreIdEncoded { get; set; } = string.Empty;
     public int HostPoints { get; set; }

@@ -9,11 +9,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CleanTableTennisApp.Application.Wizard.Commands;
 
-
 public class UpdateMatchScoreCommand : IRequest<bool>
 {
     public string MatchIdEncoded { get; set; } = string.Empty;
-    public IEnumerable<ScoreRequest> ScoreRequests { get; set; }
+    public IEnumerable<ScoreDto> ScoreDtos { get; set; } = Enumerable.Empty<ScoreDto>();
 }
 
 public class UpdateMatchScoreHandler : IRequestHandler<UpdateMatchScoreCommand, bool>
@@ -32,7 +31,7 @@ public class UpdateMatchScoreHandler : IRequestHandler<UpdateMatchScoreCommand, 
     public async Task<bool> Handle(UpdateMatchScoreCommand request, CancellationToken cancellationToken)
     {
         var matchIdDecoded = _encoder.Decode(request.MatchIdEncoded);
-        var (newScores, updatedScores) = request.ScoreRequests.Split(s => s.ScoreIdEncoded.IsNullOrWhiteSpace());
+        var (newScores, updatedScores) = request.ScoreDtos.Split(s => s.ScoreIdEncoded.IsNullOrWhiteSpace());
 
         var match = await _context.Matches
             .Include(s => s.Scores)
@@ -59,7 +58,6 @@ public class UpdateMatchScoreHandler : IRequestHandler<UpdateMatchScoreCommand, 
         await _scoreValidator.ValidateAndThrowAsync(match.Scores, cancellationToken);
 
         return await _context.SaveChangesAsync(cancellationToken) > 0;
-
     }
 }
 

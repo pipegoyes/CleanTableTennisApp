@@ -3,12 +3,12 @@ using FluentValidation;
 
 namespace CleanTableTennisApp.Application.Wizard.Validators;
 
-public class ScoreRequestValidator : AbstractValidator<ScoreRequest>
+public class ScoreDtoValidator : AbstractValidator<ScoreDto>
 {
     private const int TenPoints = 10;
     private const int ElevenPoints = 11;
 
-    public ScoreRequestValidator()
+    public ScoreDtoValidator()
     {
         RuleFor(score => score)
             .Must(score => ValidatePointsDifference(score.GuestPoints, score.HostPoints))

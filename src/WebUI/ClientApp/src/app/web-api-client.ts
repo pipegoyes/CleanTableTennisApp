@@ -83,6 +83,7 @@ export class MatchClient implements IMatchClient {
 }
 
 export interface IScoresClient {
+    get(matchIdEncoded: string | null): Observable<ScoreDto[]>;
     update(command: UpdateMatchScoreCommand): Observable<boolean>;
 }
 
@@ -97,6 +98,61 @@ export class ScoresClient implements IScoresClient {
     constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    get(matchIdEncoded: string | null): Observable<ScoreDto[]> {
+        let url_ = this.baseUrl + "/api/Scores/{matchIdEncoded}";
+        if (matchIdEncoded === undefined || matchIdEncoded === null)
+            throw new Error("The parameter 'matchIdEncoded' must be defined.");
+        url_ = url_.replace("{matchIdEncoded}", encodeURIComponent("" + matchIdEncoded));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet(<any>response_);
+                } catch (e) {
+                    return <Observable<ScoreDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ScoreDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGet(response: HttpResponseBase): Observable<ScoreDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(ScoreDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ScoreDto[]>(<any>null);
     }
 
     update(command: UpdateMatchScoreCommand): Observable<boolean> {
@@ -1023,60 +1079,12 @@ export interface IOverviewDoubleMatchDto {
     guestPoints?: number;
 }
 
-export class UpdateMatchScoreCommand implements IUpdateMatchScoreCommand {
-    matchIdEncoded?: string;
-    scoreRequests?: ScoreRequest[];
-
-    constructor(data?: IUpdateMatchScoreCommand) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.matchIdEncoded = _data["matchIdEncoded"];
-            if (Array.isArray(_data["scoreRequests"])) {
-                this.scoreRequests = [] as any;
-                for (let item of _data["scoreRequests"])
-                    this.scoreRequests!.push(ScoreRequest.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): UpdateMatchScoreCommand {
-        data = typeof data === 'object' ? data : {};
-        let result = new UpdateMatchScoreCommand();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["matchIdEncoded"] = this.matchIdEncoded;
-        if (Array.isArray(this.scoreRequests)) {
-            data["scoreRequests"] = [];
-            for (let item of this.scoreRequests)
-                data["scoreRequests"].push(item.toJSON());
-        }
-        return data; 
-    }
-}
-
-export interface IUpdateMatchScoreCommand {
-    matchIdEncoded?: string;
-    scoreRequests?: ScoreRequest[];
-}
-
-export class ScoreRequest implements IScoreRequest {
+export class ScoreDto implements IScoreDto {
     scoreIdEncoded?: string;
     hostPoints?: number;
     guestPoints?: number;
 
-    constructor(data?: IScoreRequest) {
+    constructor(data?: IScoreDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -1093,9 +1101,9 @@ export class ScoreRequest implements IScoreRequest {
         }
     }
 
-    static fromJS(data: any): ScoreRequest {
+    static fromJS(data: any): ScoreDto {
         data = typeof data === 'object' ? data : {};
-        let result = new ScoreRequest();
+        let result = new ScoreDto();
         result.init(data);
         return result;
     }
@@ -1109,10 +1117,58 @@ export class ScoreRequest implements IScoreRequest {
     }
 }
 
-export interface IScoreRequest {
+export interface IScoreDto {
     scoreIdEncoded?: string;
     hostPoints?: number;
     guestPoints?: number;
+}
+
+export class UpdateMatchScoreCommand implements IUpdateMatchScoreCommand {
+    matchIdEncoded?: string;
+    scoreDtos?: ScoreDto[];
+
+    constructor(data?: IUpdateMatchScoreCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.matchIdEncoded = _data["matchIdEncoded"];
+            if (Array.isArray(_data["scoreDtos"])) {
+                this.scoreDtos = [] as any;
+                for (let item of _data["scoreDtos"])
+                    this.scoreDtos!.push(ScoreDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): UpdateMatchScoreCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateMatchScoreCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["matchIdEncoded"] = this.matchIdEncoded;
+        if (Array.isArray(this.scoreDtos)) {
+            data["scoreDtos"] = [];
+            for (let item of this.scoreDtos)
+                data["scoreDtos"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface IUpdateMatchScoreCommand {
+    matchIdEncoded?: string;
+    scoreDtos?: ScoreDto[];
 }
 
 export class CreateTeamMatchCommand implements ICreateTeamMatchCommand {

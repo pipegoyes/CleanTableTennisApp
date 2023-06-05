@@ -3,7 +3,7 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ScoreService } from '../score.service';
-import { IScoreRequest, ScoreRequest } from '../web-api-client';
+import { ScoreDto } from '../web-api-client';
 
 @Component({
   selector: 'app-scores',
@@ -12,9 +12,8 @@ import { IScoreRequest, ScoreRequest } from '../web-api-client';
 })
 export class ScoresComponent implements OnInit {
 
-  points: number[] = [0,1,2,3,4,5,6,7];
   maxNumberOfSets: number = 5;
-  sets: ScoreRequest[] = [];
+  sets: ScoreDto[] = [];
 
   teamMatchIdObs : Observable<string>;
   matchIdObs : Observable<string>;
@@ -22,14 +21,14 @@ export class ScoresComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private scoreService: ScoreService) { }
 
   ngOnInit(): void {
-    this.initializeSets();
     this.teamMatchIdObs = this.activatedRoute.params.pipe(map(p => p.teamMatchId));
     this.matchIdObs = this.activatedRoute.params.pipe(map(p => p.matchId));
+    this.initializeSets();
   
   }
 
-  createSet(): ScoreRequest{
-    return new ScoreRequest({
+  createSet(): ScoreDto{
+    return new ScoreDto({
       hostPoints: null,
       guestPoints: null
     })
@@ -51,17 +50,27 @@ export class ScoresComponent implements OnInit {
 
   onHostPointsChanged(value : any, index : number) : any{
     this.sets[index].hostPoints = value;
-    console.log("value"+ value + " index "+ index)
   }
 
   onGuestPointsChanged(value : any, index : number) : any{
     this.sets[index].guestPoints = value;
-    console.log("value"+ value + " index "+ index)
   }
 
   private initializeSets(){
+
+    this.matchIdObs.subscribe(id => {
+      this.scoreService.get(id).subscribe(scores => {
+        this.sets = scores;
+        this.fillEmptyScores();
+      });
+    })
+  }
+
+  private fillEmptyScores(){
     for (let index = 0; index < this.maxNumberOfSets; index++) {
-      this.sets[index] = this.createSet();
+      if(!this.sets[index]){
+        this.sets[index] = this.createSet();
+      }
     }
   }
 

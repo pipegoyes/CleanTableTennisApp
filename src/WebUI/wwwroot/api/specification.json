@@ -37,6 +37,41 @@
         }
       }
     },
+    "/api/Scores/{matchIdEncoded}": {
+      "get": {
+        "tags": [
+          "Scores"
+        ],
+        "operationId": "Scores_Get",
+        "parameters": [
+          {
+            "name": "matchIdEncoded",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ScoreDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Scores": {
       "post": {
         "tags": [
@@ -605,22 +640,7 @@
           }
         }
       },
-      "UpdateMatchScoreCommand": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "matchIdEncoded": {
-            "type": "string"
-          },
-          "scoreRequests": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ScoreRequest"
-            }
-          }
-        }
-      },
-      "ScoreRequest": {
+      "ScoreDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -634,6 +654,21 @@
           "guestPoints": {
             "type": "integer",
             "format": "int32"
+          }
+        }
+      },
+      "UpdateMatchScoreCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "matchIdEncoded": {
+            "type": "string"
+          },
+          "scoreDtos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScoreDto"
+            }
           }
         }
       },

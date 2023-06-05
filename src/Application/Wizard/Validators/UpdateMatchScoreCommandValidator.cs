@@ -8,7 +8,7 @@ public class UpdateMatchScoreCommandValidator : AbstractValidator<UpdateMatchSco
     public UpdateMatchScoreCommandValidator()
     {
         RuleFor(s => s.MatchIdEncoded).NotNull();
-        RuleFor(s => s.ScoreRequests).NotNull();
-        RuleForEach(s => s.ScoreRequests).SetValidator(new ScoreRequestValidator());
+        RuleFor(s => s.ScoreDtos).NotNull();
+        RuleForEach(s => s.ScoreDtos).SetValidator(new ScoreDtoValidator());
     }
 }
