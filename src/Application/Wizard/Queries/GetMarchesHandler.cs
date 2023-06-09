@@ -31,6 +31,8 @@ public class GetMarchesHandler : IRequestHandler<GetMatchesQuery, OverviewDto>
             .ThenInclude(s => s.HostPlayer)
             .Include(s => s.SingleMatches)
             .ThenInclude(s => s.GuestPlayer)
+            .Include(s => s.SingleMatches)
+            .ThenInclude(s => s.Scores)
             .FirstAsync(s => s.Id == teamMatchId, cancellationToken);
 
         var teamMatchWithDoubleMatches = await _context.TeamMatches
@@ -42,6 +44,8 @@ public class GetMarchesHandler : IRequestHandler<GetMatchesQuery, OverviewDto>
             .ThenInclude(s => s.GuestPlayerLeft)
             .Include(s => s.DoubleMatches)
             .ThenInclude(s => s.GuestPlayerRight)
+            .Include(s => s.SingleMatches)
+            .ThenInclude(s => s.Scores)
             .FirstAsync(s => s.Id == teamMatchId, cancellationToken);
 
         return new OverviewDto
