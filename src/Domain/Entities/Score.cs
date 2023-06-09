@@ -1,6 +1,12 @@
 ﻿namespace CleanTableTennisApp.Domain.Entities;
 
-public class Score
+public interface IGamePoints
+{
+    int GamePointsHost { get; set; }
+    int GamePointsGuest { get; set; }
+}
+
+public class Score : IGamePoints
 {
     // todo can I remove ? from match
     public int Id { get; set; }

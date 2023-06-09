@@ -29,17 +29,13 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
     }
 
     public DbSet<TodoList> TodoLists => Set<TodoList>();
-
     public DbSet<TodoItem> TodoItems => Set<TodoItem>();
-
     public DbSet<Team> Teams => Set<Team>();
-
     public DbSet<Player> Players => Set<Player>();
-
     public DbSet<Match> Matches => Set<Match>();
-
     public DbSet<TeamMatch> TeamMatches => Set<TeamMatch>();
-    
+    public DbSet<DoubleMatch> DoubleMatches => Set<DoubleMatch>();
+
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
     {
         foreach (var entry in ChangeTracker.Entries<AuditableEntity>())

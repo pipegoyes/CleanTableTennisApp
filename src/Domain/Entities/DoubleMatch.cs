@@ -1,6 +1,4 @@
-﻿using System.Xml.Schema;
-
-namespace CleanTableTennisApp.Domain.Entities;
+﻿namespace CleanTableTennisApp.Domain.Entities;
 
 public class DoubleMatch : AuditableEntity
 {

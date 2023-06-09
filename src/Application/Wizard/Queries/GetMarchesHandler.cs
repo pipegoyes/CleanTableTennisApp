@@ -51,11 +51,11 @@ public class GetMarchesHandler : IRequestHandler<GetMatchesQuery, OverviewDto>
         return new OverviewDto
         {
             OverviewSingleMatchDtos = teamMatchWithSingleMatches.SingleMatches.Select(ToSingleMatchDto).ToList(),
-            OverviewDoubleMatchDtos = teamMatchWithDoubleMatches.DoubleMatches.Select(toDoubleMatchDto).ToList(),
+            OverviewDoubleMatchDtos = teamMatchWithDoubleMatches.DoubleMatches.Select(ToDoubleMatchDto).ToList(),
         };
     }
 
-    private OverviewDoubleMatchDto toDoubleMatchDto(DoubleMatch doubleMatch)
+    private OverviewDoubleMatchDto ToDoubleMatchDto(DoubleMatch doubleMatch)
     {
         return new OverviewDoubleMatchDto
         {

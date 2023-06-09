@@ -1,6 +1,6 @@
 ﻿namespace CleanTableTennisApp.Domain.Entities;
 
-public class DoubleMatchScore
+public class DoubleMatchScore : IGamePoints
 {
     public int Id { get; set; }
     public int GamePointsHost { get; set; }

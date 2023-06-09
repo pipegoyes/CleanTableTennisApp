@@ -9,7 +9,6 @@ public class MatchController : ApiControllerBase
     [HttpGet]
     public async Task<ActionResult<OverviewDto>> GetAllMatches([FromQuery] GetMatchesQuery query)
     {
-        // todo can i get rid of fromBody?
         return await Mediator.Send(query);
     }
 }

@@ -1,5 +1,4 @@
 using CleanTableTennisApp.Application.Requests;
-using CleanTableTennisApp.Domain.Entities;
 using CleanTableTennisApp.Domain.Enums;
 using FluentValidation;
 
@@ -23,29 +22,5 @@ public class TeamRequestValidator : AbstractValidator<TeamRequest>
     {
         var result = players.GroupBy(s => s.FullName).Any(s => s.Count() > 1);
         return result;
-    }
-}
-
-public class ScoresValidator : AbstractValidator<ICollection<Score>>
-{
-    private const int NumberOfSetsToWinMatch = 3;
-    private const int MaxNumberOfSetsPerMatch = 5;
-
-    public ScoresValidator()
-    {
-        RuleFor(s => s)
-            .Must(ValidateScores)
-            .WithMessage($"Number of won ({NumberOfSetsToWinMatch}) sets exceed.");
-
-        RuleFor(s => s)
-            .Must(s => s.Count <= MaxNumberOfSetsPerMatch);
-    }
-
-    private bool ValidateScores(ICollection<Score> scores)
-    {
-        var hostWins = scores.Count(s => s.GamePointsHost > s.GamePointsGuest);
-        var guestWins = scores.Count(s => s.GamePointsGuest > s.GamePointsHost);
-
-        return hostWins <= NumberOfSetsToWinMatch && guestWins <= NumberOfSetsToWinMatch;
     }
 }

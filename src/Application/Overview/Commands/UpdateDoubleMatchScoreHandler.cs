@@ -7,35 +7,36 @@ using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace CleanTableTennisApp.Application.Wizard.Commands;
+namespace CleanTableTennisApp.Application.Overview.Commands;
 
-public class UpdateMatchScoreCommand : IRequest<bool>
+public class UpdateDoubleMatchScoreCommand : IRequest<bool>
 {
-    public string MatchIdEncoded { get; set; } = string.Empty;
+    public string DoubleMatchIdEncoded { get; set; } = String.Empty;
     public IEnumerable<ScoreDto> ScoreDtos { get; set; } = Enumerable.Empty<ScoreDto>();
 }
 
-public class UpdateMatchScoreHandler : IRequestHandler<UpdateMatchScoreCommand, bool>
+public class UpdateDoubleMatchScoreHandler : IRequestHandler<UpdateDoubleMatchScoreCommand, bool>
 {
-    private readonly IApplicationDbContext _context;
     private readonly IUrlSafeIntEncoder _encoder;
-    private readonly IValidator<ICollection<Score>> _scoreValidator;
+    private readonly IApplicationDbContext _context;
+    private readonly IValidator<ICollection<DoubleMatchScore>> _scoreValidator;
 
-    public UpdateMatchScoreHandler(IApplicationDbContext context, IUrlSafeIntEncoder encoder, IValidator<ICollection<Score>> scoreValidator)
+    public UpdateDoubleMatchScoreHandler(IUrlSafeIntEncoder encoder, IApplicationDbContext context, IValidator<ICollection<DoubleMatchScore>> scoreValidator)
     {
-        _context = context;
         _encoder = encoder;
+        _context = context;
         _scoreValidator = scoreValidator;
     }
 
-    public async Task<bool> Handle(UpdateMatchScoreCommand request, CancellationToken cancellationToken)
+    public async Task<bool> Handle(UpdateDoubleMatchScoreCommand request, CancellationToken cancellationToken)
     {
-        var matchIdDecoded = _encoder.Decode(request.MatchIdEncoded);
+        // todo find a way to re-use this code with UpdateMatchScoreHandler
+        var doubleMatchIdDecoded = _encoder.Decode(request.DoubleMatchIdEncoded);
         var (newScores, updatedScores) = request.ScoreDtos.Split(s => s.ScoreIdEncoded.IsNullOrWhiteSpace());
 
-        var match = await _context.Matches
+        var match = await _context.DoubleMatches
             .Include(s => s.Scores)
-            .FirstAsync(s => s.Id == matchIdDecoded, cancellationToken);
+            .FirstAsync(s => s.Id == doubleMatchIdDecoded, cancellationToken);
 
         foreach (var updatedScore in updatedScores)
         {
@@ -48,7 +49,7 @@ public class UpdateMatchScoreHandler : IRequestHandler<UpdateMatchScoreCommand, 
 
         foreach (var newScore in newScores)
         {
-            match.Scores.Add(new Score
+            match.Scores.Add(new DoubleMatchScore
             {
                 GamePointsGuest = newScore.GuestPoints,
                 GamePointsHost = newScore.HostPoints
@@ -58,16 +59,5 @@ public class UpdateMatchScoreHandler : IRequestHandler<UpdateMatchScoreCommand, 
         await _scoreValidator.ValidateAndThrowAsync(match.Scores, cancellationToken);
 
         return await _context.SaveChangesAsync(cancellationToken) > 0;
-    }
-}
-
-public static class Require
-{
-    public static void IsNotNull<T>(T value)
-    {
-        if (value is null)
-        {
-            throw new ArgumentException($"{nameof(value)} must be not null.");
-        }
     }
 }
