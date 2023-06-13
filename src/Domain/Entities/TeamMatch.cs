@@ -6,6 +6,7 @@ public class TeamMatch : AuditableEntity
     public TeamMatch()
     {
         SingleMatches = new List<Match>();
+        DoubleMatches = new List<DoubleMatch>();
     }
 
     public TeamMatch(Team hostTeam, Team guestTeam)
