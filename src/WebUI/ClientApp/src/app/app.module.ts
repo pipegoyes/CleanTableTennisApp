@@ -38,6 +38,7 @@ import {TableModule} from 'primeng/table';
 import { ScoresComponent } from './scores/scores.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { SetScoreComponent } from './set-score/set-score.component';
+import { DoubleScoresComponent } from './double-scores/double-scores.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { SetScoreComponent } from './set-score/set-score.component';
     OverviewComponent,
     ScoresComponent,
     SetScoreComponent,
+    DoubleScoresComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

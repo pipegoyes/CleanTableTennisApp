@@ -3,6 +3,7 @@ import { Component, NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { CounterComponent } from './counter/counter.component';
+import { DoubleScoresComponent } from './double-scores/double-scores.component';
 import { DoublesComponent } from './doubles/doubles.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { GuestPlayersComponent } from './guest-players/guest-players.component';
@@ -11,6 +12,7 @@ import { HostPlayersComponent } from './host-players/host-players.component';
 import { OverviewComponent } from './overview/overview.component';
 import { PlayersComponent } from './players/players.component';
 import { ResumeComponent } from './resume/resume.component';
+import { ScoreService } from './score.service';
 import { ScoresComponent } from './scores/scores.component';
 import { StartWizardComponent } from './start-wizard/start-wizard.component';
 import { TeamInformationComponent } from './team-information/team-information.component';
@@ -23,6 +25,7 @@ export const routes: Routes = [
   { path: 'counter', component: CounterComponent },
   { path: 'overview/:teamMatchId', component: OverviewComponent },
   { path: 'overview/:teamMatchId/single-scores/:matchId', component: ScoresComponent},
+  { path: 'overview/:teamMatchId/double-scores/:doubleMatchId', component: DoubleScoresComponent},
   { path: 'match-config', component: TeamMatchConfigurationComponent },
   { path: 'start-wizard', component: StartWizardComponent, children: [
     {
@@ -59,6 +62,6 @@ export const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}
