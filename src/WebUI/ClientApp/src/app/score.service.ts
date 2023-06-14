@@ -17,7 +17,7 @@ export class ScoreService {
     var filteredScores = scoreRequests.filter(s => s.hostPoints != null && s.guestPoints != null);
     var updateCommand = new UpdateMatchScoreCommand({
       matchIdEncoded: matchIdEncoded,
-      scoreDtos: filteredScores
+      scoreDtos: filteredScores.filter(s => s.guestPoints != 0 || s.hostPoints != 0)
     });
     return this.scoreClient.update(updateCommand);
   }
