@@ -60,7 +60,7 @@ export class ScoresComponent implements OnInit {
 
     this.matchIdObs.subscribe(id => {
       this.scoreService.get(id).subscribe(scores => {
-        this.sets = scores;
+        this.sets = scores.scores;
         this.fillEmptyScores();
       });
     })
