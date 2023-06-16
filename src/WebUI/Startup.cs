@@ -2,6 +2,7 @@ using CleanTableTennisApp.Application;
 using CleanTableTennisApp.Application.Common.Enconders;
 using CleanTableTennisApp.Application.Common.Interfaces;
 using CleanTableTennisApp.Application.Overview;
+using CleanTableTennisApp.Application.Scores.Validators;
 using CleanTableTennisApp.Application.Wizard.Validators;
 using CleanTableTennisApp.Domain.Entities;
 using CleanTableTennisApp.Infrastructure;

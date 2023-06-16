@@ -1,7 +1,7 @@
 using CleanTableTennisApp.Application.Requests;
 using FluentValidation;
 
-namespace CleanTableTennisApp.Application.Wizard.Validators;
+namespace CleanTableTennisApp.Application.Scores.Validators;
 
 public class ScoreDtoValidator : AbstractValidator<ScoreDto>
 {
@@ -24,7 +24,7 @@ public class ScoreDtoValidator : AbstractValidator<ScoreDto>
     {
         if (guestPoints >= TenPoints && hostPoints >= TenPoints)
         {
-            return Math.Abs(guestPoints - hostPoints) >= 2;
+            return Math.Abs(guestPoints - hostPoints) == 2;
         }
 
         return true;

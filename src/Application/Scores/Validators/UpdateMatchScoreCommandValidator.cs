@@ -1,7 +1,8 @@
 using CleanTableTennisApp.Application.Overview.Commands;
+using CleanTableTennisApp.Application.Wizard.Validators;
 using FluentValidation;
 
-namespace CleanTableTennisApp.Application.Wizard.Validators;
+namespace CleanTableTennisApp.Application.Scores.Validators;
 
 public class UpdateMatchScoreCommandValidator : AbstractValidator<UpdateMatchScoreCommand>
 {

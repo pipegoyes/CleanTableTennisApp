@@ -12,12 +12,12 @@ public class GetMatchesQuery : IRequest<OverviewDto>
     public string TeamMatchIdEncoded { get; set; }
 }
 
-public class GetMarchesHandler : IRequestHandler<GetMatchesQuery, OverviewDto>
+public class GetMatchesHandler : IRequestHandler<GetMatchesQuery, OverviewDto>
 {
     private readonly IApplicationDbContext _context;
     private readonly IUrlSafeIntEncoder _encoder; 
 
-    public GetMarchesHandler(IApplicationDbContext context, IUrlSafeIntEncoder encoder)
+    public GetMatchesHandler(IApplicationDbContext context, IUrlSafeIntEncoder encoder)
     {
         _context = context;
         _encoder = encoder;

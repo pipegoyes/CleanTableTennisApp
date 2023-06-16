@@ -24,7 +24,7 @@
         <Folder Include="Common\Enconders\" />
         <Folder Include="Overview\Commands\" />
         <Folder Include="Overview\Queries\" />
-        <Folder Include="Wizard\Queries\" />
+        <Folder Include="Scores\Validators\" />
     </ItemGroup>
 
 </Project>

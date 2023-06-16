@@ -1,7 +1,7 @@
 using CleanTableTennisApp.Domain.Entities;
 using FluentValidation;
 
-namespace CleanTableTennisApp.Application.Wizard.Validators;
+namespace CleanTableTennisApp.Application.Scores.Validators;
 
 public class ScoreValidator : AbstractValidator<ICollection<Score>>
 {
@@ -53,4 +53,3 @@ public class DoubleScoreValidator : AbstractValidator<ICollection<DoubleMatchSco
     }
 
 }
-
