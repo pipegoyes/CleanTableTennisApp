@@ -6,6 +6,73 @@
     "version": "1.0.0"
   },
   "paths": {
+    "/api/DoubleScore/{doubleMatchIdEncoded}": {
+      "get": {
+        "tags": [
+          "DoubleScore"
+        ],
+        "operationId": "DoubleScore_Get",
+        "parameters": [
+          {
+            "name": "doubleMatchIdEncoded",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ScoreDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/DoubleScore": {
+      "post": {
+        "tags": [
+          "DoubleScore"
+        ],
+        "operationId": "DoubleScore_Update",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDoubleMatchScoreCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Match": {
       "get": {
         "tags": [
@@ -570,6 +637,38 @@
   },
   "components": {
     "schemas": {
+      "ScoreDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "scoreIdEncoded": {
+            "type": "string"
+          },
+          "hostPoints": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "guestPoints": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "UpdateDoubleMatchScoreCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "doubleMatchIdEncoded": {
+            "type": "string"
+          },
+          "scoreDtos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScoreDto"
+            }
+          }
+        }
+      },
       "OverviewDto": {
         "type": "object",
         "additionalProperties": false,
@@ -628,23 +727,6 @@
             "type": "string"
           },
           "guestRightPlayerName": {
-            "type": "string"
-          },
-          "hostPoints": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "guestPoints": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "ScoreDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "scoreIdEncoded": {
             "type": "string"
           },
           "hostPoints": {

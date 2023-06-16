@@ -1,6 +1,5 @@
 using CleanTableTennisApp.Domain.Entities;
 using FluentValidation;
-using FluentValidation.Results;
 
 namespace CleanTableTennisApp.Application.Wizard.Validators;
 

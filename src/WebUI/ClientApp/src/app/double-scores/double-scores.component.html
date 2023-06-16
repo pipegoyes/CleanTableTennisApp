@@ -1,1 +1,18 @@
-<p>double-scores works!</p>
+<p-card>
+    <ng-template pTemplate="title">
+        Match scores
+    </ng-template>
+
+    <ng-template pTemplate="content">
+        <ng-container *ngFor="let set of sets; let i = index">
+            <app-set-score [setNumber]="i+1" [(hostPoints)]="set.hostPoints" [(guestPoints)]="set.guestPoints" (hostPointsEvent)="onHostPointsChanged($event, i)" (guestPointsEvent)="onGuestPointsChanged($event, i)"></app-set-score>
+        </ng-container>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <div class="p-grid p-nogutter p-justify-between">
+            <p-button label="Back" (onClick)="goToOverview()" icon="pi pi-angle-left" iconPos="left"></p-button>
+            <p-button label="Save" (onClick)="save()" icon="pi pi-play" iconPos="right"></p-button>        
+        </div>
+    </ng-template>
+</p-card>

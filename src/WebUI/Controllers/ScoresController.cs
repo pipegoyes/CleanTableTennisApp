@@ -14,7 +14,6 @@ public class ScoresController : ApiControllerBase
         return await Mediator.Send(query);
     }
 
-
     [HttpPost]
     public async Task<ActionResult<bool>> Update([FromBody] UpdateMatchScoreCommand command)
     {

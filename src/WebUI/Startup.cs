@@ -1,6 +1,7 @@
 using CleanTableTennisApp.Application;
 using CleanTableTennisApp.Application.Common.Enconders;
 using CleanTableTennisApp.Application.Common.Interfaces;
+using CleanTableTennisApp.Application.Overview;
 using CleanTableTennisApp.Application.Wizard.Validators;
 using CleanTableTennisApp.Domain.Entities;
 using CleanTableTennisApp.Infrastructure;
@@ -39,6 +40,9 @@ public class Startup
 
         services.AddSingleton<IValidator<ICollection<Score>>, ScoreValidator>();
         services.AddSingleton<IValidator<ICollection<DoubleMatchScore>>, DoubleScoreValidator>();
+
+        services.AddSingleton<IGamePointsUpdater<Score>, GamePointsUpdater<Score>>();
+        services.AddSingleton<IGamePointsUpdater<DoubleMatchScore>, GamePointsUpdater<DoubleMatchScore>>();
 
 
         services.AddHttpContextAccessor();

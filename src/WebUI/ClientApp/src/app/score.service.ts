@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { fileURLToPath } from 'url';
+import { MatchWithScores } from './models/MatchWithScores';
 import { ScoresClient, UpdateMatchScoreCommand, ScoreDto } from './web-api-client';
 
 @Injectable({
@@ -31,8 +31,4 @@ export class ScoreService {
     })
     return this.matchWithScores$; 
   }
-}
-export interface MatchWithScores{
-  matchIdEncoded : string,
-  scores: ScoreDto[]
 }

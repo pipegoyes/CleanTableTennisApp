@@ -1,4 +1,6 @@
-﻿namespace CleanTableTennisApp.Domain.Entities;
+﻿using CleanTableTennisApp.Domain.Interfaces;
+
+namespace CleanTableTennisApp.Domain.Entities;
 
 public class DoubleMatchScore : IGamePoints
 {

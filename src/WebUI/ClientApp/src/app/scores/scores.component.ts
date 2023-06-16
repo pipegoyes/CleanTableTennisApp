@@ -15,27 +15,20 @@ export class ScoresComponent implements OnInit {
   maxNumberOfSets: number = 5;
   sets: ScoreDto[] = [];
 
-  teamMatchIdObs : Observable<string>;
+  teamMatchId$ : Observable<string>;
   matchIdObs : Observable<string>;
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private scoreService: ScoreService) { }
 
   ngOnInit(): void {
-    this.teamMatchIdObs = this.activatedRoute.params.pipe(map(p => p.teamMatchId));
+    this.teamMatchId$ = this.activatedRoute.params.pipe(map(p => p.teamMatchId));
     this.matchIdObs = this.activatedRoute.params.pipe(map(p => p.matchId));
     this.initializeSets();
   
   }
 
-  createSet(): ScoreDto{
-    return new ScoreDto({
-      hostPoints: null,
-      guestPoints: null
-    })
-  }
-
   goToOverview(): void{
-    this.teamMatchIdObs.subscribe(i => {
+    this.teamMatchId$.subscribe(i => {
       this.router.navigate(['overview', i])
     }); 
   }
@@ -73,5 +66,13 @@ export class ScoresComponent implements OnInit {
       }
     }
   }
+
+  private createSet(): ScoreDto{
+    return new ScoreDto({
+      hostPoints: null,
+      guestPoints: null
+    })
+  }
+
 
 }

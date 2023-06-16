@@ -2,7 +2,6 @@ using CleanTableTennisApp.Application.Common.Enconders;
 using CleanTableTennisApp.Application.Common.Interfaces;
 using CleanTableTennisApp.Application.Requests;
 using CleanTableTennisApp.Domain.Entities;
-using CleanTableTennisApp.Domain.Extensions;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -21,40 +20,27 @@ public class UpdateMatchScoreHandler : IRequestHandler<UpdateMatchScoreCommand, 
     private readonly IApplicationDbContext _context;
     private readonly IUrlSafeIntEncoder _encoder;
     private readonly IValidator<ICollection<Score>> _scoreValidator;
+    private readonly IGamePointsUpdater<Score> _gamePointsUpdater;
 
-    public UpdateMatchScoreHandler(IApplicationDbContext context, IUrlSafeIntEncoder encoder, IValidator<ICollection<Score>> scoreValidator)
+    public UpdateMatchScoreHandler(IApplicationDbContext context, 
+        IUrlSafeIntEncoder encoder, 
+        IValidator<ICollection<Score>> scoreValidator, 
+        IGamePointsUpdater<Score> gamePointsUpdater)
     {
         _context = context;
         _encoder = encoder;
         _scoreValidator = scoreValidator;
+        _gamePointsUpdater = gamePointsUpdater;
     }
 
     public async Task<bool> Handle(UpdateMatchScoreCommand request, CancellationToken cancellationToken)
     {
         var matchIdDecoded = _encoder.Decode(request.MatchIdEncoded);
-        var (newScores, updatedScores) = request.ScoreDtos.Split(s => s.ScoreIdEncoded.IsNullOrWhiteSpace());
-
         var match = await _context.Matches
             .Include(s => s.Scores)
             .FirstAsync(s => s.Id == matchIdDecoded, cancellationToken);
 
-        foreach (var updatedScore in updatedScores)
-        {
-            var decodedId = _encoder.Decode(updatedScore.ScoreIdEncoded);
-            var score = match.Scores.First(s => s.Id == decodedId);
-
-            score.GamePointsGuest = updatedScore.GuestPoints;
-            score.GamePointsHost = updatedScore.HostPoints;
-        }
-
-        foreach (var newScore in newScores)
-        {
-            match.Scores.Add(new Score
-            {
-                GamePointsGuest = newScore.GuestPoints,
-                GamePointsHost = newScore.HostPoints
-            });
-        }
+        _gamePointsUpdater.UpdateScores(request.ScoreDtos.ToArray(), match);
 
         await _scoreValidator.ValidateAndThrowAsync(match.Scores, cancellationToken);
 

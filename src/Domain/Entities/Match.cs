@@ -1,8 +1,9 @@
 ﻿using System.Xml.Schema;
+using CleanTableTennisApp.Domain.Interfaces;
 
 namespace CleanTableTennisApp.Domain.Entities;
 
-public class Match : AuditableEntity
+public class Match : AuditableEntity, IScorable<Score>
 {
     public Match()
     {

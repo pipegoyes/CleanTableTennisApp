@@ -1,6 +1,8 @@
-﻿namespace CleanTableTennisApp.Domain.Entities;
+﻿using CleanTableTennisApp.Domain.Interfaces;
 
-public class DoubleMatch : AuditableEntity
+namespace CleanTableTennisApp.Domain.Entities;
+
+public class DoubleMatch : AuditableEntity, IScorable<DoubleMatchScore>
 {
     public DoubleMatch()
     {
