@@ -41,6 +41,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { SetScoreComponent } from './set-score/set-score.component';
 import { DoubleScoresComponent } from './double-scores/double-scores.component';
 import { MessageService } from 'primeng/api/messageservice';
+import { OnGoingTeamMatchesComponent } from './on-going-team-matches/on-going-team-matches.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { MessageService } from 'primeng/api/messageservice';
     ScoresComponent,
     SetScoreComponent,
     DoubleScoresComponent,
+    OnGoingTeamMatchesComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

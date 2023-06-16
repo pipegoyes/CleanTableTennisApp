@@ -201,6 +201,27 @@
             }
           }
         }
+      },
+      "get": {
+        "tags": [
+          "TeamMatch"
+        ],
+        "operationId": "TeamMatch_Get",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TeamMatchDto"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/TodoItems": {
@@ -850,6 +871,33 @@
           1,
           2
         ]
+      },
+      "TeamMatchDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "hostTeamName": {
+            "type": "string"
+          },
+          "guestTeamName": {
+            "type": "string"
+          },
+          "startedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "hostVictories": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "guestVictories": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "teamMatchIdEncoded": {
+            "type": "string"
+          }
+        }
       },
       "PaginatedListOfTodoItemBriefDto": {
         "type": "object",

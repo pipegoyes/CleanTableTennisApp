@@ -22,7 +22,6 @@ import { TokenComponent } from './token/token.component';
 
 export const routes: Routes = [
 
-  { path: 'counter', component: CounterComponent },
   { path: 'overview/:teamMatchId', component: OverviewComponent },
   { path: 'overview/:teamMatchId/single-scores/:matchId', component: ScoresComponent},
   { path: 'overview/:teamMatchId/double-scores/:doubleMatchId', component: DoubleScoresComponent},

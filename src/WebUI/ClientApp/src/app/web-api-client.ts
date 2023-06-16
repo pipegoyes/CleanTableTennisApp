@@ -336,6 +336,7 @@ export class ScoresClient implements IScoresClient {
 
 export interface ITeamMatchClient {
     create(command: CreateTeamMatchCommand): Observable<string>;
+    get(): Observable<TeamMatchDto[]>;
 }
 
 @Injectable({
@@ -401,6 +402,58 @@ export class TeamMatchClient implements ITeamMatchClient {
             }));
         }
         return _observableOf<string>(<any>null);
+    }
+
+    get(): Observable<TeamMatchDto[]> {
+        let url_ = this.baseUrl + "/api/TeamMatch";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet(<any>response_);
+                } catch (e) {
+                    return <Observable<TeamMatchDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<TeamMatchDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGet(response: HttpResponseBase): Observable<TeamMatchDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(TeamMatchDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<TeamMatchDto[]>(<any>null);
     }
 }
 
@@ -1477,6 +1530,62 @@ export enum DoublePosition {
     None = 0,
     FirstDouble = 1,
     SecondDouble = 2,
+}
+
+export class TeamMatchDto implements ITeamMatchDto {
+    hostTeamName?: string;
+    guestTeamName?: string;
+    startedAt?: Date;
+    hostVictories?: number;
+    guestVictories?: number;
+    teamMatchIdEncoded?: string;
+
+    constructor(data?: ITeamMatchDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.hostTeamName = _data["hostTeamName"];
+            this.guestTeamName = _data["guestTeamName"];
+            this.startedAt = _data["startedAt"] ? new Date(_data["startedAt"].toString()) : <any>undefined;
+            this.hostVictories = _data["hostVictories"];
+            this.guestVictories = _data["guestVictories"];
+            this.teamMatchIdEncoded = _data["teamMatchIdEncoded"];
+        }
+    }
+
+    static fromJS(data: any): TeamMatchDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TeamMatchDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["hostTeamName"] = this.hostTeamName;
+        data["guestTeamName"] = this.guestTeamName;
+        data["startedAt"] = this.startedAt ? this.startedAt.toISOString() : <any>undefined;
+        data["hostVictories"] = this.hostVictories;
+        data["guestVictories"] = this.guestVictories;
+        data["teamMatchIdEncoded"] = this.teamMatchIdEncoded;
+        return data; 
+    }
+}
+
+export interface ITeamMatchDto {
+    hostTeamName?: string;
+    guestTeamName?: string;
+    startedAt?: Date;
+    hostVictories?: number;
+    guestVictories?: number;
+    teamMatchIdEncoded?: string;
 }
 
 export class PaginatedListOfTodoItemBriefDto implements IPaginatedListOfTodoItemBriefDto {

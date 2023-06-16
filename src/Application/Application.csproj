@@ -22,6 +22,7 @@
     <ItemGroup>
         <Folder Include="Common\Dtos\" />
         <Folder Include="Common\Enconders\" />
+        <Folder Include="Home\Queries\" />
         <Folder Include="Overview\Commands\" />
         <Folder Include="Overview\Queries\" />
         <Folder Include="Scores\Validators\" />

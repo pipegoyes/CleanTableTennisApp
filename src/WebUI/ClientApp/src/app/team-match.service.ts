@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Players } from './models/Players';
 import { WizardInformation } from './models/WizardInformation';
-import { CreateTeamMatchCommand, DoublePosition, ITeamMatchClient, PlayerRequest, TeamMatchClient, TeamRequest } from './web-api-client';
+import { CreateTeamMatchCommand, DoublePosition, ITeamMatchClient, PlayerRequest, TeamMatchClient, TeamMatchDto, TeamRequest } from './web-api-client';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,11 @@ export class TeamMatchService {
   constructor(private teamMatchClient: TeamMatchClient) { }
 
 
-  public save(wizardInformation: WizardInformation): Observable<string> {
+  get() : Observable<TeamMatchDto[]>{
+    return this.teamMatchClient.get();
+  }
+
+  save(wizardInformation: WizardInformation): Observable<string> {
     var teamMatchCommand = this.ToTeamMatchCommand(wizardInformation);
     return this.teamMatchClient.create(teamMatchCommand);
   }
