@@ -44,7 +44,7 @@ public class GetMarchesHandler : IRequestHandler<GetMatchesQuery, OverviewDto>
             .ThenInclude(s => s.GuestPlayerLeft)
             .Include(s => s.DoubleMatches)
             .ThenInclude(s => s.GuestPlayerRight)
-            .Include(s => s.SingleMatches)
+            .Include(s => s.DoubleMatches)
             .ThenInclude(s => s.Scores)
             .FirstAsync(s => s.Id == teamMatchId, cancellationToken);
 
