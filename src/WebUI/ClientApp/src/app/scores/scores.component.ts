@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ScoreService } from '../score.service';
@@ -8,7 +9,8 @@ import { ScoreDto } from '../web-api-client';
 @Component({
   selector: 'app-scores',
   templateUrl: './scores.component.html',
-  styleUrls: ['./scores.component.scss']
+  styleUrls: ['./scores.component.scss'],
+  providers: [MessageService]
 })
 export class ScoresComponent implements OnInit {
 
@@ -16,13 +18,13 @@ export class ScoresComponent implements OnInit {
   sets: ScoreDto[] = [];
 
   teamMatchId$ : Observable<string>;
-  matchIdObs : Observable<string>;
+  matchId$ : Observable<string>;
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private scoreService: ScoreService) { }
+  constructor(private activatedRoute: ActivatedRoute, private router: Router, private scoreService: ScoreService, private messageService : MessageService) { }
 
   ngOnInit(): void {
     this.teamMatchId$ = this.activatedRoute.params.pipe(map(p => p.teamMatchId));
-    this.matchIdObs = this.activatedRoute.params.pipe(map(p => p.matchId));
+    this.matchId$ = this.activatedRoute.params.pipe(map(p => p.matchId));
     this.initializeSets();
   
   }
@@ -34,9 +36,11 @@ export class ScoresComponent implements OnInit {
   }
 
   save(): void{    
-    this.matchIdObs.subscribe(i => {
+    this.matchId$.subscribe(i => {
       this.scoreService.update(i, this.sets).subscribe(s =>{
-        console.log("Works?"+ s)
+        this.messageService.add({severity:'success', summary: 'Success', detail: 'Scores updated'})
+      }, error => {
+        this.messageService.add({severity:'error', summary: 'Failed', detail: 'Update failed -' + error})
       })
     });
   }
@@ -51,7 +55,7 @@ export class ScoresComponent implements OnInit {
 
   private initializeSets(){
 
-    this.matchIdObs.subscribe(id => {
+    this.matchId$.subscribe(id => {
       this.scoreService.get(id).subscribe(scores => {
         this.sets = scores.scores;
         this.fillEmptyScores();

@@ -34,11 +34,13 @@ import { ResumeComponent } from './resume/resume.component';
 import { environment } from 'src/environments/environment';
 import { API_BASE_URL } from './web-api-client';
 import { OverviewComponent } from './overview/overview.component';
-import {TableModule} from 'primeng/table';
+import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast'
 import { ScoresComponent } from './scores/scores.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { SetScoreComponent } from './set-score/set-score.component';
 import { DoubleScoresComponent } from './double-scores/double-scores.component';
+import { MessageService } from 'primeng/api/messageservice';
 
 @NgModule({
   declarations: [
@@ -81,10 +83,12 @@ import { DoubleScoresComponent } from './double-scores/double-scores.component';
     SelectButtonModule,
     TableModule,
     DropdownModule,
+    ToastModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
-    { provide: API_BASE_URL, useValue: environment.apiUrl }
+    { provide: API_BASE_URL, useValue: environment.apiUrl },
+    // MessageService
   ],
   bootstrap: [AppComponent]
 })

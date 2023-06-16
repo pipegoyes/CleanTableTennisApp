@@ -10,5 +10,8 @@ NPM version:
 Angular CLI
 12.0.1
 
+PrimeNG
+https://www.primefaces.org/primeng-v12-lts
+
 Package manager CLI
 Add-Migration "Name" -Project Infrastructure 

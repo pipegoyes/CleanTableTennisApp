@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DoubleScoreService } from '../double-score.service';
@@ -8,7 +9,8 @@ import { ScoreDto } from '../web-api-client';
 @Component({
   selector: 'app-double-scores',
   templateUrl: './double-scores.component.html',
-  styleUrls: ['./double-scores.component.scss']
+  styleUrls: ['./double-scores.component.scss'],
+  providers: [MessageService]
 })
 export class DoubleScoresComponent implements OnInit {
 
@@ -17,7 +19,7 @@ export class DoubleScoresComponent implements OnInit {
   sets: ScoreDto[] = [];
   maxNumberOfSets : number;
 
-  constructor(private router: Router, private activatedRoute : ActivatedRoute, private scoreService : DoubleScoreService) { }
+  constructor(private router: Router, private activatedRoute : ActivatedRoute, private scoreService : DoubleScoreService, private messageService: MessageService) { }
   
 
 
@@ -45,7 +47,9 @@ export class DoubleScoresComponent implements OnInit {
   save(): void{    
     this.doubleMatchIdEncoded$.subscribe(i => {
       this.scoreService.update(i, this.sets).subscribe(s =>{
-        console.log("Works?"+ s)
+        this.messageService.add({severity:'success', summary: 'Success', detail: 'Scores updated'})
+      }, error => {
+        this.messageService.add({severity:'error', summary: 'Failed', detail: 'Update failed -' + error})
       })
     });
   }
