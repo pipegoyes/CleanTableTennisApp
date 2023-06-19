@@ -2,7 +2,7 @@ namespace CleanTableTennisApp.Application.Common.Dtos;
 
 public class OverviewSingleMatchDto
 {
-    public string MatchIdEncoded { get; set; }
+    public string MatchIdEncoded { get; set; } = string.Empty;
     public string HostPlayerName { get; set; } = string.Empty;
     public string GuestPlayerName { get; set; } = string.Empty;
     public int HostPoints { get; set; } = 0;

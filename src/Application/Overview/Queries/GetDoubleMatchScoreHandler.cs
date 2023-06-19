@@ -42,7 +42,7 @@ public class GetDoubleMatchScoreHandler : IRequestHandler<GetDoubleMatchScoreQue
 
     private ScoreDto ToScoreDto(DoubleMatchScore score)
     {
-        return new ScoreDto()
+        return new ScoreDto
         {
             GuestPoints = score.GamePointsGuest,
             HostPoints = score.GamePointsHost,

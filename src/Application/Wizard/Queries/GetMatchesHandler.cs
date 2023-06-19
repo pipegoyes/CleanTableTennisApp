@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using CleanTableTennisApp.Application.Common.Dtos;
 using CleanTableTennisApp.Application.Common.Enconders;
 using CleanTableTennisApp.Application.Common.Interfaces;
+using CleanTableTennisApp.Application.Scores;
 using CleanTableTennisApp.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -9,18 +11,20 @@ namespace CleanTableTennisApp.Application.Wizard.Queries;
 
 public class GetMatchesQuery : IRequest<OverviewDto>
 {
-    public string TeamMatchIdEncoded { get; set; }
+    public string TeamMatchIdEncoded { get; set; } = string.Empty;
 }
 
 public class GetMatchesHandler : IRequestHandler<GetMatchesQuery, OverviewDto>
 {
     private readonly IApplicationDbContext _context;
     private readonly IUrlSafeIntEncoder _encoder; 
+    private readonly IVictoriesCounter _victoriesCounter;
 
-    public GetMatchesHandler(IApplicationDbContext context, IUrlSafeIntEncoder encoder)
+    public GetMatchesHandler(IApplicationDbContext context, IUrlSafeIntEncoder encoder, IVictoriesCounter victoriesCounter)
     {
         _context = context;
         _encoder = encoder;
+        _victoriesCounter = victoriesCounter;
     }
 
     public async Task<OverviewDto> Handle(GetMatchesQuery request, CancellationToken cancellationToken)
@@ -64,8 +68,8 @@ public class GetMatchesHandler : IRequestHandler<GetMatchesQuery, OverviewDto>
             HostRightPlayerName = doubleMatch.HostPlayerRight.Name,
             GuestLeftPlayerName = doubleMatch.GuestPlayerLeft.Name,
             GuestRightPlayerName = doubleMatch.GuestPlayerRight.Name,
-            HostPoints = doubleMatch.Scores.Count(s => s.GamePointsHost > s.GamePointsGuest),
-            GuestPoints = doubleMatch.Scores.Count(s => s.GamePointsGuest > s.GamePointsHost)
+            HostPoints = _victoriesCounter.HostVictoriesCounter(doubleMatch.Scores.ToList()),
+            GuestPoints = _victoriesCounter.GuestVictoriesCounter(doubleMatch.Scores.ToList())
         };
     }
 
@@ -76,8 +80,8 @@ public class GetMatchesHandler : IRequestHandler<GetMatchesQuery, OverviewDto>
             MatchIdEncoded = _encoder.Encode(singleMatch.Id),
             HostPlayerName = singleMatch.HostPlayer.Name,
             GuestPlayerName = singleMatch.GuestPlayer.Name,
-            HostPoints = singleMatch.Scores.Count(s => s.GamePointsHost > s.GamePointsGuest),
-            GuestPoints = singleMatch.Scores.Count(s => s.GamePointsGuest > s.GamePointsHost)
+            HostPoints = _victoriesCounter.HostVictoriesCounter(singleMatch.Scores.ToList()),
+            GuestPoints = _victoriesCounter.GuestVictoriesCounter(singleMatch.Scores.ToList()),
         };
     }
 }

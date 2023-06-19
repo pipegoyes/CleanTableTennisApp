@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { HostPlayersComponent } from './host-players/host-players.component';
 import { OverviewComponent } from './overview/overview.component';
 import { PlayersComponent } from './players/players.component';
+import { QuickViewComponent } from './quick-view/quick-view.component';
 import { ResumeComponent } from './resume/resume.component';
 import { ScoreService } from './score.service';
 import { ScoresComponent } from './scores/scores.component';
@@ -25,6 +26,7 @@ export const routes: Routes = [
   { path: 'overview/:teamMatchId', component: OverviewComponent },
   { path: 'overview/:teamMatchId/single-scores/:matchId', component: ScoresComponent},
   { path: 'overview/:teamMatchId/double-scores/:doubleMatchId', component: DoubleScoresComponent},
+  { path: 'quick-view/:teamMatchId', component: QuickViewComponent},
   { path: 'match-config', component: TeamMatchConfigurationComponent },
   { path: 'start-wizard', component: StartWizardComponent, children: [
     {

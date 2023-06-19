@@ -1,0 +1,8 @@
+<div *ngIf="dto$ | async as dto">
+    <h2>{{ dto.hostTeamName }} ({{dto.hostVictories}}) vs {{ dto.guestTeamName }} ({{ dto.guestVictories }})</h2>
+    <p>Started at: {{ dto.startedAt | date }}</p>
+
+</div>
+  
+<!-- Loading state -->
+<div *ngIf="!(dto$ | async)">Loading...</div>

@@ -42,6 +42,7 @@ import { SetScoreComponent } from './set-score/set-score.component';
 import { DoubleScoresComponent } from './double-scores/double-scores.component';
 import { MessageService } from 'primeng/api/messageservice';
 import { OnGoingTeamMatchesComponent } from './on-going-team-matches/on-going-team-matches.component';
+import { QuickViewComponent } from './quick-view/quick-view.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { OnGoingTeamMatchesComponent } from './on-going-team-matches/on-going-te
     SetScoreComponent,
     DoubleScoresComponent,
     OnGoingTeamMatchesComponent,
+    QuickViewComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

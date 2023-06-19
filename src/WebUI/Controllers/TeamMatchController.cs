@@ -18,4 +18,11 @@ public class TeamMatchController : ApiControllerBase
     {
         return await Mediator.Send(new GetOnGoingTeamMatchesQuery());
     }
+
+    [HttpGet]
+    [Route("singleTeamMatch")]
+    public async Task<ActionResult<TeamMatchDto>> GetSingle([FromQuery] string teamMatchIdEncoded)
+    {
+        return await Mediator.Send(new GetSingleTeamMatchesQuery { TeamMatchIdEncoded = teamMatchIdEncoded });
+    }
 }

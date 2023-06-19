@@ -224,6 +224,37 @@
         }
       }
     },
+    "/api/TeamMatch/singleTeamMatch": {
+      "get": {
+        "tags": [
+          "TeamMatch"
+        ],
+        "operationId": "TeamMatch_GetSingle",
+        "parameters": [
+          {
+            "name": "teamMatchIdEncoded",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeamMatchDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/TodoItems": {
       "get": {
         "tags": [
