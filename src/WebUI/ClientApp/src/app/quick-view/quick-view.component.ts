@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { TeamMatchClient, TeamMatchDto } from '../web-api-client';
+import { MatchClient, OverviewDto, OverviewSingleMatchDto, TeamMatchClient, TeamMatchDto } from '../web-api-client';
 
 @Component({
   selector: 'app-quick-view',
@@ -12,12 +12,15 @@ import { TeamMatchClient, TeamMatchDto } from '../web-api-client';
 export class QuickViewComponent implements OnInit {
 
   dto$ : Observable<TeamMatchDto>;
+  overviewDto$ : Observable<OverviewDto>;
 
-  constructor(private activatedRoute : ActivatedRoute, private teamMatchClient : TeamMatchClient) { }
+  constructor(private activatedRoute : ActivatedRoute, private teamMatchClient : TeamMatchClient, private matchService: MatchClient) { }
 
   ngOnInit(): void {
+
     this.activatedRoute.params.pipe(map(p => p.teamMatchId)).subscribe(teamMatchIdEncoded => {
       this.dto$ = this.teamMatchClient.getSingle(teamMatchIdEncoded)
+      this.overviewDto$ = this.matchService.getAllMatches(teamMatchIdEncoded)
     });
   }
 
