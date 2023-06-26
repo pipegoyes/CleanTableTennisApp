@@ -18,10 +18,10 @@ Add-Migration "Name" -Project Infrastructure
 
 
 Whats need to be done for beta version?
-- Display all pending matches in home
-	. Action 1. just logged user should be able to set scores
-	. Action 2. Go to oponents view 
-- View for oponents
++ Display all pending matches in home
+	- Action 1. just logged user should be able to set scores
+	+ Action 2. Go to oponents view 
++ View for oponents
 - Finish a match 
 	. validate all scores 
 	. force finished (auth user)

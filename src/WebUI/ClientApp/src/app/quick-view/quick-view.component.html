@@ -26,5 +26,23 @@
             </span> 
         </div> 
     </div>
+    <div *ngFor="let doubleMatch of overviewDto.overviewDoubleMatchDtos" class="double-match">
+        <div class="p-grid" >
+            <span class="p-col">
+                {{doubleMatch.hostLeftPlayerName}} , {{doubleMatch.hostRightPlayerName}}
+            </span>
+            <span class="p-col">
+                {{doubleMatch.hostPoints}}
+            </span> 
+        </div> 
+        <div class="p-grid">
+            <span class="p-col">
+                {{doubleMatch.guestLeftPlayerName}} , {{doubleMatch.guestRightPlayerName}}
+            </span>
+            <span class="p-col">
+                {{doubleMatch.guestPoints}}
+            </span> 
+        </div> 
+    </div>
 
 </div>
