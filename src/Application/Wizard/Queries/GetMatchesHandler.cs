@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CleanTableTennisApp.Application.Common.Converters;
 using CleanTableTennisApp.Application.Common.Dtos;
 using CleanTableTennisApp.Application.Common.Enconders;
 using CleanTableTennisApp.Application.Common.Interfaces;
@@ -19,12 +20,14 @@ public class GetMatchesHandler : IRequestHandler<GetMatchesQuery, OverviewDto>
     private readonly IApplicationDbContext _context;
     private readonly IUrlSafeIntEncoder _encoder; 
     private readonly IVictoriesCounter _victoriesCounter;
+    private readonly IScoreDtoConverter _scoreDtoConverter;
 
-    public GetMatchesHandler(IApplicationDbContext context, IUrlSafeIntEncoder encoder, IVictoriesCounter victoriesCounter)
+    public GetMatchesHandler(IApplicationDbContext context, IUrlSafeIntEncoder encoder, IVictoriesCounter victoriesCounter, IScoreDtoConverter scoreDtoConverter)
     {
         _context = context;
         _encoder = encoder;
         _victoriesCounter = victoriesCounter;
+        _scoreDtoConverter = scoreDtoConverter;
     }
 
     public async Task<OverviewDto> Handle(GetMatchesQuery request, CancellationToken cancellationToken)
@@ -69,7 +72,8 @@ public class GetMatchesHandler : IRequestHandler<GetMatchesQuery, OverviewDto>
             GuestLeftPlayerName = doubleMatch.GuestPlayerLeft.Name,
             GuestRightPlayerName = doubleMatch.GuestPlayerRight.Name,
             HostPoints = _victoriesCounter.HostVictoriesCounter(doubleMatch.Scores.ToList()),
-            GuestPoints = _victoriesCounter.GuestVictoriesCounter(doubleMatch.Scores.ToList())
+            GuestPoints = _victoriesCounter.GuestVictoriesCounter(doubleMatch.Scores.ToList()),
+            ScoresDtos = doubleMatch.Scores.Select(s => _scoreDtoConverter.ToDto(s)),
         };
     }
 
@@ -80,6 +84,7 @@ public class GetMatchesHandler : IRequestHandler<GetMatchesQuery, OverviewDto>
             MatchIdEncoded = _encoder.Encode(singleMatch.Id),
             HostPlayerName = singleMatch.HostPlayer.Name,
             GuestPlayerName = singleMatch.GuestPlayer.Name,
+            ScoresDtos = singleMatch.Scores.Select(s => _scoreDtoConverter.ToDto(s)),
             HostPoints = _victoriesCounter.HostVictoriesCounter(singleMatch.Scores.ToList()),
             GuestPoints = _victoriesCounter.GuestVictoriesCounter(singleMatch.Scores.ToList()),
         };

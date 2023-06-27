@@ -28,7 +28,9 @@ Whats need to be done for beta version?
 	
 
 Bugs
-1. ComboBox does not display initial game points correctly
+- ComboBox does not display initial game points correctly
+- There is no error when you select 11 and nothing, it saves score in single match
+- Quick view does not display victories correctly, it is always 0
 
 Tech debt
 - Single View to display score and double scores 

@@ -759,6 +759,12 @@
           "guestPoints": {
             "type": "integer",
             "format": "int32"
+          },
+          "scoresDtos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScoreDto"
+            }
           }
         }
       },
@@ -788,6 +794,12 @@
           "guestPoints": {
             "type": "integer",
             "format": "int32"
+          },
+          "scoresDtos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScoreDto"
+            }
           }
         }
       },

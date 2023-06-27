@@ -1,3 +1,5 @@
+using CleanTableTennisApp.Application.Requests;
+
 namespace CleanTableTennisApp.Application.Common.Dtos;
 
 public class OverviewSingleMatchDto
@@ -7,6 +9,7 @@ public class OverviewSingleMatchDto
     public string GuestPlayerName { get; set; } = string.Empty;
     public int HostPoints { get; set; } = 0;
     public int GuestPoints { get; set; } = 0;
+    public IEnumerable<ScoreDto> ScoresDtos { get; set; } = Enumerable.Empty<ScoreDto>();
 }
 
 public class OverviewDoubleMatchDto
@@ -18,4 +21,5 @@ public class OverviewDoubleMatchDto
     public string GuestRightPlayerName { get; set; } = string.Empty;
     public int HostPoints { get; set; } = 0;
     public int GuestPoints { get; set; } = 0;
+    public IEnumerable<ScoreDto> ScoresDtos { get; set; } = Enumerable.Empty<ScoreDto>();
 }

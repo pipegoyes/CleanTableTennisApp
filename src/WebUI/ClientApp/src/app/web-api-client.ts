@@ -1295,6 +1295,7 @@ export class OverviewSingleMatchDto implements IOverviewSingleMatchDto {
     guestPlayerName?: string;
     hostPoints?: number;
     guestPoints?: number;
+    scoresDtos?: ScoreDto[];
 
     constructor(data?: IOverviewSingleMatchDto) {
         if (data) {
@@ -1312,6 +1313,11 @@ export class OverviewSingleMatchDto implements IOverviewSingleMatchDto {
             this.guestPlayerName = _data["guestPlayerName"];
             this.hostPoints = _data["hostPoints"];
             this.guestPoints = _data["guestPoints"];
+            if (Array.isArray(_data["scoresDtos"])) {
+                this.scoresDtos = [] as any;
+                for (let item of _data["scoresDtos"])
+                    this.scoresDtos!.push(ScoreDto.fromJS(item));
+            }
         }
     }
 
@@ -1329,6 +1335,11 @@ export class OverviewSingleMatchDto implements IOverviewSingleMatchDto {
         data["guestPlayerName"] = this.guestPlayerName;
         data["hostPoints"] = this.hostPoints;
         data["guestPoints"] = this.guestPoints;
+        if (Array.isArray(this.scoresDtos)) {
+            data["scoresDtos"] = [];
+            for (let item of this.scoresDtos)
+                data["scoresDtos"].push(item.toJSON());
+        }
         return data; 
     }
 }
@@ -1339,6 +1350,7 @@ export interface IOverviewSingleMatchDto {
     guestPlayerName?: string;
     hostPoints?: number;
     guestPoints?: number;
+    scoresDtos?: ScoreDto[];
 }
 
 export class OverviewDoubleMatchDto implements IOverviewDoubleMatchDto {
@@ -1349,6 +1361,7 @@ export class OverviewDoubleMatchDto implements IOverviewDoubleMatchDto {
     guestRightPlayerName?: string;
     hostPoints?: number;
     guestPoints?: number;
+    scoresDtos?: ScoreDto[];
 
     constructor(data?: IOverviewDoubleMatchDto) {
         if (data) {
@@ -1368,6 +1381,11 @@ export class OverviewDoubleMatchDto implements IOverviewDoubleMatchDto {
             this.guestRightPlayerName = _data["guestRightPlayerName"];
             this.hostPoints = _data["hostPoints"];
             this.guestPoints = _data["guestPoints"];
+            if (Array.isArray(_data["scoresDtos"])) {
+                this.scoresDtos = [] as any;
+                for (let item of _data["scoresDtos"])
+                    this.scoresDtos!.push(ScoreDto.fromJS(item));
+            }
         }
     }
 
@@ -1387,6 +1405,11 @@ export class OverviewDoubleMatchDto implements IOverviewDoubleMatchDto {
         data["guestRightPlayerName"] = this.guestRightPlayerName;
         data["hostPoints"] = this.hostPoints;
         data["guestPoints"] = this.guestPoints;
+        if (Array.isArray(this.scoresDtos)) {
+            data["scoresDtos"] = [];
+            for (let item of this.scoresDtos)
+                data["scoresDtos"].push(item.toJSON());
+        }
         return data; 
     }
 }
@@ -1399,6 +1422,7 @@ export interface IOverviewDoubleMatchDto {
     guestRightPlayerName?: string;
     hostPoints?: number;
     guestPoints?: number;
+    scoresDtos?: ScoreDto[];
 }
 
 export class UpdateMatchScoreCommand implements IUpdateMatchScoreCommand {

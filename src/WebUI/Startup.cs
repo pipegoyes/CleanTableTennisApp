@@ -48,6 +48,7 @@ public class Startup
         services.AddSingleton<IGamePointsUpdater<Score>, GamePointsUpdater<Score>>();
         services.AddSingleton<IGamePointsUpdater<DoubleMatchScore>, GamePointsUpdater<DoubleMatchScore>>();
         services.AddSingleton<ITeamMatchConverter, TeamMatchConverter>();
+        services.AddSingleton<IScoreDtoConverter, ScoreDtoConverter>();
 
         services.AddHttpContextAccessor();
 
