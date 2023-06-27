@@ -1,14 +1,16 @@
-<p>Welcome to Table tenis app.</p>
-<p>Here are a list of all on going team matches.</p>
-
-<div>
-    <app-on-going-team-matches></app-on-going-team-matches>
-</div>
-
-<div>
-    <p>
-        In order to create a new match click on the following button.
-    </p>
-
-    <button [routerLink]="['/start-wizard']" class="btn btn-primary" type="button">Lets play</button>
-</div>
+<p-card class="card">
+    <p>Welcome to Table tenis app.</p>
+    <p>Here are a list of all on going team matches.</p>
+    
+    <div>
+        <app-on-going-team-matches></app-on-going-team-matches>
+    </div>
+    
+    <div>
+        <p>
+            In order to create a new match click on the following button.
+        </p>
+    
+        <button [routerLink]="['/start-wizard']" class="btn btn-primary" type="button">Lets play</button>
+    </div>
+</p-card>
