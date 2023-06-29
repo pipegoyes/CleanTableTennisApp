@@ -30,10 +30,12 @@ public class CreateEmptyDoubleScoresHandler : IRequestHandler<CreateEmptyDoubleS
             var firstScore = CreateEmptyScore(doubleMatch);
             var secondScore = CreateEmptyScore(doubleMatch);
             var thirdScore = CreateEmptyScore(doubleMatch);
+            var fourth = CreateEmptyScore(doubleMatch);
+            var fifth = CreateEmptyScore(doubleMatch);
 
             doubleMatch.Scores = new List<DoubleMatchScore>
             {
-                firstScore, secondScore, thirdScore
+                firstScore, secondScore, thirdScore, fourth, fifth
             };  
         }
 

@@ -30,6 +30,8 @@ public class CreateEmptySingleScoresHandler : IRequestHandler<CreateEmptySingleS
             AddScoreToMatch(singleMatch);
             AddScoreToMatch(singleMatch);
             AddScoreToMatch(singleMatch);
+            AddScoreToMatch(singleMatch);
+            AddScoreToMatch(singleMatch);
         }
 
         return await _context.SaveChangesAsync(cancellationToken) > 0;
