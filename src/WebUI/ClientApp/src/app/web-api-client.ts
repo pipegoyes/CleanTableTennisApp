@@ -662,6 +662,7 @@ export class OverviewSingleMatchDto implements IOverviewSingleMatchDto {
     guestPlayerName?: string;
     hostPoints?: number;
     guestPoints?: number;
+    playingOrder?: PlayingOrder;
     scoresDtos?: ScoreDto[];
 
     constructor(data?: IOverviewSingleMatchDto) {
@@ -680,6 +681,7 @@ export class OverviewSingleMatchDto implements IOverviewSingleMatchDto {
             this.guestPlayerName = _data["guestPlayerName"];
             this.hostPoints = _data["hostPoints"];
             this.guestPoints = _data["guestPoints"];
+            this.playingOrder = _data["playingOrder"];
             if (Array.isArray(_data["scoresDtos"])) {
                 this.scoresDtos = [] as any;
                 for (let item of _data["scoresDtos"])
@@ -702,6 +704,7 @@ export class OverviewSingleMatchDto implements IOverviewSingleMatchDto {
         data["guestPlayerName"] = this.guestPlayerName;
         data["hostPoints"] = this.hostPoints;
         data["guestPoints"] = this.guestPoints;
+        data["playingOrder"] = this.playingOrder;
         if (Array.isArray(this.scoresDtos)) {
             data["scoresDtos"] = [];
             for (let item of this.scoresDtos)
@@ -717,7 +720,21 @@ export interface IOverviewSingleMatchDto {
     guestPlayerName?: string;
     hostPoints?: number;
     guestPoints?: number;
+    playingOrder?: PlayingOrder;
     scoresDtos?: ScoreDto[];
+}
+
+export enum PlayingOrder {
+    First = 1,
+    Second = 2,
+    Third = 3,
+    Fourth = 4,
+    Fifth = 5,
+    Sixth = 6,
+    Seventh = 7,
+    Eighth = 8,
+    Nine = 9,
+    Tenth = 10,
 }
 
 export class OverviewDoubleMatchDto implements IOverviewDoubleMatchDto {
@@ -728,6 +745,7 @@ export class OverviewDoubleMatchDto implements IOverviewDoubleMatchDto {
     guestRightPlayerName?: string;
     hostPoints?: number;
     guestPoints?: number;
+    playingOrder?: PlayingOrder;
     scoresDtos?: ScoreDto[];
 
     constructor(data?: IOverviewDoubleMatchDto) {
@@ -748,6 +766,7 @@ export class OverviewDoubleMatchDto implements IOverviewDoubleMatchDto {
             this.guestRightPlayerName = _data["guestRightPlayerName"];
             this.hostPoints = _data["hostPoints"];
             this.guestPoints = _data["guestPoints"];
+            this.playingOrder = _data["playingOrder"];
             if (Array.isArray(_data["scoresDtos"])) {
                 this.scoresDtos = [] as any;
                 for (let item of _data["scoresDtos"])
@@ -772,6 +791,7 @@ export class OverviewDoubleMatchDto implements IOverviewDoubleMatchDto {
         data["guestRightPlayerName"] = this.guestRightPlayerName;
         data["hostPoints"] = this.hostPoints;
         data["guestPoints"] = this.guestPoints;
+        data["playingOrder"] = this.playingOrder;
         if (Array.isArray(this.scoresDtos)) {
             data["scoresDtos"] = [];
             for (let item of this.scoresDtos)
@@ -789,6 +809,7 @@ export interface IOverviewDoubleMatchDto {
     guestRightPlayerName?: string;
     hostPoints?: number;
     guestPoints?: number;
+    playingOrder?: PlayingOrder;
     scoresDtos?: ScoreDto[];
 }
 

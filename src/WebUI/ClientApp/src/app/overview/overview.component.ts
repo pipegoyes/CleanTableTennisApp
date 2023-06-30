@@ -12,6 +12,7 @@ import { OverviewDoubleMatchDto, OverviewSingleMatchDto } from '../web-api-clien
 })
 export class OverviewComponent implements OnInit {
 
+  // todo change to observables
   singleMatches : OverviewSingleMatchDto[] = [];
   doubleMatches : OverviewDoubleMatchDto[] = [];
 
@@ -21,8 +22,8 @@ export class OverviewComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.pipe(map(p => p.teamMatchId)).subscribe(teamMatchIdEncoded => {
       this.matchService.GetAllMatches(teamMatchIdEncoded).subscribe(o => {
-        this.singleMatches = o.overviewSingleMatchDtos;
-        this.doubleMatches = o.overviewDoubleMatchDtos;
+        this.singleMatches = o.overviewSingleMatchDtos.sort((a,b) => a.playingOrder - b.playingOrder);
+        this.doubleMatches = o.overviewDoubleMatchDtos.sort((a,b) => a.playingOrder - b.playingOrder);
       });
     });
   }

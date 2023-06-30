@@ -71,6 +71,7 @@ public class GetMatchesHandler : IRequestHandler<GetMatchesQuery, OverviewDto>
             HostRightPlayerName = doubleMatch.HostPlayerRight.Name,
             GuestLeftPlayerName = doubleMatch.GuestPlayerLeft.Name,
             GuestRightPlayerName = doubleMatch.GuestPlayerRight.Name,
+            PlayingOrder = doubleMatch.PlayingOrder,
             HostPoints = _victoriesCounter.HostVictoriesCounter(doubleMatch.Scores.ToList()),
             GuestPoints = _victoriesCounter.GuestVictoriesCounter(doubleMatch.Scores.ToList()),
             ScoresDtos = doubleMatch.Scores.Select(s => _scoreDtoConverter.ToDto(s)),
@@ -85,6 +86,7 @@ public class GetMatchesHandler : IRequestHandler<GetMatchesQuery, OverviewDto>
             HostPlayerName = singleMatch.HostPlayer.Name,
             GuestPlayerName = singleMatch.GuestPlayer.Name,
             ScoresDtos = singleMatch.Scores.Select(s => _scoreDtoConverter.ToDto(s)),
+            PlayingOrder = singleMatch.PlayingOrder,
             HostPoints = _victoriesCounter.HostVictoriesCounter(singleMatch.Scores.ToList()),
             GuestPoints = _victoriesCounter.GuestVictoriesCounter(singleMatch.Scores.ToList()),
         };

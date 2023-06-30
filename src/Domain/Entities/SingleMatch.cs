@@ -10,11 +10,12 @@ public class SingleMatch : AuditableEntity, IScorable<Score>
         Scores = new List<Score>();
     }
 
-    public SingleMatch(Player hostPlayer, Player guestPlayer, TeamMatch teamMatch)
+    public SingleMatch(Player hostPlayer, Player guestPlayer, TeamMatch teamMatch, PlayingOrder playingOrder)
     {
         HostPlayer = hostPlayer;
         GuestPlayer = guestPlayer;
         TeamMatch = teamMatch;
+        PlayingOrder = playingOrder;
         Scores = new List<Score>();
     }
 
@@ -22,6 +23,6 @@ public class SingleMatch : AuditableEntity, IScorable<Score>
     public Player HostPlayer { get; set; }
     public Player GuestPlayer { get; set; }
     public TeamMatch TeamMatch { get; set; }
-    public int PlayingOrder { get; set; }
+    public PlayingOrder PlayingOrder { get; set; }
     public ICollection<Score> Scores { get; set; }
 }

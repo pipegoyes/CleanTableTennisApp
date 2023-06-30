@@ -1,5 +1,6 @@
 using CleanTableTennisApp.Application.Common.Interfaces;
 using CleanTableTennisApp.Domain.Entities;
+using CleanTableTennisApp.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,19 +26,22 @@ public class CreateAllSingleMatchesHandler : IRequestHandler<CreateAllSingleMatc
         var hostPlayers = teamMatch.HostTeam.Players.ToArray();
         var guestPlayers = teamMatch.GuestTeam.Players.ToArray();
 
-        CreateSingleMatches(hostPlayers, guestPlayers, teamMatch);
+        AttachSingleMatches(hostPlayers, guestPlayers, teamMatch);
+
+
 
         return await _context.SaveChangesAsync(cancellationToken) > 0;
     }
 
-    private void CreateSingleMatches(Player[] hostPlayers, Player[] guestPlayers, TeamMatch teamMatch)
+    private void AttachSingleMatches(Player[] hostPlayers, Player[] guestPlayers, TeamMatch teamMatch)
     {
+        // todo think about a more simple way that include order
         int numberOfTuples = hostPlayers.Length / 2;
         for (int i = 0; i < hostPlayers.Length - 1; i += numberOfTuples)
         {
             var firstTuplePlayersHost = new TuplePlayers(hostPlayers[i], hostPlayers[i + 1]);
             var firstTuplePlayersGuest = new TuplePlayers(guestPlayers[i], guestPlayers[i + 1]);
-            var singleMatches = CreateMatches(firstTuplePlayersHost, firstTuplePlayersGuest, teamMatch);
+            var singleMatches = CreateMatches(firstTuplePlayersHost, firstTuplePlayersGuest, teamMatch, i);
 
             foreach (SingleMatch singleMatch in singleMatches)
             {
@@ -46,15 +50,15 @@ public class CreateAllSingleMatchesHandler : IRequestHandler<CreateAllSingleMatc
         }
     }
 
-    private SingleMatch[] CreateMatches(TuplePlayers hostTuplePlayers, TuplePlayers guestTuplePlayers, TeamMatch teamMatch)
+    private SingleMatch[] CreateMatches(TuplePlayers hostTuplePlayers, TuplePlayers guestTuplePlayers, TeamMatch teamMatch, int playerPosition)
     {
         var result = new List<SingleMatch>
         {
-            new(hostTuplePlayers.FirstPlayer, guestTuplePlayers.SecondPlayer, teamMatch),
-            new(hostTuplePlayers.FirstPlayer, guestTuplePlayers.FirstPlayer, teamMatch),
+            new(hostTuplePlayers.FirstPlayer, guestTuplePlayers.SecondPlayer, teamMatch, (PlayingOrder) playerPosition + 3), // +3
+            new(hostTuplePlayers.FirstPlayer, guestTuplePlayers.FirstPlayer, teamMatch, (PlayingOrder) playerPosition + 7), // +7
 
-            new(hostTuplePlayers.SecondPlayer, guestTuplePlayers.FirstPlayer, teamMatch),
-            new(hostTuplePlayers.SecondPlayer, guestTuplePlayers.SecondPlayer, teamMatch),
+            new(hostTuplePlayers.SecondPlayer, guestTuplePlayers.FirstPlayer, teamMatch, (PlayingOrder) playerPosition + 4), // +4
+            new(hostTuplePlayers.SecondPlayer, guestTuplePlayers.SecondPlayer, teamMatch, (PlayingOrder) playerPosition + 8), // +8
         };
         return result.ToArray();
     }
