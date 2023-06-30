@@ -72,7 +72,7 @@ namespace CleanTableTennisApp.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("TeamMatchId");
 
-                    b.ToTable("DoubleMatches");
+                    b.ToTable("DoubleMatches", (string)null);
                 });
 
             modelBuilder.Entity("CleanTableTennisApp.Domain.Entities.DoubleMatchScore", b =>
@@ -96,7 +96,7 @@ namespace CleanTableTennisApp.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("DoubleMatchId");
 
-                    b.ToTable("DoubleMatchScore");
+                    b.ToTable("DoubleMatchScore", (string)null);
                 });
 
             modelBuilder.Entity("CleanTableTennisApp.Domain.Entities.Player", b =>
@@ -130,7 +130,7 @@ namespace CleanTableTennisApp.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("Players");
+                    b.ToTable("Players", (string)null);
                 });
 
             modelBuilder.Entity("CleanTableTennisApp.Domain.Entities.Score", b =>
@@ -154,7 +154,7 @@ namespace CleanTableTennisApp.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("MatchId");
 
-                    b.ToTable("Score");
+                    b.ToTable("Score", (string)null);
                 });
 
             modelBuilder.Entity("CleanTableTennisApp.Domain.Entities.SingleMatch", b =>
@@ -197,7 +197,7 @@ namespace CleanTableTennisApp.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("TeamMatchId");
 
-                    b.ToTable("SingleMatches");
+                    b.ToTable("SingleMatches", (string)null);
                 });
 
             modelBuilder.Entity("CleanTableTennisApp.Domain.Entities.Team", b =>
@@ -226,7 +226,7 @@ namespace CleanTableTennisApp.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Teams");
+                    b.ToTable("Teams", (string)null);
                 });
 
             modelBuilder.Entity("CleanTableTennisApp.Domain.Entities.TeamMatch", b =>
@@ -264,7 +264,7 @@ namespace CleanTableTennisApp.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("HostTeamId");
 
-                    b.ToTable("TeamMatches");
+                    b.ToTable("TeamMatches", (string)null);
                 });
 
             modelBuilder.Entity("CleanTableTennisApp.Infrastructure.Identity.ApplicationUser", b =>
@@ -415,7 +415,7 @@ namespace CleanTableTennisApp.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("Use");
 
-                    b.ToTable("Keys");
+                    b.ToTable("Keys", (string)null);
                 });
 
             modelBuilder.Entity("Duende.IdentityServer.EntityFramework.Entities.PersistedGrant", b =>

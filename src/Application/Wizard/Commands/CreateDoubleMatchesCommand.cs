@@ -27,14 +27,14 @@ public class CreateDoubleMatchesHandler : IRequestHandler<CreateDoubleMatchesCom
     {
         var teamMatch =  await _context.TeamMatches.SingleAsync(s => s.Id == request.TeamMatchId, cancellationToken);
         
-        CreateDoubleMatch(request, teamMatch, DoublePosition.FirstDouble);
-        CreateDoubleMatch(request, teamMatch, DoublePosition.SecondDouble);
+        CreateDoubleMatch(request, teamMatch, DoublePosition.FirstDouble, PlayingOrder.First);
+        CreateDoubleMatch(request, teamMatch, DoublePosition.SecondDouble, PlayingOrder.Second);
 
         _context.TeamMatches.Attach(teamMatch);
         return await _context.SaveChangesAsync(cancellationToken) > 0;
     }
 
-    private void CreateDoubleMatch(CreateDoubleMatchesCommand request, TeamMatch teamMatch, DoublePosition doublePosition)
+    private void CreateDoubleMatch(CreateDoubleMatchesCommand request, TeamMatch teamMatch, DoublePosition doublePosition, PlayingOrder playingOrder)
     {
         var hostPlayers = request.HostPlayers.Where(s => s.DoublePosition == doublePosition).ToArray();
         var guestPlayers = request.GuestPlayers.Where(s => s.DoublePosition == doublePosition).ToArray();
@@ -45,7 +45,7 @@ public class CreateDoubleMatchesHandler : IRequestHandler<CreateDoubleMatchesCom
         {
             HostPlayerLeft = _context.Players.Single(s => s.Id == hostPlayers[0].PlayerId),
             HostPlayerRight = _context.Players.Single(s => s.Id == hostPlayers[1].PlayerId),
-
+            PlayingOrder = playingOrder,
             GuestPlayerLeft = _context.Players.Single(s => s.Id == guestPlayers[0].PlayerId),
             GuestPlayerRight = _context.Players.Single(s => s.Id == guestPlayers[1].PlayerId),
         };
