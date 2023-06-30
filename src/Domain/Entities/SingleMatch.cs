@@ -22,6 +22,6 @@ public class SingleMatch : AuditableEntity, IScorable<Score>
     public Player HostPlayer { get; set; }
     public Player GuestPlayer { get; set; }
     public TeamMatch TeamMatch { get; set; }
-    public short Order { get; set; }
+    public int PlayingOrder { get; set; }
     public ICollection<Score> Scores { get; set; }
 }

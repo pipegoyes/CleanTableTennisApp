@@ -14,5 +14,6 @@ public class DoubleMatch : AuditableEntity, IScorable<DoubleMatchScore>
     public Player GuestPlayerRight { get; set; }
     public Player GuestPlayerLeft { get; set; }
     public int TeamMatchId { get; set; }
+    public int PlayingOrder { get; set; }
     public ICollection<DoubleMatchScore> Scores { get; set; }
 }
