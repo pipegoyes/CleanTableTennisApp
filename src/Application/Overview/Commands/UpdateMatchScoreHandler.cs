@@ -36,7 +36,7 @@ public class UpdateMatchScoreHandler : IRequestHandler<UpdateMatchScoreCommand, 
     public async Task<bool> Handle(UpdateMatchScoreCommand request, CancellationToken cancellationToken)
     {
         var matchIdDecoded = _encoder.Decode(request.MatchIdEncoded);
-        var match = await _context.Matches
+        var match = await _context.SingleMatches
             .Include(s => s.Scores)
             .FirstAsync(s => s.Id == matchIdDecoded, cancellationToken);
 

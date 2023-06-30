@@ -5,7 +5,7 @@ public class TeamMatch : AuditableEntity
     // TODO EF needs a parameterless constructor 
     public TeamMatch()
     {
-        SingleMatches = new List<Match>();
+        SingleMatches = new List<SingleMatch>();
         DoubleMatches = new List<DoubleMatch>();
     }
 
@@ -13,7 +13,7 @@ public class TeamMatch : AuditableEntity
     {
         HostTeam = hostTeam;
         GuestTeam = guestTeam;
-        SingleMatches = new List<Match>();
+        SingleMatches = new List<SingleMatch>();
         DoubleMatches = new List<DoubleMatch>();
     }
 
@@ -21,6 +21,6 @@ public class TeamMatch : AuditableEntity
     public Team HostTeam { get; set; }
     public Team GuestTeam { get; set; }
     public DateTime? FinishedAt { get; set; }
-    public ICollection<Match> SingleMatches { get; set; }
+    public ICollection<SingleMatch> SingleMatches { get; set; }
     public ICollection<DoubleMatch> DoubleMatches { get; set; }
 }

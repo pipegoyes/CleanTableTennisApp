@@ -46,7 +46,7 @@ namespace CleanTableTennisApp.Infrastructure.Persistence.Migrations
                 column: "HostPlayerId",
                 principalTable: "Players",
                 principalColumn: "Id", 
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.NoAction);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

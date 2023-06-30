@@ -31,7 +31,7 @@ public class GetMatchScoreHandler : IRequestHandler<GetMatchScoreQuery, ScoreDto
     public async Task<ScoreDto[]> Handle(GetMatchScoreQuery request, CancellationToken cancellationToken)
     {
         var decodedMatchId = _encoder.Decode(request.MatchIdEncoded);
-        var match =  await _context.Matches
+        var match =  await _context.SingleMatches
             .Include(s => s.Scores)
             .FirstAsync(s => s.Id == decodedMatchId, cancellationToken);
 

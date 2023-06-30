@@ -3,14 +3,14 @@ using CleanTableTennisApp.Domain.Interfaces;
 
 namespace CleanTableTennisApp.Domain.Entities;
 
-public class Match : AuditableEntity, IScorable<Score>
+public class SingleMatch : AuditableEntity, IScorable<Score>
 {
-    public Match()
+    public SingleMatch()
     {
         Scores = new List<Score>();
     }
 
-    public Match(Player hostPlayer, Player guestPlayer, TeamMatch teamMatch)
+    public SingleMatch(Player hostPlayer, Player guestPlayer, TeamMatch teamMatch)
     {
         HostPlayer = hostPlayer;
         GuestPlayer = guestPlayer;

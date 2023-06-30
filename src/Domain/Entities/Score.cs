@@ -8,5 +8,5 @@ public class Score : IGamePoints
     public int Id { get; set; }
     public int GamePointsHost { get; set; }
     public int GamePointsGuest { get; set; }
-    public Match? Match { get; set; }
+    public SingleMatch? Match { get; set; }
 }

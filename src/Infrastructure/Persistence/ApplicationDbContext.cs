@@ -30,7 +30,7 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
 
     public DbSet<Team> Teams => Set<Team>();
     public DbSet<Player> Players => Set<Player>();
-    public DbSet<Match> Matches => Set<Match>();
+    public DbSet<SingleMatch> SingleMatches => Set<SingleMatch>();
     public DbSet<TeamMatch> TeamMatches => Set<TeamMatch>();
     public DbSet<DoubleMatch> DoubleMatches => Set<DoubleMatch>();
 

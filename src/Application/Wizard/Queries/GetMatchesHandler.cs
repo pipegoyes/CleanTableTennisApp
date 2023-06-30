@@ -77,7 +77,7 @@ public class GetMatchesHandler : IRequestHandler<GetMatchesQuery, OverviewDto>
         };
     }
 
-    private OverviewSingleMatchDto ToSingleMatchDto(Match singleMatch)
+    private OverviewSingleMatchDto ToSingleMatchDto(SingleMatch singleMatch)
     {
         return new OverviewSingleMatchDto
         {

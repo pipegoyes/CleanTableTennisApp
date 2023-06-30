@@ -25,7 +25,7 @@ public class CreateEmptySingleScoresHandler : IRequestHandler<CreateEmptySingleS
             .Include(s => s.SingleMatches)
             .FirstAsync(s => s.Id == request.TeamMatchId, cancellationToken);
 
-        foreach (Match singleMatch in teamMatch.SingleMatches)
+        foreach (SingleMatch singleMatch in teamMatch.SingleMatches)
         {
             AddScoreToMatch(singleMatch);
             AddScoreToMatch(singleMatch);
@@ -37,7 +37,7 @@ public class CreateEmptySingleScoresHandler : IRequestHandler<CreateEmptySingleS
         return await _context.SaveChangesAsync(cancellationToken) > 0;
     }
 
-    private static void AddScoreToMatch(Match singleMatch)
+    private static void AddScoreToMatch(SingleMatch singleMatch)
     {
         var score = new Score { GamePointsGuest = 0, GamePointsHost = 0, };
         singleMatch.Scores.Add(score);

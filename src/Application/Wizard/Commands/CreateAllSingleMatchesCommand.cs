@@ -39,16 +39,16 @@ public class CreateAllSingleMatchesHandler : IRequestHandler<CreateAllSingleMatc
             var firstTuplePlayersGuest = new TuplePlayers(guestPlayers[i], guestPlayers[i + 1]);
             var singleMatches = CreateMatches(firstTuplePlayersHost, firstTuplePlayersGuest, teamMatch);
 
-            foreach (Match singleMatch in singleMatches)
+            foreach (SingleMatch singleMatch in singleMatches)
             {
                 teamMatch.SingleMatches.Add(singleMatch);
             }
         }
     }
 
-    private Match[] CreateMatches(TuplePlayers hostTuplePlayers, TuplePlayers guestTuplePlayers, TeamMatch teamMatch)
+    private SingleMatch[] CreateMatches(TuplePlayers hostTuplePlayers, TuplePlayers guestTuplePlayers, TeamMatch teamMatch)
     {
-        var result = new List<Match>
+        var result = new List<SingleMatch>
         {
             new(hostTuplePlayers.FirstPlayer, guestTuplePlayers.SecondPlayer, teamMatch),
             new(hostTuplePlayers.FirstPlayer, guestTuplePlayers.FirstPlayer, teamMatch),
