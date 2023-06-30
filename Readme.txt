@@ -23,8 +23,10 @@ Bugs
 - Quick view does not display victories correctly, it is always 0
 - Consider set order in scores (single and doubles)
 
-features
-- Validate doubles
+Features
+- Display matches in real order 
+- Shows error when match configuration is not valid
+- Validate doubles, player does not play in both doubles (wizard)
 - Go back to home in quick view
 - COntinue and lets play button must be displayed just for admins
 - Finish a match 
@@ -33,5 +35,9 @@ features
 
 Tech debt
 - Single View to display score and double scores 
-- Validate double selection in wizard 
 - Validations does not display detail message
+
+
+Questions
+- Domain Events ? Create score ? to notify all users ?
+- AuditableEntity for all entities ?

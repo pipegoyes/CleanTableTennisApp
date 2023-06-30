@@ -27,6 +27,16 @@
         <Folder Include="Overview\Commands\" />
         <Folder Include="Overview\Queries\" />
         <Folder Include="Scores\Validators\" />
+        <Folder Include="TodoItems\Commands\CreateTodoItem\" />
+        <Folder Include="TodoItems\Commands\DeleteTodoItem\" />
+        <Folder Include="TodoItems\Commands\UpdateTodoItemDetail\" />
+        <Folder Include="TodoItems\Commands\UpdateTodoItem\" />
+        <Folder Include="TodoItems\EventHandlers\" />
+        <Folder Include="TodoItems\Queries\GetTodoItemsWithPagination\" />
+        <Folder Include="TodoLists\Commands\CreateTodoList\" />
+        <Folder Include="TodoLists\Commands\DeleteTodoList\" />
+        <Folder Include="TodoLists\Commands\PurgeTodoLists\" />
+        <Folder Include="TodoLists\Commands\UpdateTodoList\" />
     </ItemGroup>
 
 </Project>

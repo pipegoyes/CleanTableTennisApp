@@ -6,8 +6,6 @@ namespace CleanTableTennisApp.Application.Common.Interfaces;
 public interface IApplicationDbContext
 {
     // todo to be removed
-    DbSet<TodoList> TodoLists { get; }
-    DbSet<TodoItem> TodoItems { get; }
 
     DbSet<Team> Teams { get; }
     DbSet<Player> Players { get; }

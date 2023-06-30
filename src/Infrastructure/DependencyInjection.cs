@@ -1,5 +1,4 @@
 ﻿using CleanTableTennisApp.Application.Common.Interfaces;
-using CleanTableTennisApp.Infrastructure.Files;
 using CleanTableTennisApp.Infrastructure.Identity;
 using CleanTableTennisApp.Infrastructure.Persistence;
 using CleanTableTennisApp.Infrastructure.Services;
@@ -42,7 +41,6 @@ public static class DependencyInjection
 
         services.AddTransient<IDateTime, DateTimeService>();
         services.AddTransient<IIdentityService, IdentityService>();
-        services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
 
         services.AddAuthentication()
             .AddIdentityServerJwt();
