@@ -10,6 +10,36 @@
 
 
     <div *ngIf="overviewDto$ | async as overviewDto">
+
+        <div *ngFor="let doubleMatch of overviewDto.overviewDoubleMatchDtos" class="double-match">
+            <div class="p-grid" >
+                <div class="p-col">
+                    {{doubleMatch.hostLeftPlayerName}} , {{doubleMatch.hostRightPlayerName}}
+                </div>
+                <div class="p-col">
+                    <span class="match-points">
+                        {{doubleMatch.hostPoints}}
+                    </span>
+                    <span *ngFor="let score of doubleMatch.scoresDtos" class="set-points">
+                        {{score.hostPoints}}
+                    </span>
+                </div> 
+            </div> 
+            <div class="p-grid">
+                <div class="p-col">
+                    {{doubleMatch.guestLeftPlayerName}} , {{doubleMatch.guestRightPlayerName}}
+                </div>
+                <div class="p-col">
+                    <span class="match-points">
+                        {{doubleMatch.guestPoints}}
+                    </span>
+                    <span *ngFor="let score of doubleMatch.scoresDtos" class="set-points">
+                        {{score.guestPoints}}
+                    </span>
+                </div> 
+            </div> 
+        </div>
+
         <div *ngFor="let singleMatch of overviewDto.overviewSingleMatchDtos" class="single-match">
             <div class="p-grid" >
                 <div class="p-col">
@@ -35,34 +65,6 @@
                     </span>
                     
                     <span *ngFor="let score of singleMatch.scoresDtos" class="set-points">
-                        {{score.guestPoints}}
-                    </span>
-                </div> 
-            </div> 
-        </div>
-        <div *ngFor="let doubleMatch of overviewDto.overviewDoubleMatchDtos" class="double-match">
-            <div class="p-grid" >
-                <div class="p-col">
-                    {{doubleMatch.hostLeftPlayerName}} , {{doubleMatch.hostRightPlayerName}}
-                </div>
-                <div class="p-col">
-                    <span class="match-points">
-                        {{doubleMatch.hostPoints}}
-                    </span>
-                    <span *ngFor="let score of doubleMatch.scoresDtos" class="set-points">
-                        {{score.hostPoints}}
-                    </span>
-                </div> 
-            </div> 
-            <div class="p-grid">
-                <div class="p-col">
-                    {{doubleMatch.guestLeftPlayerName}} , {{doubleMatch.guestRightPlayerName}}
-                </div>
-                <div class="p-col">
-                    <span class="match-points">
-                        {{doubleMatch.guestPoints}}
-                    </span>
-                    <span *ngFor="let score of doubleMatch.scoresDtos" class="set-points">
                         {{score.guestPoints}}
                     </span>
                 </div> 

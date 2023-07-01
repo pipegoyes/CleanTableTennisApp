@@ -57,8 +57,8 @@ public class GetMatchesHandler : IRequestHandler<GetMatchesQuery, OverviewDto>
 
         return new OverviewDto
         {
-            OverviewSingleMatchDtos = teamMatchWithSingleMatches.SingleMatches.Select(ToSingleMatchDto).ToList(),
-            OverviewDoubleMatchDtos = teamMatchWithDoubleMatches.DoubleMatches.Select(ToDoubleMatchDto).ToList(),
+            OverviewSingleMatchDtos = teamMatchWithSingleMatches.SingleMatches.Select(ToSingleMatchDto).OrderBy(s => s.PlayingOrder).ToList(),
+            OverviewDoubleMatchDtos = teamMatchWithDoubleMatches.DoubleMatches.Select(ToDoubleMatchDto).OrderBy(s => s.PlayingOrder).ToList(),
         };
     }
 
