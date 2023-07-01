@@ -1,12 +1,12 @@
 <p-card class="card">
 
     <!--TODO move to another component-->
-    <div *ngIf="dto$ | async as dto">
+    <div *ngIf="teamMatchDto$ | async as dto">
         <h2>{{ dto.hostTeamName }} ({{dto.hostVictories}}) vs {{ dto.guestTeamName }} ({{ dto.guestVictories }})</h2>
         <p>Started at: {{ dto.startedAt | date }}</p>
 
     </div>
-    <div *ngIf="!(dto$ | async)">Loading...</div>
+    <div *ngIf="!(teamMatchDto$ | async)">Loading...</div>
 
 
     <div *ngIf="overviewDto$ | async as overviewDto">

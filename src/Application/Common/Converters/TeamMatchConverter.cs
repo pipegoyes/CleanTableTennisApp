@@ -1,7 +1,9 @@
 using CleanTableTennisApp.Application.Common.Dtos;
 using CleanTableTennisApp.Application.Common.Enconders;
 using CleanTableTennisApp.Application.Requests;
+using CleanTableTennisApp.Application.Scores;
 using CleanTableTennisApp.Domain.Entities;
+using CleanTableTennisApp.Domain.Enums;
 using CleanTableTennisApp.Domain.Interfaces;
 
 namespace CleanTableTennisApp.Application.Common.Converters;
@@ -10,10 +12,12 @@ namespace CleanTableTennisApp.Application.Common.Converters;
 public class TeamMatchConverter : ITeamMatchConverter
 {
     private readonly IUrlSafeIntEncoder _encoder;
+    private readonly ITeamMatchVictoriesCounter _teamMatchVictoriesCounter;
 
-    public TeamMatchConverter(IUrlSafeIntEncoder encoder)
+    public TeamMatchConverter(IUrlSafeIntEncoder encoder, ITeamMatchVictoriesCounter teamMatchVictoriesCounter)
     {
         _encoder = encoder;
+        _teamMatchVictoriesCounter = teamMatchVictoriesCounter;
     }
 
     public TeamMatchDto ToDto(TeamMatch match)
@@ -22,8 +26,8 @@ public class TeamMatchConverter : ITeamMatchConverter
         {
             GuestTeamName = match.GuestTeam.Name,
             HostTeamName = match.HostTeam.Name,
-            GuestVictories = 0,
-            HostVictories = 0,
+            GuestVictories = _teamMatchVictoriesCounter.CountVictories(match, SetVictory.GuestWon),
+            HostVictories = _teamMatchVictoriesCounter.CountVictories(match, SetVictory.HostWon),
             StartedAt = match.Created,
             TeamMatchIdEncoded = _encoder.Encode(match.Id)
         };

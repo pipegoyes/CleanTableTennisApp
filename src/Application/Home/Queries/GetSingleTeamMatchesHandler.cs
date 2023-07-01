@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using CleanTableTennisApp.Application.Common.Converters;
 using CleanTableTennisApp.Application.Common.Dtos;
 using CleanTableTennisApp.Application.Common.Enconders;
@@ -33,8 +34,12 @@ public class GetSingleTeamMatchesHandler : IRequestHandler<GetSingleTeamMatchesQ
         var teamMatch = await _context.TeamMatches
             .Include(s => s.GuestTeam)
             .Include(s => s.HostTeam)
+            .Include(s => s.DoubleMatches)
+            .ThenInclude(s => s.Scores)
+            .Include(s => s.SingleMatches)
+            .ThenInclude(s => s.Scores)
             .FirstAsync(s => s.Id == teamMatchId, cancellationToken: cancellationToken);
 
         return _teamMatchConverter.ToDto(teamMatch);
     }
-}
+} 

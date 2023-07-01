@@ -11,7 +11,7 @@ import { MatchClient, OverviewDto, OverviewSingleMatchDto, TeamMatchClient, Team
 })
 export class QuickViewComponent implements OnInit {
 
-  dto$ : Observable<TeamMatchDto>;
+  teamMatchDto$ : Observable<TeamMatchDto>;
   overviewDto$ : Observable<OverviewDto>;
 
   constructor(private activatedRoute : ActivatedRoute, private teamMatchClient : TeamMatchClient, private matchService: MatchClient) { }
@@ -19,7 +19,7 @@ export class QuickViewComponent implements OnInit {
   ngOnInit(): void {
 
     this.activatedRoute.params.pipe(map(p => p.teamMatchId)).subscribe(teamMatchIdEncoded => {
-      this.dto$ = this.teamMatchClient.getSingle(teamMatchIdEncoded)
+      this.teamMatchDto$ = this.teamMatchClient.getSingle(teamMatchIdEncoded)
       this.overviewDto$ = this.matchService.getAllMatches(teamMatchIdEncoded)
     });
   }
