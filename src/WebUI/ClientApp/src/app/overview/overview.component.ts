@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { MatchService } from '../match.service';
 import { OverviewDoubleMatchDto, OverviewSingleMatchDto } from '../web-api-client';
@@ -17,7 +17,7 @@ export class OverviewComponent implements OnInit {
   doubleMatches : OverviewDoubleMatchDto[] = [];
 
 
-  constructor(private activatedRoute: ActivatedRoute, private matchService: MatchService) { }
+  constructor(private activatedRoute: ActivatedRoute, private matchService: MatchService, private router: Router) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.pipe(map(p => p.teamMatchId)).subscribe(teamMatchIdEncoded => {
@@ -28,4 +28,13 @@ export class OverviewComponent implements OnInit {
     });
   }
 
+  finish(): void{
+    this.activatedRoute.params.pipe(map(p => p.teamMatchId)).subscribe(teamMatchIdEncoded => {
+      this.matchService.FinishTeamMatch(teamMatchIdEncoded).subscribe(ok => {
+        if(ok){
+          this.router.navigate(['/']) 
+        }
+      });
+    });
+  }
 }

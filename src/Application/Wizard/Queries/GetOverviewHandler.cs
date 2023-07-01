@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using CleanTableTennisApp.Application.Common.Converters;
 using CleanTableTennisApp.Application.Common.Dtos;
 using CleanTableTennisApp.Application.Common.Enconders;
@@ -10,19 +9,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CleanTableTennisApp.Application.Wizard.Queries;
 
-public class GetMatchesQuery : IRequest<OverviewDto>
+public class GetOverviewQuery : IRequest<OverviewDto>
 {
     public string TeamMatchIdEncoded { get; set; } = string.Empty;
 }
 
-public class GetMatchesHandler : IRequestHandler<GetMatchesQuery, OverviewDto>
+public class GetOverviewHandler : IRequestHandler<GetOverviewQuery, OverviewDto>
 {
     private readonly IApplicationDbContext _context;
     private readonly IUrlSafeIntEncoder _encoder; 
     private readonly IVictoriesCounter _victoriesCounter;
     private readonly IScoreDtoConverter _scoreDtoConverter;
 
-    public GetMatchesHandler(IApplicationDbContext context, IUrlSafeIntEncoder encoder, IVictoriesCounter victoriesCounter, IScoreDtoConverter scoreDtoConverter)
+    public GetOverviewHandler(IApplicationDbContext context, IUrlSafeIntEncoder encoder, IVictoriesCounter victoriesCounter, IScoreDtoConverter scoreDtoConverter)
     {
         _context = context;
         _encoder = encoder;
@@ -30,7 +29,7 @@ public class GetMatchesHandler : IRequestHandler<GetMatchesQuery, OverviewDto>
         _scoreDtoConverter = scoreDtoConverter;
     }
 
-    public async Task<OverviewDto> Handle(GetMatchesQuery request, CancellationToken cancellationToken)
+    public async Task<OverviewDto> Handle(GetOverviewQuery request, CancellationToken cancellationToken)
     {
         var teamMatchId = _encoder.Decode(request.TeamMatchIdEncoded);
         var teamMatchWithSingleMatches = await _context.TeamMatches

@@ -17,8 +17,10 @@
         </div>
     </ng-template>
     <ng-template pTemplate="footer">
+
         <div class="p-grid p-nogutter p-justify-between">
-            <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+            <p-button label="Back" [routerLink]="['/']" icon="pi pi-angle-left" iconPos="left"></p-button>
+            <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>        
         </div>
     </ng-template>
 </p-card>

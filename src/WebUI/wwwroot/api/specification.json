@@ -73,12 +73,12 @@
         }
       }
     },
-    "/api/Match": {
+    "/api/Overview": {
       "get": {
         "tags": [
-          "Match"
+          "Overview"
         ],
-        "operationId": "Match_GetAllMatches",
+        "operationId": "Overview_GetAllMatches",
         "parameters": [
           {
             "name": "TeamMatchIdEncoded",
@@ -97,6 +97,36 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/OverviewDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Overview"
+        ],
+        "operationId": "Overview_Finish",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FinishTeamMatchCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
                 }
               }
             }
@@ -403,6 +433,15 @@
             "items": {
               "$ref": "#/components/schemas/ScoreDto"
             }
+          }
+        }
+      },
+      "FinishTeamMatchCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "teamMatchIdEncoded": {
+            "type": "string"
           }
         }
       },

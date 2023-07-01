@@ -20,11 +20,9 @@ Whats need to be done for beta version?
 Bugs
 - ComboBox does not display initial game points correctly
 - There is no error when you select 11 and nothing, it saves score in single match
-- Quick view does not display victories correctly, it is always 0
 - Consider set order in scores (single and doubles)
 
 Features
-- Display matches in real order 
 - Shows error when match configuration is not valid
 - Validate doubles, player does not play in both doubles (wizard)
 - Go back to home in quick view
@@ -32,10 +30,11 @@ Features
 - Finish a match 
 	. validate all scores 
 	. force finished (auth user)
+- Validations does not display detail message
 
 Tech debt
 - Single View to display score and double scores 
-- Validations does not display detail message
+- Overview and quick-view are too much similar to be different components
 
 
 Questions
