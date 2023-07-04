@@ -12,6 +12,7 @@ namespace CleanTableTennisApp.Application.Overview.Commands;
 public class UpdateMatchScoreCommand : IRequest<bool>
 {
     public string MatchIdEncoded { get; set; } = string.Empty;
+    public string TeamMatchIdEncoded { get; set; } = string.Empty;
     public IEnumerable<ScoreDto> ScoreDtos { get; set; } = Enumerable.Empty<ScoreDto>();
 }
 
@@ -21,7 +22,7 @@ public class UpdateMatchScoreHandler : IRequestHandler<UpdateMatchScoreCommand, 
     private readonly IUrlSafeIntEncoder _encoder;
     private readonly IValidator<ICollection<Score>> _scoreValidator;
     private readonly IGamePointsUpdater<Score> _gamePointsUpdater;
-
+    
     public UpdateMatchScoreHandler(IApplicationDbContext context, 
         IUrlSafeIntEncoder encoder, 
         IValidator<ICollection<Score>> scoreValidator, 

@@ -452,6 +452,9 @@
           "matchIdEncoded": {
             "type": "string"
           },
+          "teamMatchIdEncoded": {
+            "type": "string"
+          },
           "scoreDtos": {
             "type": "array",
             "items": {

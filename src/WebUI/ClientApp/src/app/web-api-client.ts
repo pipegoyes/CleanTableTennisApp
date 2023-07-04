@@ -904,6 +904,7 @@ export interface IFinishTeamMatchCommand {
 
 export class UpdateMatchScoreCommand implements IUpdateMatchScoreCommand {
     matchIdEncoded?: string;
+    teamMatchIdEncoded?: string;
     scoreDtos?: ScoreDto[];
 
     constructor(data?: IUpdateMatchScoreCommand) {
@@ -918,6 +919,7 @@ export class UpdateMatchScoreCommand implements IUpdateMatchScoreCommand {
     init(_data?: any) {
         if (_data) {
             this.matchIdEncoded = _data["matchIdEncoded"];
+            this.teamMatchIdEncoded = _data["teamMatchIdEncoded"];
             if (Array.isArray(_data["scoreDtos"])) {
                 this.scoreDtos = [] as any;
                 for (let item of _data["scoreDtos"])
@@ -936,6 +938,7 @@ export class UpdateMatchScoreCommand implements IUpdateMatchScoreCommand {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["matchIdEncoded"] = this.matchIdEncoded;
+        data["teamMatchIdEncoded"] = this.teamMatchIdEncoded;
         if (Array.isArray(this.scoreDtos)) {
             data["scoreDtos"] = [];
             for (let item of this.scoreDtos)
@@ -947,6 +950,7 @@ export class UpdateMatchScoreCommand implements IUpdateMatchScoreCommand {
 
 export interface IUpdateMatchScoreCommand {
     matchIdEncoded?: string;
+    teamMatchIdEncoded?: string;
     scoreDtos?: ScoreDto[];
 }
 

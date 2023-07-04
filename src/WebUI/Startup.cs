@@ -8,6 +8,7 @@ using CleanTableTennisApp.Application.Scores.Validators;
 using CleanTableTennisApp.Domain.Entities;
 using CleanTableTennisApp.Infrastructure;
 using CleanTableTennisApp.Infrastructure.Persistence;
+using CleanTableTennisApp.WebUI.Controllers;
 using CleanTableTennisApp.WebUI.Filters;
 using CleanTableTennisApp.WebUI.RequestExamples;
 using CleanTableTennisApp.WebUI.Services;
@@ -86,6 +87,7 @@ public class Startup
             configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
             configure.AddExamples(provider);
         });
+        services.AddSignalR();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -128,7 +130,9 @@ public class Startup
                 "default",
                 "{controller}/{action=Index}/{id?}");
             endpoints.MapRazorPages();
+            endpoints.MapHub<ScoresHub>("/real-time-scores");
         });
+        
 
         app.UseSpa(spa =>
         {

@@ -31,6 +31,7 @@ Features
 	. validate all scores 
 	. force finished (auth user)
 - Validations does not display detail message
+- Update score in quick-view without refreshing the page
 
 Tech debt
 - Single View to display score and double scores 

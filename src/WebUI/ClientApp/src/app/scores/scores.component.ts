@@ -36,13 +36,15 @@ export class ScoresComponent implements OnInit {
   }
 
   save(): void{    
-    this.matchId$.subscribe(i => {
-      this.scoreService.update(i, this.sets).subscribe(s =>{
-        this.messageService.add({severity:'success', summary: 'Success', detail: 'Scores updated'})
-      }, error => {
-        this.messageService.add({severity:'error', summary: 'Failed', detail: 'Update failed -' + error})
-      })
-    });
+    this.teamMatchId$.subscribe(teamMatchIdEncoded => {
+      this.matchId$.subscribe(i => {
+        this.scoreService.update(i, this.sets, teamMatchIdEncoded).subscribe(s =>{
+          this.messageService.add({severity:'success', summary: 'Success', detail: 'Scores updated'})
+        }, error => {
+          this.messageService.add({severity:'error', summary: 'Failed', detail: 'Update failed -' + error})
+        })
+      });
+    })
   }
 
   onHostPointsChanged(value : any, index : number) : any{

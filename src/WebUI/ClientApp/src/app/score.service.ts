@@ -13,10 +13,11 @@ export class ScoreService {
 
   constructor(private scoreClient: ScoresClient) { }
 
-  update(matchIdEncoded: string, scoreRequests : ScoreDto[] ) : Observable<boolean>{
+  update(matchIdEncoded: string, scoreRequests : ScoreDto[], teamMatchIdEncoded: string) : Observable<boolean>{
     var filteredScores = scoreRequests.filter(s => s.hostPoints != null && s.guestPoints != null);
     var updateCommand = new UpdateMatchScoreCommand({
       matchIdEncoded: matchIdEncoded,
+      teamMatchIdEncoded: teamMatchIdEncoded,
       scoreDtos: filteredScores.filter(s => s.guestPoints != 0 || s.hostPoints != 0)
     });
     return this.scoreClient.update(updateCommand);
