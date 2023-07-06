@@ -36,8 +36,9 @@ export class QuickViewComponent implements OnInit, OnDestroy {
       this.realTimeScoreServices.onScoreChange()
         .pipe(takeUntil(this.destroy$))
         .subscribe(dto => {
-          console.log(dto);
-          this.overviewDtoSubject.next(dto);
+          var overviewDto = new OverviewDto(dto)
+          console.log(overviewDto);
+          this.overviewDtoSubject.next(overviewDto);
       });     
 
     });
