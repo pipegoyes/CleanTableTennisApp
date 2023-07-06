@@ -31,6 +31,10 @@ public class GetOnGoingTeamMatchesHandler : IRequestHandler<GetOnGoingTeamMatche
         var teamMatches = await _context.TeamMatches
             .Include(s => s.GuestTeam)
             .Include(s => s.HostTeam)
+            .Include(s => s.SingleMatches)
+            .ThenInclude(s => s.Scores)
+            .Include(s => s.DoubleMatches)
+            .ThenInclude(s => s.Scores)
             .Where(s => s.FinishedAt == null)
             .ToArrayAsync(cancellationToken: cancellationToken);
 
