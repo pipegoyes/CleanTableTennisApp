@@ -70,7 +70,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "CleanTableTennisApp.WebUI:build"
+            "browserTarget": "CleanTableTennisApp.WebUI:build",
+            "disableHostCheck": true
           },
           "configurations": {
             "production": {
