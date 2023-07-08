@@ -30,9 +30,9 @@ export class DoubleScoresComponent implements OnInit {
   }
 
   
-  goToOverview(): void{
+  goToQuickView(): void{
     this.teamMatchId$.subscribe(i => {
-      this.router.navigate(['overview', i])
+      this.router.navigate(['quick-view', i])
     }); 
   }
   

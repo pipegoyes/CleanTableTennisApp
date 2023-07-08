@@ -20,6 +20,8 @@ export const routes: Routes = [
   { path: 'overview/:teamMatchId/single-scores/:matchId', component: ScoresComponent},
   { path: 'overview/:teamMatchId/double-scores/:doubleMatchId', component: DoubleScoresComponent},
   { path: 'quick-view/:teamMatchId', component: QuickViewComponent},
+  { path: 'quick-view/:teamMatchId/single-scores/:matchId', component: ScoresComponent},
+  { path: 'quick-view/:teamMatchId/double-scores/:doubleMatchId', component: DoubleScoresComponent},
   { path: 'start-wizard', component: StartWizardComponent, children: [
     {
       path: '',
