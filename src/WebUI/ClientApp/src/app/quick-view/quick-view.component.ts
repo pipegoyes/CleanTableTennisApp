@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { RealTimeScoreService } from '../real-time-score.service';
-import { OverviewClient, OverviewDto, OverviewSingleMatchDto, TeamMatchClient, TeamMatchDto } from '../web-api-client';
+import { FinishTeamMatchCommand, OverviewClient, OverviewDto, OverviewSingleMatchDto, TeamMatchClient, TeamMatchDto } from '../web-api-client';
 
 @Component({
   selector: 'app-quick-view',
@@ -20,6 +20,7 @@ export class QuickViewComponent implements OnInit, OnDestroy {
 
 
   constructor(private activatedRoute : ActivatedRoute, 
+    private router : Router,
     private teamMatchClient : TeamMatchClient, 
     private overviewClient: OverviewClient,
     private realTimeScoreServices : RealTimeScoreService) { 
@@ -41,6 +42,18 @@ export class QuickViewComponent implements OnInit, OnDestroy {
           this.overviewDtoSubject.next(overviewDto);
       });     
 
+    });
+  }
+
+  public finish(): void{
+    this.activatedRoute.params.pipe(map(p => p.teamMatchId)).subscribe(teamMatchIdEncoded => {
+      var command = new FinishTeamMatchCommand();
+      command.teamMatchIdEncoded = teamMatchIdEncoded; 
+      this.overviewClient.finish(command).subscribe(response =>{
+        if(response){
+          this.router.navigate([''])
+        }
+      })
     });
   }
 

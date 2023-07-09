@@ -26,15 +26,15 @@ Features
 - Shows error when match configuration is not valid
 - Validate doubles, player does not play in both doubles (wizard)
 - Go back to home in quick view
-- COntinue and lets play button must be displayed just for admins
+- Set score button must be displayed just for admins
 - Finish a match 
 	. validate all scores 
 	. force finished (auth user)
 - Validations does not display detail message
 - Update score in quick-view without refreshing the page
+- Display names in double and single matches
 
 Tech debt
-- Responsive design for phones in home
 - Single View to display score and double scores 
 - Overview and quick-view are too much similar to be different components
 

@@ -1,77 +1,86 @@
 <p-card class="card">
 
-    <!--TODO move to another component-->
-    <div *ngIf="teamMatchDto$ | async as dto">
-        <h2>{{ dto.hostTeamName }} ({{dto.hostVictories}}) vs {{ dto.guestTeamName }} ({{ dto.guestVictories }})</h2>
-        <p>Started at: {{ dto.startedAt | date }}</p>
+    <ng-template pTemplate="body">
 
-    </div>
-    <div *ngIf="!(teamMatchDto$ | async)">Loading...</div>
+        <!--TODO move to another component-->
+        <div *ngIf="teamMatchDto$ | async as dto">
+            <h2>{{ dto.hostTeamName }} ({{dto.hostVictories}}) vs {{ dto.guestTeamName }} ({{ dto.guestVictories }})</h2>
+            <p>Started at: {{ dto.startedAt | date }}</p>
 
-
-    <div *ngIf="overviewDto$ | async as overviewDto">
-
-        <div *ngFor="let doubleMatch of overviewDto.overviewDoubleMatchDtos" class="double-match">
-            <div class="p-grid">
-                <div class="p-col-6 column">
-                    <div class="p-grid p-nogutter p-justify-between">
-                        <div class="p-col-11 row-item">{{doubleMatch.hostLeftPlayerName}} , {{doubleMatch.hostRightPlayerName}}</div>
-                        <div class="p-col-1 row-item match-points">{{doubleMatch.hostPoints}}</div>
-                    </div>
-                    <div class="p-grid p-nogutter p-justify-between">
-                        <div class="p-col-11 row-item">{{doubleMatch.guestLeftPlayerName}} , {{doubleMatch.guestRightPlayerName}}</div>
-                        <div class="p-col-1 row-item match-points">{{doubleMatch.guestPoints}}</div>
-                    </div>
-                </div>
-                <div class="p-col-4 column">
-                    <div class="row-item">
-                        <span *ngFor="let score of doubleMatch.scoresDtos" class="set-points">
-                            {{score.hostPoints}}
-                        </span>
-                    </div>
-                    <div class="row-item">
-                        <span *ngFor="let score of doubleMatch.scoresDtos" class="set-points">
-                            {{score.guestPoints}}
-                        </span>
-                    </div>
-                </div>
-                <div class="p-col-2 column third-column">
-                    <button pButton type="button" class="p-button-raised p-button-text" label="Set Score" [routerLink]="['double-scores', doubleMatch.matchIdEncoded]"></button>
-                </div>
-            </div>
         </div>
+        <div *ngIf="!(teamMatchDto$ | async)">Loading...</div>
 
-        <div *ngFor="let singleMatch of overviewDto.overviewSingleMatchDtos" class="single-match">
-            <div class="p-grid">
-                <div class="p-col-6 column" >
-                    <div class="p-grid p-nogutter p-justify-between">
-                        <div class="p-col-11 row-item">{{singleMatch.hostPlayerName}}</div>
-                        <div class="p-col-1 row-item match-points">{{singleMatch.hostPoints}}</div>
+        <div *ngIf="overviewDto$ | async as overviewDto">
+
+            <div *ngFor="let doubleMatch of overviewDto.overviewDoubleMatchDtos" class="double-match">
+                <div class="p-grid">
+                    <div class="p-col-6 column">
+                        <div class="p-grid p-nogutter p-justify-between">
+                            <div class="p-col-11 row-item">{{doubleMatch.hostLeftPlayerName}} , {{doubleMatch.hostRightPlayerName}}</div>
+                            <div class="p-col-1 row-item match-points">{{doubleMatch.hostPoints}}</div>
+                        </div>
+                        <div class="p-grid p-nogutter p-justify-between">
+                            <div class="p-col-11 row-item">{{doubleMatch.guestLeftPlayerName}} , {{doubleMatch.guestRightPlayerName}}</div>
+                            <div class="p-col-1 row-item match-points">{{doubleMatch.guestPoints}}</div>
+                        </div>
                     </div>
-                    <div class="p-grid p-nogutter p-justify-between">
-                        <div class="p-col-11 row-item">{{singleMatch.guestPlayerName}}</div>
-                        <div class="p-col-1 row-item match-points">{{singleMatch.guestPoints}}</div>
+                    <div class="p-col-4 column">
+                        <div class="row-item">
+                            <span *ngFor="let score of doubleMatch.scoresDtos" class="set-points">
+                                {{score.hostPoints}}
+                            </span>
+                        </div>
+                        <div class="row-item">
+                            <span *ngFor="let score of doubleMatch.scoresDtos" class="set-points">
+                                {{score.guestPoints}}
+                            </span>
+                        </div>
                     </div>
-                </div>
-                <div class="p-col-4 column">
-                    <div class="row-item">
-                        <span *ngFor="let score of singleMatch.scoresDtos" class="set-points">
-                            {{score.hostPoints}}
-                        </span>
+                    <div class="p-col-2 column third-column">
+                        <button pButton type="button" class="p-button-raised p-button-text" label="Set Score" [routerLink]="['double-scores', doubleMatch.matchIdEncoded]"></button>
                     </div>
-                    <div class="row-item">
-                        <span *ngFor="let score of singleMatch.scoresDtos" class="set-points">
-                            {{score.guestPoints}}
-                        </span>
-                    </div>
-                </div>
-                <div class="p-col-2 column third-column">
-                    <button pButton type="button" class="p-button-raised p-button-text" label="Set Score" [routerLink]="['single-scores', singleMatch.matchIdEncoded]"></button>
                 </div>
             </div>
 
-        </div>
+            <div *ngFor="let singleMatch of overviewDto.overviewSingleMatchDtos" class="single-match">
+                <div class="p-grid">
+                    <div class="p-col-6 column" >
+                        <div class="p-grid p-nogutter p-justify-between">
+                            <div class="p-col-11 row-item">{{singleMatch.hostPlayerName}}</div>
+                            <div class="p-col-1 row-item match-points">{{singleMatch.hostPoints}}</div>
+                        </div>
+                        <div class="p-grid p-nogutter p-justify-between">
+                            <div class="p-col-11 row-item">{{singleMatch.guestPlayerName}}</div>
+                            <div class="p-col-1 row-item match-points">{{singleMatch.guestPoints}}</div>
+                        </div>
+                    </div>
+                    <div class="p-col-4 column">
+                        <div class="row-item">
+                            <span *ngFor="let score of singleMatch.scoresDtos" class="set-points">
+                                {{score.hostPoints}}
+                            </span>
+                        </div>
+                        <div class="row-item">
+                            <span *ngFor="let score of singleMatch.scoresDtos" class="set-points">
+                                {{score.guestPoints}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-col-2 column third-column">
+                        <button pButton type="button" class="p-button-raised p-button-text" label="Set Score" [routerLink]="['single-scores', singleMatch.matchIdEncoded]"></button>
+                    </div>
+                </div>
 
-    </div>
+            </div>
+
+        </div>
+    </ng-template>
+    
+    <ng-template pTemplate="footer">
+        <div class="p-grid p-nogutter p-justify-between">
+            <p-button label="Back" [routerLink]="['']" icon="pi pi-angle-left" iconPos="left"></p-button>
+            <p-button label="Finish" (onClick)="finish()" icon="pi pi-play" iconPos="right"></p-button>        
+        </div>
+    </ng-template>
 
 </p-card>
