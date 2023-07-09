@@ -13,93 +13,63 @@
 
         <div *ngFor="let doubleMatch of overviewDto.overviewDoubleMatchDtos" class="double-match">
             <div class="p-grid">
-                <div class="p-col-6">
+                <div class="p-col-6 column">
                     <div class="p-grid p-nogutter p-justify-between">
-                        <div class="p-col-11 left-item">{{doubleMatch.hostLeftPlayerName}} , {{doubleMatch.hostRightPlayerName}}</div>
-                        <div class="p-col-1 left-item match-points">{{doubleMatch.hostPoints}}</div>
+                        <div class="p-col-11 row-item">{{doubleMatch.hostLeftPlayerName}} , {{doubleMatch.hostRightPlayerName}}</div>
+                        <div class="p-col-1 row-item match-points">{{doubleMatch.hostPoints}}</div>
                     </div>
                     <div class="p-grid p-nogutter p-justify-between">
-                        <div class="p-col-11 left-item">{{doubleMatch.guestLeftPlayerName}} , {{doubleMatch.guestRightPlayerName}}</div>
-                        <div class="p-col-1 left-item match-points">{{doubleMatch.guestPoints}}</div>
+                        <div class="p-col-11 row-item">{{doubleMatch.guestLeftPlayerName}} , {{doubleMatch.guestRightPlayerName}}</div>
+                        <div class="p-col-1 row-item match-points">{{doubleMatch.guestPoints}}</div>
                     </div>
                 </div>
-                <div class="p-col-4">
-                    <div class="left-item">
+                <div class="p-col-4 column">
+                    <div class="row-item">
                         <span *ngFor="let score of doubleMatch.scoresDtos" class="set-points">
                             {{score.hostPoints}}
                         </span>
                     </div>
-                    <div class="left-item">
+                    <div class="row-item">
                         <span *ngFor="let score of doubleMatch.scoresDtos" class="set-points">
                             {{score.guestPoints}}
                         </span>
                     </div>
                 </div>
-                <div class="p-col-2">
-                    <button pButton type="button" class="p-button-raised p-button-text" [routerLink]="['double-scores', doubleMatch.matchIdEncoded]">Set Score</button>
+                <div class="p-col-2 column third-column">
+                    <button pButton type="button" class="p-button-raised p-button-text" label="Set Score" [routerLink]="['double-scores', doubleMatch.matchIdEncoded]"></button>
                 </div>
             </div>
         </div>
 
         <div *ngFor="let singleMatch of overviewDto.overviewSingleMatchDtos" class="single-match">
             <div class="p-grid">
-                <div class="p-col-6">
+                <div class="p-col-6 column" >
                     <div class="p-grid p-nogutter p-justify-between">
-                        <div class="p-col-11 left-item">{{singleMatch.hostPlayerName}}</div>
-                        <div class="p-col-1 left-item match-points">{{singleMatch.hostPoints}}</div>
+                        <div class="p-col-11 row-item">{{singleMatch.hostPlayerName}}</div>
+                        <div class="p-col-1 row-item match-points">{{singleMatch.hostPoints}}</div>
                     </div>
                     <div class="p-grid p-nogutter p-justify-between">
-                        <div class="p-col-11 left-item">{{singleMatch.guestPlayerName}}</div>
-                        <div class="p-col-1 left-item match-points">{{singleMatch.guestPoints}}</div>
+                        <div class="p-col-11 row-item">{{singleMatch.guestPlayerName}}</div>
+                        <div class="p-col-1 row-item match-points">{{singleMatch.guestPoints}}</div>
                     </div>
                 </div>
-                <div class="p-col-4">
-                    <div class="left-item">
+                <div class="p-col-4 column">
+                    <div class="row-item">
                         <span *ngFor="let score of singleMatch.scoresDtos" class="set-points">
                             {{score.hostPoints}}
                         </span>
                     </div>
-                    <div class="left-item">
+                    <div class="row-item">
                         <span *ngFor="let score of singleMatch.scoresDtos" class="set-points">
                             {{score.guestPoints}}
                         </span>
                     </div>
                 </div>
-                <div class="p-col-2">
-                    <button pButton type="button" class="p-button-raised p-button-text" [routerLink]="['single-scores', singleMatch.matchIdEncoded]">Set Score</button>
+                <div class="p-col-2 column third-column">
+                    <button pButton type="button" class="p-button-raised p-button-text" label="Set Score" [routerLink]="['single-scores', singleMatch.matchIdEncoded]"></button>
                 </div>
             </div>
 
-
-<!--             
-            <div class="p-grid" >
-                <div class="p-col">
-                    {{singleMatch.hostPlayerName}}
-                </div>
-                <div class="p-col">
-                    <span class="match-points">
-                        {{singleMatch.hostPoints}}
-                    </span>
-                    
-                    <span *ngFor="let score of singleMatch.scoresDtos" class="set-points">
-                        {{score.hostPoints}}
-                    </span>
-                </div> 
-            </div> 
-            <div class="p-grid">
-                <div class="p-col">
-                    {{singleMatch.guestPlayerName}}
-                </div>
-                <div class="p-col">
-                    <span class="match-points">
-                        {{singleMatch.guestPoints}}
-                    </span>
-                    
-                    <span *ngFor="let score of singleMatch.scoresDtos" class="set-points">
-                        {{score.guestPoints}}
-                    </span>
-                </div> 
-            </div>  -->
         </div>
 
     </div>

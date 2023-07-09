@@ -6,20 +6,28 @@
 
 .set-points {
     font-size: 10px;
-    width: 36px;
-    text-align: center;
     color: gray;
     padding: 5px;
-    display: inline-block;
-}
-.match-points {
-    // width: 36px;
-    // display: inline-block;
-    // font-size: 18px;
-    // text-align: center;
-    // padding: 5px;
 }
 
-.left-item{
+.row-item{
     padding: 5px;
+    height: 50%;
+    display: flex;
+    justify-content: space-between;
 }
+
+@media (max-width: 600px) {
+
+    .column {
+      flex-basis: 50%;
+    }
+
+    .third-column {
+      flex-basis: 100%;
+    }
+
+    .third-column > button {
+        width: 100%;
+    }
+  }

@@ -7,7 +7,6 @@ import { DoublesComponent } from './doubles/doubles.component';
 import { GuestPlayersComponent } from './guest-players/guest-players.component';
 import { HomeComponent } from './home/home.component';
 import { HostPlayersComponent } from './host-players/host-players.component';
-import { OverviewComponent } from './overview/overview.component';
 import { QuickViewComponent } from './quick-view/quick-view.component';
 import { ResumeComponent } from './resume/resume.component';
 import { ScoresComponent } from './scores/scores.component';
@@ -16,9 +15,6 @@ import { TeamInformationComponent } from './team-information/team-information.co
 
 export const routes: Routes = [
 
-  { path: 'overview/:teamMatchId', component: OverviewComponent },
-  { path: 'overview/:teamMatchId/single-scores/:matchId', component: ScoresComponent},
-  { path: 'overview/:teamMatchId/double-scores/:doubleMatchId', component: DoubleScoresComponent},
   { path: 'quick-view/:teamMatchId', component: QuickViewComponent},
   { path: 'quick-view/:teamMatchId/single-scores/:matchId', component: ScoresComponent},
   { path: 'quick-view/:teamMatchId/double-scores/:doubleMatchId', component: DoubleScoresComponent},

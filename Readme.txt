@@ -34,6 +34,7 @@ Features
 - Update score in quick-view without refreshing the page
 
 Tech debt
+- Responsive design for phones in home
 - Single View to display score and double scores 
 - Overview and quick-view are too much similar to be different components
 

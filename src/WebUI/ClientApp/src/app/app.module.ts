@@ -26,14 +26,12 @@ import {SelectButtonModule} from 'primeng/selectbutton';
 import { ResumeComponent } from './resume/resume.component';
 import { environment } from 'src/environments/environment';
 import { API_BASE_URL } from './web-api-client';
-import { OverviewComponent } from './overview/overview.component';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast'
 import { ScoresComponent } from './scores/scores.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { SetScoreComponent } from './set-score/set-score.component';
 import { DoubleScoresComponent } from './double-scores/double-scores.component';
-import { MessageService } from 'primeng/api/messageservice';
 import { OnGoingTeamMatchesComponent } from './on-going-team-matches/on-going-team-matches.component';
 import { QuickViewComponent } from './quick-view/quick-view.component';
 
@@ -49,7 +47,6 @@ import { QuickViewComponent } from './quick-view/quick-view.component';
     GuestPlayersComponent,
     DoublesComponent,
     ResumeComponent,
-    OverviewComponent,
     ScoresComponent,
     SetScoreComponent,
     DoubleScoresComponent,

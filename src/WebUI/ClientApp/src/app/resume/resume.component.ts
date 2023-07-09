@@ -39,7 +39,7 @@ export class ResumeComponent implements OnInit {
 
   send(): void {
     this.teamMatchService.save(this.wizardService.wizardInformation).subscribe(teamMatchId => {
-      this.router.navigate(['overview', teamMatchId])
+      this.router.navigate(['quick-view', teamMatchId])
     });
   }
 
