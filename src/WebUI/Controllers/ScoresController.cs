@@ -24,6 +24,7 @@ public class ScoresController : ApiControllerBase
     }
 
     [HttpPost]
+    // TODO this functionality should be restricted by roles
     public async Task<ActionResult<bool>> Update([FromBody] UpdateMatchScoreCommand command)
     {
         var result = await Mediator.Send(command);

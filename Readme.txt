@@ -23,20 +23,20 @@ Bugs
 - Consider set order in scores (single and doubles)
 
 Features
-- Shows error when match configuration is not valid
-- Validate doubles, player does not play in both doubles (wizard)
-- Go back to home in quick view
-- Set score button must be displayed just for admins
-- Finish a match 
-	. validate all scores 
-	. force finished (auth user)
+- Display names in double and single matches
 - Validations does not display detail message
 - Update score in quick-view without refreshing the page
-- Display names in double and single matches
+- Shows error when match configuration is not valid
+- Validate doubles, player does not play in both doubles (wizard)
+- Finish a match 
+	. validate all scores 
+	. popup to confirm action
+
+TODOS
+- Deploy or Open local ports at home.
 
 Tech debt
 - Single View to display score and double scores 
-- Overview and quick-view are too much similar to be different components
 
 
 Questions

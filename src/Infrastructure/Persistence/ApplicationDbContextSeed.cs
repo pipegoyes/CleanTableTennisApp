@@ -1,6 +1,4 @@
-﻿using CleanTableTennisApp.Domain.Entities;
-using CleanTableTennisApp.Domain.ValueObjects;
-using CleanTableTennisApp.Infrastructure.Identity;
+﻿using CleanTableTennisApp.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 
 namespace CleanTableTennisApp.Infrastructure.Persistence;
