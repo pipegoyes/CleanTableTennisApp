@@ -1,23 +1,19 @@
-<p-table [value]="teamMatches$ | async" styleClass="p-datatable-sm" responsiveLayout="scroll">
-    <ng-template pTemplate="header" >
-        <tr>
-            <th>Host Team</th>
-            <th>Guest Team</th>
-            <th>Started at</th>
-            <th>Result</th>
-            <th>Actions</th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-value>
-        <tr>
-            <td>{{value.hostTeamName}}</td>
-            <td>{{value.guestTeamName}}</td>
-            <td>{{value.startedAt | date }}</td>
-            <td>{{value.hostVictories}} - {{value.guestVictories}}</td>
-            <td>
-                <button pButton type="button" class="p-button-raised p-button-text" [routerLink]="['quick-view', value.teamMatchIdEncoded]">See</button>
-            </td>
-        </tr>
-    </ng-template>
-</p-table>
+<div *ngFor="let teamMatch of teamMatches$ | async">
+    <div class="team-match">
+        <div class="name-container">
+            {{teamMatch.hostTeamName}} 
+            <span>({{teamMatch.hostVictories}})</span> 
+        </div>
+        <div class="name-container">
+            {{teamMatch.guestTeamName}} 
+            <span>({{teamMatch.guestVictories}})</span>
+        </div>
+        <div class="date-container">
+            {{teamMatch.startedAt | date}}
+        </div>
 
+        <div class="see-container">
+            <button pButton type="button" class="p-button-raised p-button-text" label="See" [routerLink]="['quick-view', teamMatch.teamMatchIdEncoded]"></button>
+        </div>
+    </div>
+</div>

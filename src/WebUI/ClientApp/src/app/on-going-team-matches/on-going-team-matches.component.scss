@@ -1,0 +1,29 @@
+.team-match{
+    background: #ffffff;
+    color: #495057;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 3px;
+
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.name-container, .date-container{
+    padding: 5px;
+    font-size: 15px;
+    text-transform: uppercase;
+}
+
+.name-container > span{
+    font-weight: 600;
+}
+
+.see-container > button{
+    width: 100%;
+}
+
+.date-container {
+    text-align: right;
+    font-size: 10px;
+}
+
