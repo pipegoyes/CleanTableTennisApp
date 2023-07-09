@@ -6,7 +6,7 @@
         <app-on-going-team-matches></app-on-going-team-matches>
     </div>
     
-    <div>
+    <div *ngIf="isAuthenticated$ | async">
         <p>
             In order to create a new match click on the following button.
         </p>
