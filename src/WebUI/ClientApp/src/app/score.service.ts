@@ -8,9 +8,6 @@ import { ScoresClient, UpdateMatchScoreCommand, ScoreDto } from './web-api-clien
 })
 export class ScoreService {
 
-  private _matchWithScores : BehaviorSubject<MatchWithScores> = new BehaviorSubject({ matchIdEncoded: null, scores: []});
-  matchWithScores$ = this._matchWithScores.asObservable(); 
-
   constructor(private scoreClient: ScoresClient) { }
 
   update(matchIdEncoded: string, scoreRequests : ScoreDto[], teamMatchIdEncoded: string) : Observable<boolean>{
@@ -23,13 +20,7 @@ export class ScoreService {
     return this.scoreClient.update(updateCommand);
   }
 
-  get(matchIdEncoded: string): Observable<MatchWithScores>{
-    this.scoreClient.get(matchIdEncoded).subscribe(s => {
-      this._matchWithScores.next({
-        matchIdEncoded: matchIdEncoded,
-        scores: s
-      })
-    })
-    return this.matchWithScores$; 
+  get(matchIdEncoded: string): Observable<ScoreDto[]>{
+    return this.scoreClient.get(matchIdEncoded);
   }
 }

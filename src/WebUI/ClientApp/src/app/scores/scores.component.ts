@@ -23,6 +23,13 @@ export class ScoresComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private scoreService: ScoreService, private messageService : MessageService) { }
 
   ngOnInit(): void {
+    // Bug-fixed you need to initalize all scores first, because this array render the dropdowns first
+    this.sets.push(new ScoreDto())
+    this.sets.push(new ScoreDto())
+    this.sets.push(new ScoreDto())
+    this.sets.push(new ScoreDto())
+    this.sets.push(new ScoreDto())
+
     this.teamMatchId$ = this.activatedRoute.params.pipe(map(p => p.teamMatchId));
     this.matchId$ = this.activatedRoute.params.pipe(map(p => p.matchId));
     this.initializeSets();
@@ -59,7 +66,14 @@ export class ScoresComponent implements OnInit {
 
     this.matchId$.subscribe(id => {
       this.scoreService.get(id).subscribe(scores => {
-        this.sets = scores.scores;
+        
+        scores.forEach( (element, i) => {
+          if(this.sets[i]){
+            this.sets[i].guestPoints = element.guestPoints;
+            this.sets[i].hostPoints = element.hostPoints;
+            this.sets[i].scoreIdEncoded = element.scoreIdEncoded;
+          }
+        });
         this.fillEmptyScores();
       });
     })
