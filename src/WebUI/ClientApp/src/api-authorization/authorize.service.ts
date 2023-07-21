@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { User, UserManager, WebStorageStateStore } from 'oidc-client';
 import { BehaviorSubject, concat, from, Observable } from 'rxjs';
 import { filter, map, mergeMap, take, tap } from 'rxjs/operators';
+import { API_BASE_URL } from 'src/app/web-api-client';
 import { ApplicationPaths, ApplicationName } from './api-authorization.constants';
+import { Inject } from '@angular/core';
 
 export type IAuthenticationResult =
   SuccessAuthenticationResult |
@@ -39,6 +41,11 @@ export interface IUser {
 export class AuthorizeService {
   // By default pop ups are disabled because they don't work properly on Edge.
   // If you want to enable pop up authentication simply set this flag to false.
+  baseUrl: string;
+
+  constructor(@Inject(API_BASE_URL) baseUrl?: string){
+    this.baseUrl = baseUrl;
+  }
 
   private popUpDisabled = true;
   private userManager: UserManager;
@@ -173,8 +180,8 @@ export class AuthorizeService {
     if (this.userManager !== undefined) {
       return;
     }
-
-    const response = await fetch(ApplicationPaths.ApiAuthorizationClientConfigurationUrl);
+    var url = this.baseUrl + ApplicationPaths.ApiAuthorizationClientConfigurationUrl;
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Could not load settings for '${ApplicationName}'`);
     }

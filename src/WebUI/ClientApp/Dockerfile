@@ -1,4 +1,4 @@
-FROM node:12
+FROM node:16
 EXPOSE 4200
 WORKDIR /usr/src/app
 COPY package*.json ./
