@@ -15,7 +15,6 @@ using CleanTableTennisApp.WebUI.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using NSwag;
 using NSwag.Examples;
 using NSwag.Generation.Processors.Security;
@@ -53,6 +52,15 @@ public class Startup
         services.AddSingleton<IScoreDtoConverter, ScoreDtoConverter>();
         services.AddSingleton<ITeamMatchVictoriesCounter, TeamMatchVictoriesCounter>();
 
+        services.AddCors(builder =>
+        {
+            builder.AddDefaultPolicy(policy =>
+            {
+                policy.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
+        });
         services.AddHttpContextAccessor();
 
         services.AddHealthChecks()
@@ -70,10 +78,7 @@ public class Startup
         services.Configure<ApiBehaviorOptions>(options => 
             options.SuppressModelStateInvalidFilter = true);
 
-        // In production, the Angular files will be served from this directory
-        services.AddSpaStaticFiles(configuration => 
-            configuration.RootPath = "ClientApp/dist");
-
+        
         services.AddOpenApiDocument((configure, provider) =>
         {
             configure.Title = "CleanTableTennisApp API";
@@ -89,6 +94,7 @@ public class Startup
             configure.AddExamples(provider);
         });
         services.AddSignalR();
+
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -109,10 +115,8 @@ public class Startup
         app.UseHealthChecks("/health");
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-        if (!env.IsDevelopment())
-        {
-            app.UseSpaStaticFiles();
-        }
+        
+
 
         app.UseSwaggerUi3(settings =>
         {
@@ -121,7 +125,8 @@ public class Startup
         });
 
         app.UseRouting();
-
+        
+        app.UseCors();
         app.UseAuthentication();
         app.UseIdentityServer();
         app.UseAuthorization();
@@ -133,20 +138,6 @@ public class Startup
             endpoints.MapRazorPages();
             endpoints.MapHub<ScoresHub>("/real-time-scores");
         });
-        
 
-        app.UseSpa(spa =>
-        {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
-
-                spa.Options.SourcePath = "ClientApp";
-
-            if (env.IsDevelopment())
-            {
-                    spa.UseAngularCliServer(npmScript: "start");
-                    spa.UseProxyToSpaDevelopmentServer(Configuration["SpaBaseUrl"] ?? "http://localhost:4200");
-            }
-        });
     }
 }
