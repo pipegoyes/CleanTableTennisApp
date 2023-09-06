@@ -51,3 +51,5 @@ Azure
 	npm install -g @azure/static-web-apps-cli
 - Build and deploy front end
 	swa deploy -n front-end ./dist --env production
+- cors setting with defined origin
+- do not forget to change enviroment.prod to point to the right api url with port enviroment.prod.ts
