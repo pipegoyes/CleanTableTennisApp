@@ -56,9 +56,13 @@ public class Startup
         {
             builder.AddDefaultPolicy(policy =>
             {
-                policy.AllowAnyOrigin()
+                policy.WithOrigins(new string[]
+                {
+                    "https://victorious-pond-070130c03.3.azurestaticapps.net"
+                })
                     .AllowAnyHeader()
-                    .AllowAnyMethod();
+                    .AllowAnyMethod()
+                    .AllowCredentials();
             });
         });
         services.AddHttpContextAccessor();

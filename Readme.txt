@@ -42,3 +42,12 @@ Tech debt
 Questions
 - Domain Events ? Create score ? to notify all users ?
 - AuditableEntity for all entities ?
+
+Azure 
+- in DB Server add networking exception for azure services 
+- Create/export a certificate with powershell (createCertificate.ps1)
+- Add app setting in web app api
+- Install static-web-apps-cli
+	npm install -g @azure/static-web-apps-cli
+- Build and deploy front end
+	swa deploy -n front-end ./dist --env production

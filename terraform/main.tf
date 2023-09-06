@@ -24,6 +24,7 @@ resource "azurerm_windows_web_app" "table_tennis_webapp" {
 
   site_config {
     always_on = false
+    ftps_state = "FtpsOnly"
     application_stack {
       current_stack  = "dotnet"
       dotnet_version = "v6.0"
@@ -43,13 +44,14 @@ resource "azurerm_windows_web_app" "table_tennis_webapp" {
   #   physical_path = "ClientApp/dist"
   # }
 
-  connection_string {
-    name  = "DefaultConnection"
-    type  = "SQLServer"
-    value = "Server=tt-db.database.windows.net;Database=CleanTableTennisAppDb;User=XXX;Password=XXX;MultipleActiveResultSets=true"
-  }
+  # connection_string {
+  #   name  = "DefaultConnection"
+  #   type  = "SQLServer"
+  #   value = "Server=tt-db.database.windows.net;Database=CleanTableTennisAppDb;User=XXX;Password=XXX;MultipleActiveResultSets=true"
+  # }
 
   app_settings = {
+    "WEBSITE_LOAD_CERTIFICATES" = "*"
     "UseInMemoryDatabase" = false
   }
 
@@ -82,12 +84,18 @@ resource "azurerm_mssql_server" "server" {
   name                         = "random-pet"
   resource_group_name          = azurerm_resource_group.app_rg.name
   location                     = azurerm_resource_group.app_rg.location
-  administrator_login          = "XXX"
-  administrator_login_password = "XXX"
+  administrator_login          = "super-admin"
+  administrator_login_password = "password"
   version                      = "12.0"
 }
 
 resource "azurerm_mssql_database" "db" {
   name      = "CleanTableTennisAppDb"
   server_id = azurerm_mssql_server.server.id
+}
+
+resource "azurerm_static_site" "front-end" {
+  name                = "front-end"
+  resource_group_name = azurerm_resource_group.app_rg.name
+  location            = azurerm_resource_group.app_rg.location
 }
