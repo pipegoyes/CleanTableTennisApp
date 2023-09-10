@@ -20,7 +20,7 @@ export class WizardService {
       guestFirstDouble: null,
       guestSecondDouble: null
     }
-    this.wizardInformation = this.getDummyWizard();
+    // this.wizardInformation = this.getDummyWizard();
   }
 
   getDummyWizard(): WizardInformation{
@@ -30,21 +30,21 @@ export class WizardService {
         guestName: "Naurod"
       },
       hostPlayers: {
-        player1: "Felipe Goyes",
-        player2: "Torsten Oelhof",
-        player3: "Simon Henz",
-        player4: "Manfred Moses"
+        player1: "Felipe Goyes1",
+        player2: "Felipe Goyes2",
+        player3: "Felipe Goyes3",
+        player4: "Felipe Goyes4"
       },
       guestPlayers: {
-        player1: "Another Goyes",
-        player2: "Another Oelhof",
-        player3: "Another Henz",
-        player4: "Another Moses"
+        player1: "Andres Coral1",
+        player2: "Andres Coral2",
+        player3: "Andres Coral3",
+        player4: "Andres Coral4"
       },
-      hostFirstDouble: ["Felipe Goyes", "Torsten Oelhof"],
-      hostSecondDouble: ["Simon Henz", "Manfred Moses"],
-      guestFirstDouble: ["Another Goyes", "Another Oelhof"],
-      guestSecondDouble: ["Another Henz", "Another Moses"],
+      hostFirstDouble: ["Felipe Goyes1", "Felipe Goyes2"],
+      hostSecondDouble: ["Felipe Goyes3", "Felipe Goyes4"],
+      guestFirstDouble: ["Andres Coral1", "Andres Coral2"],
+      guestSecondDouble: ["Andres Coral3", "Andres Coral4"],
     }
   }
 

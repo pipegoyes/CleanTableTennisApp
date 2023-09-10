@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  // apiUrl: "https://clean-table-tennis-app.azurewebsites.net:443"
   apiUrl: "https://localhost:5001"
   // apiUrl: "https://localhost:44312"
 };

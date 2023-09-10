@@ -3,7 +3,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "app_rg" {
-  name     = "main-group"
+  name     = "app_rg"
   location = "westeurope" # Germany West Central region
 }
 

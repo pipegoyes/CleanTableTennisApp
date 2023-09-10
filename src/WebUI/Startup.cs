@@ -54,11 +54,13 @@ public class Startup
 
         services.AddCors(builder =>
         {
+            //todo use a dedicated policy and disable it in development Example .useCors(myProdPolicy)
             builder.AddDefaultPolicy(policy =>
             {
                 policy.WithOrigins(new string[]
                 {
-                    "https://victorious-pond-070130c03.3.azurestaticapps.net"
+                    "https://lively-tree-05d863103.3.azurestaticapps.net",
+                    "http://localhost:4200"
                 })
                     .AllowAnyHeader()
                     .AllowAnyMethod()

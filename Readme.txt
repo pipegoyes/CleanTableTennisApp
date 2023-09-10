@@ -6,7 +6,11 @@ NPM version:
 8.5.5
 
 Angular CLI
+npm install -g @angular/cli@12.0.1
 12.0.1
+
+.Net 5
+choco install dotnet-5.0-sdk
 
 PrimeNG
 https://www.primefaces.org/primeng-v12-lts
@@ -43,13 +47,14 @@ Questions
 - Domain Events ? Create score ? to notify all users ?
 - AuditableEntity for all entities ?
 
-Azure 
+Azure
 - in DB Server add networking exception for azure services 
+- Verify user and password credentials for db
 - Create/export a certificate with powershell (createCertificate.ps1)
 - Add app setting in web app api
 - Install static-web-apps-cli
 	npm install -g @azure/static-web-apps-cli
-- Build and deploy front end
+- Build and deploy front end 	
 	swa deploy -n front-end ./dist --env production
 - cors setting with defined origin
 - do not forget to change enviroment.prod to point to the right api url with port enviroment.prod.ts
