@@ -1,5 +1,5 @@
 {
-  "x-generator": "NSwag v13.9.4.0 (NJsonSchema v10.3.1.0 (Newtonsoft.Json v13.0.0.0))",
+  "x-generator": "NSwag v14.0.4.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))",
   "openapi": "3.0.0",
   "info": {
     "title": "CleanTableTennisApp API",
@@ -18,8 +18,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string",
-              "nullable": true
+              "type": "string"
             },
             "x-position": 1
           }
@@ -84,8 +83,7 @@
             "name": "TeamMatchIdEncoded",
             "in": "query",
             "schema": {
-              "type": "string",
-              "nullable": true
+              "type": "string"
             },
             "x-position": 1
           }
@@ -146,8 +144,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string",
-              "nullable": true
+              "type": "string"
             },
             "x-position": 1
           }
@@ -213,6 +210,50 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/CreateTeamMatchCommand"
+              },
+              "example": {
+                "hostTeam": {
+                  "name": "Host",
+                  "players": [
+                    {
+                      "fullName": "First player",
+                      "doublePosition": 1
+                    },
+                    {
+                      "fullName": "Second player",
+                      "doublePosition": 1
+                    },
+                    {
+                      "fullName": "Third player",
+                      "doublePosition": 2
+                    },
+                    {
+                      "fullName": "Fourth player",
+                      "doublePosition": 2
+                    }
+                  ]
+                },
+                "guestTeam": {
+                  "name": "Guest",
+                  "players": [
+                    {
+                      "fullName": "First player",
+                      "doublePosition": 1
+                    },
+                    {
+                      "fullName": "Second player",
+                      "doublePosition": 1
+                    },
+                    {
+                      "fullName": "Third player",
+                      "doublePosition": 2
+                    },
+                    {
+                      "fullName": "Fourth player",
+                      "doublePosition": 2
+                    }
+                  ]
+                }
               }
             }
           },
@@ -265,8 +306,7 @@
             "name": "teamMatchIdEncoded",
             "in": "query",
             "schema": {
-              "type": "string",
-              "nullable": true
+              "type": "string"
             },
             "x-position": 1
           }
@@ -465,50 +505,6 @@
       },
       "CreateTeamMatchCommand": {
         "type": "object",
-        "example": {
-          "hostTeam": {
-            "name": "Host",
-            "players": [
-              {
-                "fullName": "First player",
-                "doublePosition": 1
-              },
-              {
-                "fullName": "Second player",
-                "doublePosition": 1
-              },
-              {
-                "fullName": "Third player",
-                "doublePosition": 2
-              },
-              {
-                "fullName": "Fourth player",
-                "doublePosition": 2
-              }
-            ]
-          },
-          "guestTeam": {
-            "name": "Guest",
-            "players": [
-              {
-                "fullName": "First player",
-                "doublePosition": 1
-              },
-              {
-                "fullName": "Second player",
-                "doublePosition": 1
-              },
-              {
-                "fullName": "Third player",
-                "doublePosition": 2
-              },
-              {
-                "fullName": "Fourth player",
-                "doublePosition": 2
-              }
-            ]
-          }
-        },
         "additionalProperties": false,
         "properties": {
           "hostTeam": {
