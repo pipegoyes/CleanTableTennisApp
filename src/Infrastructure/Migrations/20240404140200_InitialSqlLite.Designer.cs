@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CleanTableTennisApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240404130339_initialSqlLite")]
-    partial class initialSqlLite
+    [Migration("20240404140200_InitialSqlLite")]
+    partial class InitialSqlLite
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

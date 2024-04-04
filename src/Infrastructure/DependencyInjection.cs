@@ -27,7 +27,14 @@ public static class DependencyInjection
             //        b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
             services.AddDbContext<ApplicationDbContext>(o =>
-                o.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
+            {
+                o.UseSqlite(configuration.GetConnectionString("DefaultConnection"), options =>
+                {
+                    options.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName);
+                    
+                });
+
+            });
         }
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
