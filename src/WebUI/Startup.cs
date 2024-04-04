@@ -121,8 +121,6 @@ public class Startup
         app.UseHealthChecks("/health");
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-        
-
 
         app.UseSwaggerUi(settings =>
         {
@@ -134,7 +132,7 @@ public class Startup
         
         app.UseCors();
         app.UseAuthentication();
-        app.UseIdentityServer();
+        //app.UseIdentityServer();
         app.UseAuthorization();
         app.UseEndpoints(endpoints =>
         {

@@ -2,9 +2,9 @@
 
 #nullable disable
 
-namespace CleanTableTennisApp.Infrastructure.Persistence.Migrations
+namespace CleanTableTennisApp.Infrastructure.Migrations
 {
-    public partial class renameSingleMatch : Migration
+    public partial class initialSqlLite : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
