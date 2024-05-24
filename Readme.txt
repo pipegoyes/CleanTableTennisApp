@@ -58,3 +58,23 @@ Azure
 	swa deploy -n front-end ./dist --env production
 - cors setting with defined origin
 - do not forget to change enviroment.prod to point to the right api url with port enviroment.prod.ts
+
+
+BACK END - Migrating to JWT
+- Remove Identity Service from WebApi
+- Install nuget packages
+	- Microsoft.AspNetCore.Authentication.JwtBearer
+- Add jwt to appsettings
+- Congifure jwt in web api
+- Create login controller
+- Protect endpoints
+
+
+Angular - Migrating to JWT (see https://github.com/auth0/angular2-jwt)
+- npm install @auth0/angular-jwt
+- remove ApiAuthorizationModule from app module
+- configure interceptors
+- create login component
+- modify navigation bar
+
+

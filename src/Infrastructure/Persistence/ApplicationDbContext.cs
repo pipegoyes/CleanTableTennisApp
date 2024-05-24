@@ -2,26 +2,20 @@
 using CleanTableTennisApp.Application.Common.Interfaces;
 using CleanTableTennisApp.Domain.Common;
 using CleanTableTennisApp.Domain.Entities;
-using CleanTableTennisApp.Infrastructure.Identity;
-using Duende.IdentityServer.EntityFramework.Options;
-using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace CleanTableTennisApp.Infrastructure.Persistence;
 
-public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, IApplicationDbContext
+public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     private readonly ICurrentUserService _currentUserService;
     private readonly IDateTime _dateTime;
     private readonly IDomainEventService _domainEventService;
 
     public ApplicationDbContext(
-        DbContextOptions<ApplicationDbContext> options,
-        IOptions<OperationalStoreOptions> operationalStoreOptions,
         ICurrentUserService currentUserService,
         IDomainEventService domainEventService,
-        IDateTime dateTime) : base(options, operationalStoreOptions)
+        IDateTime dateTime)
     {
         _currentUserService = currentUserService;
         _domainEventService = domainEventService;
