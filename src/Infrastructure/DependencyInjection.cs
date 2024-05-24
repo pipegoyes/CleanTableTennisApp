@@ -1,9 +1,6 @@
 ﻿using CleanTableTennisApp.Application.Common.Interfaces;
-using CleanTableTennisApp.Infrastructure.Identity;
 using CleanTableTennisApp.Infrastructure.Persistence;
 using CleanTableTennisApp.Infrastructure.Services;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,17 +38,7 @@ public static class DependencyInjection
 
         services.AddScoped<IDomainEventService, DomainEventService>();
 
-        //services
-        //    .AddDefaultIdentity<ApplicationUser>()
-        //    .AddRoles<IdentityRole>()
-        //    .AddEntityFrameworkStores<ApplicationDbContext>();
-
-
         services.AddTransient<IDateTime, DateTimeService>();
-        services.AddTransient<IIdentityService, IdentityService>();
-
-        //services.AddAuthentication()
-        //    .AddIdentityServerJwt();
 
         services.AddAuthorization(options => 
             options.AddPolicy("CanPurge", policy => policy.RequireRole("Administrator")));

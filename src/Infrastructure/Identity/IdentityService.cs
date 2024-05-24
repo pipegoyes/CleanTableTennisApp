@@ -1,4 +1,5 @@
-﻿using CleanTableTennisApp.Application.Common.Interfaces;
+﻿using System.Security.Claims;
+using CleanTableTennisApp.Application.Common.Interfaces;
 using CleanTableTennisApp.Application.Common.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -6,11 +7,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CleanTableTennisApp.Infrastructure.Identity;
 
+public class AuthorizationService : IAuthorizationService
+{
+    public Task<AuthorizationResult> AuthorizeAsync(ClaimsPrincipal user, object? resource, IEnumerable<IAuthorizationRequirement> requirements)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<AuthorizationResult> AuthorizeAsync(ClaimsPrincipal user, object? resource, string policyName)
+    {
+        throw new NotImplementedException();
+    }
+}
+
 public class IdentityService : IIdentityService
 {
     private readonly IAuthorizationService _authorizationService;
     private readonly IUserClaimsPrincipalFactory<ApplicationUser> _userClaimsPrincipalFactory;
-    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly  UserManager<ApplicationUser> _userManager;
 
     public IdentityService(
         UserManager<ApplicationUser> userManager,
