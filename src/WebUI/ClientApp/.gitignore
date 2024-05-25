@@ -38,5 +38,11 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-
 .env
+
+# sqlite 
+/*.db-shm
+/*.db-wal
+
+# dont save changes in db
+*.db

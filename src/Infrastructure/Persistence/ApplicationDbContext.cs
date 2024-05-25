@@ -8,6 +8,7 @@ namespace CleanTableTennisApp.Infrastructure.Persistence;
 
 public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
+    private static readonly DbContextOptions options;
     private readonly ICurrentUserService _currentUserService;
     private readonly IDateTime _dateTime;
     private readonly IDomainEventService _domainEventService;
@@ -15,7 +16,8 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public ApplicationDbContext(
         ICurrentUserService currentUserService,
         IDomainEventService domainEventService,
-        IDateTime dateTime)
+        IDateTime dateTime,
+        DbContextOptions options) : base(options)
     {
         _currentUserService = currentUserService;
         _domainEventService = domainEventService;
