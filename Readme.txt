@@ -68,6 +68,8 @@ BACK END - Migrating to JWT
 - Congifure jwt in web api
 - Create login controller
 - Protect endpoints
+- EF and audit create by and modify by 
+- Register functionality ?
 
 
 Angular - Migrating to JWT (see https://github.com/auth0/angular2-jwt)

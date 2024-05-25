@@ -1,7 +1,5 @@
-import { compileClassMetadata } from '@angular/compiler';
-import { Component, NgModule } from '@angular/core';
+import * as core from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { DoubleScoresComponent } from './double-scores/double-scores.component';
 import { DoublesComponent } from './doubles/doubles.component';
 import { GuestPlayersComponent } from './guest-players/guest-players.component';
@@ -51,7 +49,7 @@ export const routes: Routes = [
   // { path: 'token', component: TokenComponent, canActivate: [AuthorizeGuard] }
 ];
 
-@NgModule({
+@core.NgModule({
   imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule]
 })

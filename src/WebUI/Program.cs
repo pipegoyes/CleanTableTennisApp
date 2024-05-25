@@ -17,7 +17,7 @@ public class Program
 
             try
             {
-                //var context = services.GetRequiredService<ApplicationDbContext>();
+                var context = services.GetRequiredService<ApplicationDbContext>();
 
                 //if (context.Database.IsSqlServer())
                 //{
@@ -28,7 +28,7 @@ public class Program
                 //var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
                 //await ApplicationDbContextSeed.SeedDefaultUserAsync(userManager, roleManager);
-                //await ApplicationDbContextSeed.SeedSampleDataAsync(context);
+                await ApplicationDbContextSeed.SeedSampleDataAsync(context);
             }
             catch (Exception ex)
             {

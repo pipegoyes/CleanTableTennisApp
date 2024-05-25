@@ -28,7 +28,6 @@ public static class DependencyInjection
                 o.UseSqlite(configuration.GetConnectionString("DefaultConnection"), options =>
                 {
                     options.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName);
-                    
                 });
 
             });

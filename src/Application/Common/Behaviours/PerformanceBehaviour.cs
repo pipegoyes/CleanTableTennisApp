@@ -14,14 +14,12 @@ public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequ
 
     public PerformanceBehaviour(
         ILogger<TRequest> logger,
-        ICurrentUserService currentUserService,
-        IIdentityService identityService)
+        ICurrentUserService currentUserService)
     {
         _timer = new Stopwatch();
 
         _logger = logger;
         _currentUserService = currentUserService;
-        _identityService = identityService;
     }
 
     public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
@@ -42,7 +40,7 @@ public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequ
 
             if (!string.IsNullOrEmpty(userId))
             {
-                userName = await _identityService.GetUserNameAsync(userId);
+                //userName = await _identityService.GetUserNameAsync(userId);
             }
 
             _logger.LogWarning("CleanTableTennisApp Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@UserId} {@UserName} {@Request}",
