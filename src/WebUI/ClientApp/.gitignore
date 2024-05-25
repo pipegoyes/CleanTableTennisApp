@@ -43,6 +43,3 @@ Thumbs.db
 # sqlite 
 /*.db-shm
 /*.db-wal
-
-# dont save changes in db
-*.db
