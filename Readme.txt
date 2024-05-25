@@ -61,22 +61,18 @@ Azure
 
 
 BACK END - Migrating to JWT
-- Remove Identity Service from WebApi
-- Install nuget packages
-	- Microsoft.AspNetCore.Authentication.JwtBearer
-- Add jwt to appsettings
-- Congifure jwt in web api
-- Create login controller
+- Register functionality 
+- Reactivate feature EF and audit create by and modify by 
+- Validate loginRequest before creating JWT Token
+- Add private claims 
 - Protect endpoints
-- EF and audit create by and modify by 
-- Register functionality ?
 
 
 Angular - Migrating to JWT (see https://github.com/auth0/angular2-jwt)
-- npm install @auth0/angular-jwt
-- remove ApiAuthorizationModule from app module
-- configure interceptors
+- Create Token service to call logincontroller and get jwt Token
+- Create options factory to set getter functionality
+	https://github.com/auth0/angular2-jwt/blob/main/EXAMPLES.md
 - create login component
-- modify navigation bar
+- Adjust navigation bar to show register/login buttons
 
 
