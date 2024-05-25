@@ -1,10 +1,12 @@
 ﻿using CleanTableTennisApp.Application.Common.Dtos;
 using CleanTableTennisApp.Application.Home.Queries;
 using CleanTableTennisApp.Application.Wizard.Commands;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanTableTennisApp.WebUI.Controllers;
 
+[Authorize]
 public class TeamMatchController : ApiControllerBase
 {
     [HttpPost]

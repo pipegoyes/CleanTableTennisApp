@@ -19,6 +19,7 @@ public class Program
             {
                 var context = services.GetRequiredService<ApplicationDbContext>();
 
+                //TODO this should be reactivated
                 //if (context.Database.IsSqlServer())
                 //{
                 //    await context.Database.MigrateAsync();

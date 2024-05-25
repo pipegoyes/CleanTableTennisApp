@@ -1,3 +1,4 @@
+using System.Text;
 using CleanTableTennisApp.Application;
 using CleanTableTennisApp.Application.Common.Converters;
 using CleanTableTennisApp.Application.Common.Enconders;
@@ -14,7 +15,9 @@ using CleanTableTennisApp.WebUI.RequestExamples;
 using CleanTableTennisApp.WebUI.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using NSwag;
 using NSwag.Examples;
 using NSwag.Generation.Processors.Security;
@@ -33,6 +36,8 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+        AddJwtAuthentication(services);
+
         services.AddApplication();
         services.AddInfrastructure(Configuration);
 
@@ -75,16 +80,16 @@ public class Startup
         services.AddControllersWithViews(options =>
             options.Filters.Add<ApiExceptionFilterAttribute>())
                 .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
-        
+
         services.AddExampleProviders(typeof(CreateTeamMatchExample).Assembly);
 
         services.AddRazorPages();
 
         // Customise default API behaviour
-        services.Configure<ApiBehaviorOptions>(options => 
+        services.Configure<ApiBehaviorOptions>(options =>
             options.SuppressModelStateInvalidFilter = true);
 
-        
+
         services.AddOpenApiDocument((configure, provider) =>
         {
             configure.Title = "CleanTableTennisApp API";
@@ -101,6 +106,28 @@ public class Startup
         });
         services.AddSignalR();
 
+    }
+
+    private void AddJwtAuthentication(IServiceCollection services)
+    {
+        //Jwt configuration starts here
+        var jwtIssuer = Configuration.GetSection("Jwt:Issuer").Get<string>();
+        var jwtKey = Configuration.GetSection("Jwt:Key").Get<string>();
+
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+         .AddJwtBearer(options =>
+         {
+             options.TokenValidationParameters = new TokenValidationParameters
+             {
+                 ValidateIssuer = true,
+                 ValidateAudience = true,
+                 ValidateLifetime = true,
+                 ValidateIssuerSigningKey = true,
+                 ValidIssuer = jwtIssuer,
+                 ValidAudience = jwtIssuer,
+                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+             };
+         });
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -132,7 +159,6 @@ public class Startup
         
         app.UseCors();
         app.UseAuthentication();
-        //app.UseIdentityServer();
         app.UseAuthorization();
         app.UseEndpoints(endpoints =>
         {
