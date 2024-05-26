@@ -45,8 +45,6 @@ export const routes: Routes = [
   ]
 },
   { path: '', component: HomeComponent, pathMatch: 'full' },
-  // { path: 'todo', component: TodoComponent, canActivate: [AuthorizeGuard] },
-  // { path: 'token', component: TokenComponent, canActivate: [AuthorizeGuard] }
 ];
 
 @core.NgModule({
