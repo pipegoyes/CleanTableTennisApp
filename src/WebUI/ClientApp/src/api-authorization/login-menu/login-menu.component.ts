@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthorizeService } from '../authorize.service';
-import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { AuthService } from '@auth0/auth0-angular';
+import { Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-login-menu',
@@ -9,13 +9,21 @@ import { map, tap } from 'rxjs/operators';
   styleUrls: ['./login-menu.component.scss']
 })
 export class LoginMenuComponent implements OnInit {
-  public isAuthenticated: Observable<boolean>;
-  public userName: Observable<string>;
 
-  constructor(private authorizeService: AuthorizeService) { }
+  constructor(public auth: AuthService, @Inject(DOCUMENT) public document: Document,) { }
 
   ngOnInit() {
-    this.isAuthenticated = this.authorizeService.isAuthenticated();
-    this.userName = this.authorizeService.getUser().pipe(map(u => u && u.name));
+  }
+
+  login() {
+    this.auth.loginWithRedirect();
+  }
+
+  logout() {
+    this.auth.logout({
+      logoutParams: {
+        returnTo: this.document.location.origin
+      }
+    });
   }
 }
