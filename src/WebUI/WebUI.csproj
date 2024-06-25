@@ -18,6 +18,10 @@
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         <DockerfileContext>..\..</DockerfileContext>
         <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+        <AnalysisMode>Recommended</AnalysisMode>
+        <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+
     </PropertyGroup>
 
     <ItemGroup>
@@ -50,11 +54,6 @@
         <ProjectReference Include="..\Application\Application.csproj" />
         <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     </ItemGroup>
-
-    <PropertyGroup>
-        <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-    </PropertyGroup>
-
 
     <Target Name="NSwag" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
         <Message Importance="High" Text="$(NSwagExe_Net60) run nswag.json /variables:Configuration=$(Configuration)" />

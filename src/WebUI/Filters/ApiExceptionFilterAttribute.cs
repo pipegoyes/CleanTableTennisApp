@@ -59,7 +59,7 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
         context.ExceptionHandled = true;
     }
 
-    private void HandleInvalidModelStateException(ExceptionContext context)
+    private static void HandleInvalidModelStateException(ExceptionContext context)
     {
         var details = new ValidationProblemDetails(context.ModelState)
         {
@@ -121,7 +121,7 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
         context.ExceptionHandled = true;
     }
 
-    private void HandleUnknownException(ExceptionContext context)
+    private static void HandleUnknownException(ExceptionContext context)
     {
         var details = new ProblemDetails
         {

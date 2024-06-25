@@ -34,9 +34,8 @@ public class Program
             catch (Exception ex)
             {
                 var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-
-                logger.LogError(ex, "An error occurred while migrating or seeding the database.");
-
+                var loggerMessage = LoggerMessage.Define(LogLevel.Error, 1, "An error occurred while migrating or seeding the database.");
+                loggerMessage(logger, ex);
                 throw;
             }
         }

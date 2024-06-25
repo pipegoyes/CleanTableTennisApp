@@ -16,8 +16,7 @@ public class LoginController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Post()
-    {
+    public IActionResult Post(){
         // TODO Add login request [FromBody] LoginRequest loginRequest
 
         //your logic for login process
