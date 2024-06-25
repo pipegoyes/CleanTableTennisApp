@@ -10,7 +10,7 @@ namespace CleanTableTennisApp.Application.UnitTests.Common.Behaviours;
 
 public class CreateTeamMatchCommandValidatorTest
 {
-    private CreateTeamMatchCommandValidator _testee;
+    private CreateTeamMatchCommandValidator _testee = new CreateTeamMatchCommandValidator();
 
     [SetUp]
     public void Setup()

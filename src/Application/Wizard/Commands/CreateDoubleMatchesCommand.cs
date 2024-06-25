@@ -10,8 +10,8 @@ namespace CleanTableTennisApp.Application.Wizard.Commands;
 public class CreateDoubleMatchesCommand : IRequest<bool>
 {
     public int TeamMatchId { get; set; }
-    public IList<DoublePlayerRequest> HostPlayers { get; set; }
-    public IList<DoublePlayerRequest> GuestPlayers { get; set; }
+    public IList<DoublePlayerRequest> HostPlayers { get; set; } = new List<DoublePlayerRequest>();
+    public IList<DoublePlayerRequest> GuestPlayers { get; set; } = new List<DoublePlayerRequest>();
 }
 
 public class CreateDoubleMatchesHandler : IRequestHandler<CreateDoubleMatchesCommand, bool>

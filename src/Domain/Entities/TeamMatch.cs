@@ -5,6 +5,8 @@ public class TeamMatch : AuditableEntity
     // TODO EF needs a parameterless constructor 
     public TeamMatch()
     {
+        HostTeam = new Team(string.Empty);
+        GuestTeam = new Team(string.Empty);
         SingleMatches = new List<SingleMatch>();
         DoubleMatches = new List<DoubleMatch>();
     }

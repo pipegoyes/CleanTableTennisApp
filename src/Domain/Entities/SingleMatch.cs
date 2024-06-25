@@ -20,9 +20,9 @@ public class SingleMatch : AuditableEntity, IScorable<Score>
     }
 
     public int Id { get; set; }
-    public Player HostPlayer { get; set; }
-    public Player GuestPlayer { get; set; }
-    public TeamMatch TeamMatch { get; set; }
-    public PlayingOrder PlayingOrder { get; set; }
+    public Player HostPlayer { get; set; } = new();
+    public Player GuestPlayer { get; set; } = new();
+    public TeamMatch TeamMatch { get; set; } = new();
+    public PlayingOrder PlayingOrder { get; set; } = new();
     public ICollection<Score> Scores { get; set; }
 }

@@ -15,7 +15,7 @@ public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest> where T
         _currentUserService = currentUserService;
     }
 
-    public async Task Process(TRequest request, CancellationToken cancellationToken)
+    public Task Process(TRequest request, CancellationToken cancellationToken)
     {
         var requestName = typeof(TRequest).Name;
         var userId = _currentUserService.UserId ?? string.Empty;
@@ -28,5 +28,6 @@ public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest> where T
 
         _logger.LogInformation("CleanTableTennisApp Request: {Name} {@UserId} {@UserName} {@Request}",
             requestName, userId, userName, request);
+        return Task.CompletedTask;
     }
 }

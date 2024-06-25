@@ -23,8 +23,8 @@ public static class ApplicationDbContextSeed
         }
     }
 
-    public static async Task SeedSampleDataAsync(ApplicationDbContext context)
+    public static Task SeedSampleDataAsync(ApplicationDbContext context)
     {
-        // Seed, if necessary
+        return Task.CompletedTask;
     }
 }

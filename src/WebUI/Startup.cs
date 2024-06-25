@@ -81,6 +81,8 @@ public class Startup
             options.Filters.Add<ApiExceptionFilterAttribute>())
                 .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
 
+        //services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+
         services.AddExampleProviders(typeof(CreateTeamMatchExample).Assembly);
 
         services.AddRazorPages();

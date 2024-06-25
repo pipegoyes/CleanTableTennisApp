@@ -8,7 +8,6 @@ namespace CleanTableTennisApp.Application.Common.Behaviours;
 public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
 {
     private readonly ICurrentUserService _currentUserService;
-    private readonly IIdentityService _identityService;
     private readonly ILogger<TRequest> _logger;
     private readonly Stopwatch _timer;
 
