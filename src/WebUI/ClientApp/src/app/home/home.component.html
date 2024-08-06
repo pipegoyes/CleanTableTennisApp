@@ -6,14 +6,11 @@
         <app-on-going-team-matches></app-on-going-team-matches>
     </div>
     
-    <div>
+    <div *ngIf="auth.isAuthenticated$ | async">
         <p>
             In order to create a new match click on the following button.
         </p>
     
-        <button [routerLink]="['/start-wizard']" class="btn btn-primary" type="button">Lets play</button>
-    </div>
-    <div>
-        Hey thats the token {{ token }}
+        <button [routerLink]="['/start-wizard']" class="btn btn-primary" type="button" >Lets play</button>
     </div>
 </p-card>
