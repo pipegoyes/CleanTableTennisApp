@@ -271,3 +271,7 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+# Temporal files of SQLite
+cleantt.db-wal
+cleantt.db-shm
