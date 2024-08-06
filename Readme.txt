@@ -22,7 +22,7 @@ Add-Migration "Name" -Project Infrastructure
 Whats need to be done for beta version?
 
 Bugs
-- ComboBox does not display initial game points correctly
+- (resolved) ComboBox does not display initial game points correctly
 - There is no error when you select 11 and nothing, it saves score in single match
 - Consider set order in scores (single and doubles)
 

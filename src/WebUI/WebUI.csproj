@@ -18,10 +18,9 @@
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         <DockerfileContext>..\..</DockerfileContext>
         <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
+        <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
         <AnalysisMode>Recommended</AnalysisMode>
-        <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-
     </PropertyGroup>
 
     <ItemGroup>

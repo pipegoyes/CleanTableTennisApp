@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CleanTableTennisApp.WebUI.Controllers;
 
-[Authorize]
 public class TeamMatchController : ApiControllerBase
 {
     [HttpPost]
