@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ScoreService } from '../score.service';
 
 @Component({
   selector: 'app-set-score',
@@ -16,16 +17,25 @@ export class SetScoreComponent implements OnInit {
   @Output() hostPointsEvent = new EventEmitter<number>();
   @Output() guestPointsEvent = new EventEmitter<number>();
 
-  constructor() { }
+  constructor(private scoreService: ScoreService) { }
 
   ngOnInit(): void {
   }
 
   onHostPointChange(event: any) {
+    var rivalScore = this.scoreService.calculateRivalScore(event.value);
+    if(rivalScore){
+      this.guestPoints = rivalScore;
+    }
+
     this.hostPointsEvent.emit(event.value);
   }
 
   onGuestPointChange(event: any) {
+    var rivalScore = this.scoreService.calculateRivalScore(event.value);
+    if(rivalScore){
+      this.hostPoints = rivalScore;
+    }
     this.guestPointsEvent.emit(event.value);
   }
 

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { MatchWithScores } from './models/MatchWithScores';
+import { Observable } from 'rxjs';
 import { ScoresClient, UpdateMatchScoreCommand, ScoreDto } from './web-api-client';
 
 @Injectable({
@@ -22,5 +21,12 @@ export class ScoreService {
 
   get(matchIdEncoded: string): Observable<ScoreDto[]>{
     return this.scoreClient.get(matchIdEncoded);
+  }
+
+  calculateRivalScore(points: number): number{
+    if(points != 11 && points < 11){
+      return 11;
+    }
+    return null;
   }
 }
