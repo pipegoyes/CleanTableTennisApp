@@ -76,8 +76,8 @@ import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.
   providers: [
     { provide: API_BASE_URL, useValue: environment.apiUrl },
     provideAuth0({
-      domain: 'dev-dydx45fd0tuoy8tt.us.auth0.com',
-      clientId: 'cUkx2OcPufVLok3s6MVZZH2ghWkHsW4c',
+      domain: environment.auth0Domain,
+      clientId: environment.auth0ClientId,
       authorizationParams: {
         redirect_uri: window.location.origin
       }

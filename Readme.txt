@@ -59,7 +59,7 @@ Azure
 - cors setting with defined origin
 - do not forget to change enviroment.prod to point to the right api url with port enviroment.prod.ts
 
-
+[Obsolete]
 BACK END - Migrating to JWT
 - Register functionality 
 - Reactivate feature EF and audit create by and modify by 

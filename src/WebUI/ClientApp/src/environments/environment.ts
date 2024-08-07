@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  // apiUrl: "https://clean-table-tennis-app.azurewebsites.net:443"
-  // apiUrl: "https://localhost:5001"
-  apiUrl: "https://localhost:44312"
+  apiUrl: "https://localhost:44312",
+  auth0Domain: "dev-dydx45fd0tuoy8tt.us.auth0.com",
+  auth0ClientId: "cUkx2OcPufVLok3s6MVZZH2ghWkHsW4c"
 };
 
 /*
