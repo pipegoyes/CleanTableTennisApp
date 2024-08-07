@@ -18,11 +18,6 @@ public static class DependencyInjection
         }
         else
         {
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlServer(
-            //        configuration.GetConnectionString("DefaultConnection"),
-            //        b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
-
             services.AddDbContext<ApplicationDbContext>(o =>
             {
                 o.UseSqlite(configuration.GetConnectionString("DefaultConnection"), options =>
@@ -34,11 +29,10 @@ public static class DependencyInjection
         }
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
-
         services.AddScoped<IDomainEventService, DomainEventService>();
-
         services.AddTransient<IDateTime, DateTimeService>();
 
+        // Todo pending to reactivate
         services.AddAuthorization(options => 
             options.AddPolicy("CanPurge", policy => policy.RequireRole("Administrator")));
 

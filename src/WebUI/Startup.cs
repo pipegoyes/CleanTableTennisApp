@@ -38,14 +38,12 @@ public class Startup
 
         services.AddDatabaseDeveloperPageExceptionFilter();
 
+        // todo some of them needs to go to AddApplication or AddInfrastructure
         services.AddSingleton<ICurrentUserService, CurrentUserService>();
         services.AddSingleton<IUrlSafeIntEncoder, UrlSafeIntEncoder>();
-
         services.AddSingleton<IValidator<ICollection<Score>>, ScoreValidator>();
         services.AddSingleton<IValidator<ICollection<DoubleMatchScore>>, DoubleScoreValidator>();
-
         services.AddSingleton<IVictoriesCounter, VictoriesCounter>();
-
         services.AddSingleton<IGamePointsUpdater<Score>, GamePointsUpdater<Score>>();
         services.AddSingleton<IGamePointsUpdater<DoubleMatchScore>, GamePointsUpdater<DoubleMatchScore>>();
         services.AddSingleton<ITeamMatchConverter, TeamMatchConverter>();
@@ -57,11 +55,8 @@ public class Startup
             //todo use a dedicated policy and disable it in development Example .useCors(myProdPolicy)
             builder.AddDefaultPolicy(policy =>
             {
-                policy.WithOrigins(new string[]
-                {
-                    "https://lively-tree-05d863103.3.azurestaticapps.net",
-                    "http://localhost:4200"
-                })
+                var originUrl = Configuration.GetValue<string>("OriginUrl");
+                policy.WithOrigins(originUrl)
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();
