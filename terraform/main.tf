@@ -1,25 +1,34 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = "3.115.0"
+    }
+  }
+}
+
 provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "app_rg" {
-  name     = "app_rg"
+resource "azurerm_resource_group" "rg-clean-tt" {
+  name     = "rg-clean-tt"
   location = "westeurope" # Germany West Central region
 }
 
-resource "azurerm_service_plan" "app_service_plan" {
+resource "azurerm_service_plan" "sp-clean-tt" {
   name                = "main-service-plan"
-  location            = azurerm_resource_group.app_rg.location
-  resource_group_name = azurerm_resource_group.app_rg.name
+  location            = azurerm_resource_group.rg-clean-tt.location
+  resource_group_name = azurerm_resource_group.rg-clean-tt.name
   os_type             = "Windows"
   sku_name            = "B1"
 }
 
-resource "azurerm_windows_web_app" "table_tennis_webapp" {
-  name                = "clean-table-tennis-app"
-  location            = azurerm_resource_group.app_rg.location
-  resource_group_name = azurerm_resource_group.app_rg.name
-  service_plan_id     = azurerm_service_plan.app_service_plan.id
+resource "azurerm_windows_web_app" "clean-tt-api" {
+  name                = "clean-table-tennis-api"
+  location            = azurerm_resource_group.rg-clean-tt.location
+  resource_group_name = azurerm_resource_group.rg-clean-tt.name
+  service_plan_id     = azurerm_service_plan.sp-clean-tt.id
 
 
   site_config {
@@ -59,14 +68,14 @@ resource "azurerm_windows_web_app" "table_tennis_webapp" {
 
 # resource "azurerm_storage_account" "storageacount" {
 #   name                     = "storagedb"
-#   resource_group_name      = azurerm_resource_group.app_rg.name
-#   location                 = azurerm_resource_group.app_rg.location
+#   resource_group_name      = azurerm_resource_group.rg-clean-tt.name
+#   location                 = azurerm_resource_group.rg-clean-tt.location
 #   account_tier             = "Standard"
 #   account_replication_type = "LRS"
 # }
 
-resource "azurerm_static_site" "front-end" {
-  name                = "front-end"
-  resource_group_name = azurerm_resource_group.app_rg.name
-  location            = azurerm_resource_group.app_rg.location
+resource "azurerm_static_web_app" "clean-tt-frontend" {
+  name                = "clean-tt-frontend"
+  resource_group_name = azurerm_resource_group.rg-clean-tt.name
+  location            = azurerm_resource_group.rg-clean-tt.location
 }
