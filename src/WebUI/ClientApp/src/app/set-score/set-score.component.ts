@@ -26,15 +26,18 @@ export class SetScoreComponent implements OnInit {
     var rivalScore = this.scoreService.calculateRivalScore(event.value);
     if(rivalScore){
       this.guestPoints = rivalScore;
+      this.guestPointsEvent.emit(this.guestPoints);
     }
 
     this.hostPointsEvent.emit(event.value);
+    
   }
 
   onGuestPointChange(event: any) {
     var rivalScore = this.scoreService.calculateRivalScore(event.value);
     if(rivalScore){
       this.hostPoints = rivalScore;
+      this.hostPointsEvent.emit(this.hostPoints);
     }
     this.guestPointsEvent.emit(event.value);
   }

@@ -18,6 +18,9 @@ https://www.primefaces.org/primeng-v12-lts
 Package manager CLI
 Add-Migration "Name" -Project Infrastructure 
 
+SWA - deploying cli
+npm install -g @azure/static-web-apps-cli
+
 -------------------------------
 Whats need to be done for beta version?
 
@@ -55,7 +58,7 @@ Azure
 - Install static-web-apps-cli
 	npm install -g @azure/static-web-apps-cli
 - Build and deploy front end 	
-	swa deploy -n front-end ./dist --env production
+	swa deploy -n clean-tt-frontend ./dist --env production
 - cors setting with defined origin
 - do not forget to change enviroment.prod to point to the right api url with port enviroment.prod.ts
 
