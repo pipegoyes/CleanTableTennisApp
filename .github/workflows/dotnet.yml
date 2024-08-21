@@ -26,3 +26,5 @@ jobs:
       run: dotnet build CleanTableTennisApp.sln --no-restore
     - name: Test
       run: dotnet test CleanTableTennisApp.sln --no-build --verbosity normal
+    - name: Publish 
+      run: dotnet publish src/WebUI/WebUI.csproj --configuration Release -o artifacts
