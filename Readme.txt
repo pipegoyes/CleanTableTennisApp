@@ -77,6 +77,3 @@ Angular - Migrating to JWT (see https://github.com/auth0/angular2-jwt)
 	https://github.com/auth0/angular2-jwt/blob/main/EXAMPLES.md
 - create login component
 - Adjust navigation bar to show register/login buttons
-
-
-test123

@@ -10,7 +10,7 @@ namespace CleanTableTennisApp.Application.UnitTests.Common.Behaviours;
 
 public class CreateTeamMatchCommandValidatorTest
 {
-    private CreateTeamMatchCommandValidator _testee = new CreateTeamMatchCommandValidator();
+    private CreateTeamMatchCommandValidator _testee = new();
 
     [SetUp]
     public void Setup()
@@ -28,10 +28,21 @@ public class CreateTeamMatchCommandValidatorTest
                 Name = "Guest",
                 Players = new List<PlayerRequest>
                 {
-                    new PlayerRequest
-                    {
-                        DoublePosition = DoublePosition.FirstDouble, FullName = "Felipe Goyes",
-                    }
+                    CreatePlayer("Felipe Goyes", DoublePosition.FirstDouble),
+                    CreatePlayer("Andres Coral", DoublePosition.FirstDouble),
+                    CreatePlayer("Bran Muster", DoublePosition.SecondDouble),
+                    CreatePlayer("Jan Peter", DoublePosition.SecondDouble),
+                }
+            },
+            HostTeam = new TeamRequest()
+            {
+                Name = "Host",
+                Players = new List<PlayerRequest>()
+                {
+                    CreatePlayer("Player1 LastName1", DoublePosition.FirstDouble),
+                    CreatePlayer("Player2 LastName2", DoublePosition.FirstDouble),
+                    CreatePlayer("Player3 LastName3", DoublePosition.SecondDouble),
+                    CreatePlayer("Player4 LastName4", DoublePosition.SecondDouble),
                 }
             }
         };
@@ -40,4 +51,10 @@ public class CreateTeamMatchCommandValidatorTest
         result.Errors.Should().BeEmpty();
     }
 
+    private static PlayerRequest CreatePlayer(string name, DoublePosition doublePosition) =>
+        new()
+        {
+            DoublePosition = doublePosition,
+            FullName = name,
+        };
 }
