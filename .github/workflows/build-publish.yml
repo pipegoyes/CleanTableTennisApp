@@ -26,7 +26,7 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: upload-artifact
+        name: cleantt-api-artifacts
         path: artifacts/
 
   deploy_dev:
@@ -36,6 +36,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: dometrain-artifact
+          name: cleantt-api-artifacts
           path: artifacts/
-
+      - name: Display structure of downloaded files
+        run: ls -R
