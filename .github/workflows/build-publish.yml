@@ -11,7 +11,8 @@ jobs:
     name: Build-Publish
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repo
+      uses: actions/checkout@v4
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
@@ -34,10 +35,12 @@ jobs:
     name: Use terraform to create infrastructure
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
       - name: terraform plan
         uses: dflook/terraform-plan@v1
         with:
-          path: terraform
+          path: terraform/
 
   # deploy_prod:
   #   name: Deploy to production
