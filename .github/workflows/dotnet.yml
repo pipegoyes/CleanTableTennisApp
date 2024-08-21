@@ -23,6 +23,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore CleanTableTennisApp.sln
     - name: Build
-      run: dotnet build CleanTableTennisApp.sln --no-restore -o .\artifacts
+      run: dotnet build CleanTableTennisApp.sln --no-restore
     - name: Test
       run: dotnet test CleanTableTennisApp.sln --no-build --verbosity normal
