@@ -46,34 +46,12 @@ resource "azurerm_windows_web_app" "clean-tt-api" {
     }
   }
 
-  # node version ?
-
-  # virtual_directory {
-  #   virtual_path  = "/"
-  #   physical_path = "ClientApp/dist"
-  # }
-
-  # connection_string {
-  #   name  = "DefaultConnection"
-  #   type  = "SQLServer"
-  #   value = "Server=tt-db.database.windows.net;Database=CleanTableTennisAppDb;User=XXX;Password=XXX;MultipleActiveResultSets=true"
-  # }
-
   app_settings = {
     "WEBSITE_LOAD_CERTIFICATES" = "*"
     "UseInMemoryDatabase" = false
   }
 
 }
-
-# resource "azurerm_storage_account" "storageacount" {
-#   name                     = "storagedb"
-#   resource_group_name      = azurerm_resource_group.rg-clean-tt.name
-#   location                 = azurerm_resource_group.rg-clean-tt.location
-#   account_tier             = "Standard"
-#   account_replication_type = "LRS"
-# }
-
 resource "azurerm_static_web_app" "clean-tt-frontend" {
   name                = "clean-tt-frontend"
   resource_group_name = azurerm_resource_group.rg-clean-tt.name
