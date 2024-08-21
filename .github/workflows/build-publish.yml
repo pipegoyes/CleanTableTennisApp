@@ -32,6 +32,7 @@ jobs:
   
   prepare_infrastructure:
     name: Use terraform to create infrastructure
+    runs-on: ubuntu-latest
     steps:
       - name: terraform plan
         uses: dflook/terraform-plan@v1
