@@ -26,3 +26,8 @@ jobs:
       run: dotnet test CleanTableTennisApp.sln --no-build --verbosity normal
     - name: Publish 
       run: dotnet publish src/WebUI/WebUI.csproj --configuration Release -o artifacts
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: upload-artifact
+        path: artifacts/
