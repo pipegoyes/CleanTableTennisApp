@@ -65,5 +65,8 @@
     "protractor": "~7.0.0",
     "ts-node": "~5.0.1",
     "tslint": "~6.1.0"
+  },
+  "engines": {
+    "npm": "16.15.0"
   }
 }
