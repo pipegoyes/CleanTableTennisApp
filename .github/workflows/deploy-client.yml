@@ -21,7 +21,7 @@ jobs:
           lfs: false
       - uses: Langsdorf/env-replace@v1.0.5
         with:
-          file: './src/WebUI/ClientApp/environment.prod.ts'
+          file: './src/WebUI/ClientApp/src/environments/environment.prod.ts'
           match-secrets: "true"
           secrets: |
             AUTH0_DOMAIN=${{ secrets.AUTH0_DOMAIN }}
