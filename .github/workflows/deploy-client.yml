@@ -27,7 +27,7 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_DEPLOYMENT_TOKEN }}
           repo_token: ${{ secrets.GITHUB_TOKEN }} 
-          action: "upload" # More info https://aka.ms/swaworkflowconfig
+          action: "upload" 
           app_location: "src/WebUI/ClientApp" # location of package.json
-          output_location: "src/WebUI/ClientApp/dist"
+          output_location: "dist"
           app_build_command: "npm run release"
