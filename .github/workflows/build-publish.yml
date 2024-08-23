@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [ "master" ]
 
+env:
+  TERRAFORM_PRE_RUN: |
+    # Install latest Azure CLI
+    curl -skL https://aka.ms/InstallAzureCLIDeb | bash
+
 jobs:
   build:
     name: Build-Publish
@@ -31,16 +36,16 @@ jobs:
         name: cleantt-api-artifacts
         path: artifacts/
   
-  prepare_infrastructure:
-    name: Use terraform to create infrastructure
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-      - name: terraform plan
-        uses: dflook/terraform-plan@v1
-        with:
-          path: terraform/
+  # prepare_infrastructure:
+  #   name: Use terraform to create infrastructure
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repo
+  #       uses: actions/checkout@v4
+  #     - name: terraform plan
+  #       uses: dflook/terraform-plan@v1
+  #       with:
+  #         path: terraform/
 
   # deploy_prod:
   #   name: Deploy to production

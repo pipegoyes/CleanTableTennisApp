@@ -18,11 +18,12 @@ public class Program
             try
             {
                 var context = services.GetRequiredService<ApplicationDbContext>();
+                await context.Database.EnsureCreatedAsync();
 
                 //TODO this should be reactivated
                 //if (context.Database.IsSqlServer())
                 //{
-                //    await context.Database.MigrateAsync();
+                //await context.Database.MigrateAsync();
                 //}
 
                 //var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
