@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Checkout build and deploy client
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
           lfs: false
@@ -28,6 +28,6 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_DEPLOYMENT_TOKEN }}
           repo_token: ${{ secrets.GITHUB_TOKEN }} 
           action: "upload" # More info https://aka.ms/swaworkflowconfig
-          app_location: "./src/WebUI/ClientApp" # location of package.json
-          output_location: "./src/WebUI/ClientApp/dist"
+          app_location: "src/WebUI/ClientApp" # location of package.json
+          output_location: "src/WebUI/ClientApp/dist"
           app_build_command: "npm run release"
