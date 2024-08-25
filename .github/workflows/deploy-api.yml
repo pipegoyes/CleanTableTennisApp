@@ -13,7 +13,7 @@ env:
 
 jobs:
   build:
-    name: deploy-api
+    name: Build and upload
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repo
@@ -49,6 +49,6 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: v1-dotnetcore-sampleapp
+          app-name: clean-table-tennis-api
           publish-profile: ${{ secrets.AZURE_WEB_API_PUBLISH_PROFILE }}
           package: artifacts
