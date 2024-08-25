@@ -36,25 +36,19 @@ jobs:
         name: cleantt-api-artifacts
         path: artifacts/
   
-  # prepare_infrastructure:
-  #   name: Use terraform to create infrastructure
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout repo
-  #       uses: actions/checkout@v4
-  #     - name: terraform plan
-  #       uses: dflook/terraform-plan@v1
-  #       with:
-  #         path: terraform/
-
-  # deploy_prod:
-  #   name: Deploy to production
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   steps:
-  #     - uses: actions/download-artifact@v4
-  #       with:
-  #         name: cleantt-api-artifacts
-  #         path: artifacts/
-  #     - name: Display structure of downloaded files
-  #       run: ls -R artifacts/
+  deploy_prod:
+    name: Deploy to production
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: cleantt-api-artifacts
+          path: artifacts/
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: v1-dotnetcore-sampleapp
+          publish-profile: ${{ secrets.AZURE_WEB_API_PUBLISH_PROFILE }}
+          package: artifacts
