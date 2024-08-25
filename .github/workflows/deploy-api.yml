@@ -13,7 +13,7 @@ env:
 
 jobs:
   build:
-    name: Build-Publish
+    name: deploy-api
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repo
