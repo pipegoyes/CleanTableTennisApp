@@ -21,7 +21,7 @@ resource "azurerm_service_plan" "sp-clean-tt" {
   location            = azurerm_resource_group.rg-clean-tt.location
   resource_group_name = azurerm_resource_group.rg-clean-tt.name
   os_type             = "Windows"
-  sku_name            = "B1"
+  sku_name            = "F1"
 }
 
 resource "azurerm_windows_web_app" "clean-tt-api" {
