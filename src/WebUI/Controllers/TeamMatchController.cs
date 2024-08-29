@@ -1,6 +1,7 @@
 ﻿using CleanTableTennisApp.Application.Common.Dtos;
 using CleanTableTennisApp.Application.Home.Queries;
 using CleanTableTennisApp.Application.Wizard.Commands;
+using CleanTableTennisApp.WebUI.Permission;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace CleanTableTennisApp.WebUI.Controllers;
 public class TeamMatchController : ApiControllerBase
 {
     [HttpPost]
+    [Authorize(Permissions.Write.Matches)]
     public async Task<ActionResult<string>> Create([FromBody] CreateTeamMatchCommand command)
     {
         return await Mediator.Send(command);

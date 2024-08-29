@@ -40,7 +40,7 @@ Features
 	. popup to confirm action
 
 TODOS
-- Deploy or Open local ports at home.
+- Refactor API to make it real REST (plural at endpoints and so on)
 
 Tech debt
 - Single View to display score and double scores 

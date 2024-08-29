@@ -2,6 +2,8 @@
 using CleanTableTennisApp.Application.Requests;
 using CleanTableTennisApp.Application.Wizard.Commands;
 using CleanTableTennisApp.Application.Wizard.Queries;
+using CleanTableTennisApp.WebUI.Permission;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
@@ -24,6 +26,7 @@ public class ScoresController : ApiControllerBase
     }
 
     [HttpPost]
+    [Authorize(Permissions.Write.Matches)]
     // TODO this functionality should be restricted by roles
     public async Task<ActionResult<bool>> Update([FromBody] UpdateMatchScoreCommand command)
     {

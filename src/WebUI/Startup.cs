@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using CleanTableTennisApp.Application;
 using CleanTableTennisApp.Application.Common.Converters;
 using CleanTableTennisApp.Application.Common.Enconders;
@@ -10,11 +11,15 @@ using CleanTableTennisApp.Infrastructure;
 using CleanTableTennisApp.Infrastructure.Persistence;
 using CleanTableTennisApp.WebUI.Controllers;
 using CleanTableTennisApp.WebUI.Filters;
+using CleanTableTennisApp.WebUI.Permission;
 using CleanTableTennisApp.WebUI.RequestExamples;
 using CleanTableTennisApp.WebUI.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using NSwag;
 using NSwag.Examples;
 using NSwag.Generation.Processors.Security;
@@ -49,6 +54,7 @@ public class Startup
         services.AddSingleton<ITeamMatchConverter, TeamMatchConverter>();
         services.AddSingleton<IScoreDtoConverter, ScoreDtoConverter>();
         services.AddSingleton<ITeamMatchVictoriesCounter, TeamMatchVictoriesCounter>();
+        services.AddSingleton<IAuthorizationHandler, HasPermissionsHandler>();
 
         services.AddCors(builder =>
         {
@@ -62,6 +68,7 @@ public class Startup
                     .AllowCredentials();
             });
         });
+
         services.AddHttpContextAccessor();
 
         services.AddHealthChecks()
@@ -81,6 +88,26 @@ public class Startup
         services.Configure<ApiBehaviorOptions>(options =>
             options.SuppressModelStateInvalidFilter = true);
 
+        var domain = $"https://{Configuration.GetValue<string>("Auth0:Domain")}/";
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.Authority = domain;
+                options.Audience = Configuration.GetValue<string>("Auth0:Audience");
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    NameClaimType = ClaimTypes.NameIdentifier
+                };
+            });
+
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy(Permissions.Write.Matches, policy => policy.Requirements.Add(new
+                PermissionDto(Permissions.Write.Matches, domain)));
+            options.AddPolicy(Permissions.All.Admin, policy => policy.Requirements.Add(new
+                PermissionDto(Permissions.All.Admin, domain)));
+
+        });
 
         services.AddOpenApiDocument((configure, provider) =>
         {

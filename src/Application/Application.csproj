@@ -35,10 +35,6 @@
         <Folder Include="Overview\Commands\" />
         <Folder Include="Overview\Queries\" />
         <Folder Include="Scores\Validators\" />
-        <Folder Include="TodoLists\Commands\CreateTodoList\" />
-        <Folder Include="TodoLists\Commands\DeleteTodoList\" />
-        <Folder Include="TodoLists\Commands\PurgeTodoLists\" />
-        <Folder Include="TodoLists\Commands\UpdateTodoList\" />
     </ItemGroup>
 
 </Project>
