@@ -1,12 +1,12 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-
 export const environment = {
   production: false,
   apiUrl: "https://localhost:44312",
+  auth0Audience: "https://cleantt-identity-dev/api",
   auth0Domain: "dev-dydx45fd0tuoy8tt.us.auth0.com",
-  auth0ClientId: "Ska99nrc5TjRrvaDh0k7nq5ihiZ3BRyR"
+  auth0ClientId: "cUkx2OcPufVLok3s6MVZZH2ghWkHsW4c"
 };
 
 /*

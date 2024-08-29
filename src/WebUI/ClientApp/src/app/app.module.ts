@@ -32,7 +32,7 @@ import { SetScoreComponent } from './set-score/set-score.component';
 import { DoubleScoresComponent } from './double-scores/double-scores.component';
 import { OnGoingTeamMatchesComponent } from './on-going-team-matches/on-going-team-matches.component';
 import { QuickViewComponent } from './quick-view/quick-view.component';
-import { provideAuth0 } from '@auth0/auth0-angular';
+import { AuthHttpInterceptor, provideAuth0 } from '@auth0/auth0-angular';
 import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
@@ -81,10 +81,14 @@ import { AuthInterceptor } from './auth.interceptor';
       domain: environment.auth0Domain,
       clientId: environment.auth0ClientId,
       authorizationParams: {
+        audience: environment.auth0Audience,
         redirect_uri: window.location.origin
-      }
+      },
+      httpInterceptor: {
+        allowedList: [`${environment.apiUrl}/*`],
+      },
     }),
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })
