@@ -69,28 +69,12 @@
               }
             }
           }
-        }
-      }
-    },
-    "/api/Login": {
-      "post": {
-        "tags": [
-          "Login"
-        ],
-        "operationId": "Login_Post",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
+        },
+        "security": [
+          {
+            "JWT": []
           }
-        }
+        ]
       }
     },
     "/api/Overview": {
@@ -150,7 +134,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/api/Scores/{matchIdEncoded}": {
@@ -216,7 +205,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
     "/api/TeamMatch": {
@@ -318,12 +312,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        }
       }
     },
     "/api/TeamMatch/singleTeamMatch": {

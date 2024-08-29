@@ -1,7 +1,8 @@
 ﻿using CleanTableTennisApp.Application.Overview.Commands;
 using CleanTableTennisApp.Application.Overview.Queries;
 using CleanTableTennisApp.Application.Requests;
-using CleanTableTennisApp.Application.Wizard.Commands;
+using CleanTableTennisApp.WebUI.Permission;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanTableTennisApp.WebUI.Controllers;
@@ -16,6 +17,7 @@ public class DoubleScoreController : ApiControllerBase
     }
 
     [HttpPost]
+    [Authorize(Permissions.Write.Matches)]
     public async Task<ActionResult<bool>> Update([FromBody] UpdateDoubleMatchScoreCommand command)
     {
         return await Mediator.Send(command);

@@ -35,7 +35,6 @@ import { QuickViewComponent } from './quick-view/quick-view.component';
 import { AuthHttpInterceptor, provideAuth0 } from '@auth0/auth0-angular';
 import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from './auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -82,7 +81,7 @@ import { AuthInterceptor } from './auth.interceptor';
       clientId: environment.auth0ClientId,
       authorizationParams: {
         audience: environment.auth0Audience,
-        redirect_uri: window.location.origin
+        redirect_uri: window.location.origin,
       },
       httpInterceptor: {
         allowedList: [`${environment.apiUrl}/*`],
