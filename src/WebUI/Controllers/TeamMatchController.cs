@@ -9,12 +9,14 @@ namespace CleanTableTennisApp.WebUI.Controllers;
 public class TeamMatchController : ApiControllerBase
 {
     [HttpPost]
+    [Authorize(Permissions.Write.Matches)]
     public async Task<ActionResult<string>> Create([FromBody] CreateTeamMatchCommand command)
     {
         return await Mediator.Send(command);
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<TeamMatchDto[]>> Get()
     {
         return await Mediator.Send(new GetOnGoingTeamMatchesQuery());

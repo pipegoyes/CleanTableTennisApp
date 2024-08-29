@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   apiUrl: "https://localhost:44312",
   auth0Domain: "dev-dydx45fd0tuoy8tt.us.auth0.com",
-  auth0ClientId: "cUkx2OcPufVLok3s6MVZZH2ghWkHsW4c"
+  auth0ClientId: "Ska99nrc5TjRrvaDh0k7nq5ihiZ3BRyR"
 };
 
 /*

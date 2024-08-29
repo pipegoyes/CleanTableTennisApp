@@ -6,6 +6,7 @@
     "start": "echo 'Starting...' && ng serve",
     "start:dev": "echo 'Starting (Dev)...' && ng serve --host 0.0.0.0 --disable-host-check",
     "build": "ng build",
+    "bserve": "ng build && ng serve",
     "release": "ng build --configuration production",
     "build:ssr": "ng run CleanTableTennisApp.WebUI:server:dev",
     "test": "ng test",

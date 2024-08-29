@@ -34,6 +34,8 @@ import { OnGoingTeamMatchesComponent } from './on-going-team-matches/on-going-te
 import { QuickViewComponent } from './quick-view/quick-view.component';
 import { provideAuth0 } from '@auth0/auth0-angular';
 import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -82,6 +84,7 @@ import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.
         redirect_uri: window.location.origin
       }
     }),
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using CleanTableTennisApp.Application;
 using CleanTableTennisApp.Application.Common.Converters;
 using CleanTableTennisApp.Application.Common.Enconders;
@@ -14,7 +15,10 @@ using CleanTableTennisApp.WebUI.RequestExamples;
 using CleanTableTennisApp.WebUI.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using NSwag;
 using NSwag.Examples;
 using NSwag.Generation.Processors.Security;
@@ -49,6 +53,7 @@ public class Startup
         services.AddSingleton<ITeamMatchConverter, TeamMatchConverter>();
         services.AddSingleton<IScoreDtoConverter, ScoreDtoConverter>();
         services.AddSingleton<ITeamMatchVictoriesCounter, TeamMatchVictoriesCounter>();
+        services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
         services.AddCors(builder =>
         {
@@ -62,6 +67,7 @@ public class Startup
                     .AllowCredentials();
             });
         });
+
         services.AddHttpContextAccessor();
 
         services.AddHealthChecks()
@@ -81,6 +87,25 @@ public class Startup
         services.Configure<ApiBehaviorOptions>(options =>
             options.SuppressModelStateInvalidFilter = true);
 
+        var domain = $"https://{Configuration.GetValue<string>("Auth0:Domain")}/";
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.Authority = domain;
+                options.Audience = Configuration.GetValue<string>("Auth0:Audience");
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    NameClaimType = ClaimTypes.NameIdentifier
+                };
+            });
+
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy(Permissions.Write.Matches, policy => policy.Requirements.Add(new
+                HasScopeRequirement(Permissions.Write.Matches, domain)));
+            options.AddPolicy(Permissions.All.Admin, policy => policy.Requirements.Add(new
+                HasScopeRequirement(Permissions.All.Admin, domain)));
+        });
 
         services.AddOpenApiDocument((configure, provider) =>
         {
@@ -139,5 +164,49 @@ public class Startup
             endpoints.MapHub<ScoresHub>("/real-time-scores");
         });
 
+    }
+}
+
+public static class Permissions
+{
+    public static class Write
+    {
+        public const string Matches = "write:matches";
+    }
+
+    public static class All
+    {
+        public const string Admin = "all:admin";
+    }
+}
+
+public class HasScopeRequirement : IAuthorizationRequirement
+{
+    public string Issuer { get; }
+    public string Scope { get; }
+
+    public HasScopeRequirement(string scope, string issuer)
+    {
+        Scope = scope ?? throw new ArgumentNullException(nameof(scope));
+        Issuer = issuer ?? throw new ArgumentNullException(nameof(issuer));
+    }
+}
+
+public class HasScopeHandler : AuthorizationHandler<HasScopeRequirement>
+{
+    protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, HasScopeRequirement requirement)
+    {
+        // If user does not have the scope claim, get out of here
+        if (!context.User.HasClaim(c => c.Type == "scope" && c.Issuer == requirement.Issuer))
+            return Task.CompletedTask;
+
+        // Split the scopes string into an array
+        var scopes = context.User.FindFirst(c => c.Type == "scope" && c.Issuer == requirement.Issuer)?.Value.Split(' ');
+
+        // Succeed if the scope array contains the required scope
+        if (scopes != null && scopes.Any(s => s == requirement.Scope))
+            context.Succeed(requirement);
+
+        return Task.CompletedTask;
     }
 }
