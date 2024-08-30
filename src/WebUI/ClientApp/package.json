@@ -31,7 +31,7 @@
     "@fortawesome/free-solid-svg-icons": "5.14.0",
     "@microsoft/signalr": "^7.0.7",
     "aspnet-prerendering": "^3.0.1",
-    "bootstrap": "^4.3.1",
+    "bootstrap": "^5.0.2",
     "core-js": "^2.6.5",
     "jquery": "3.5.0",
     "ngx-bootstrap": "^5.2.0",
