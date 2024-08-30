@@ -51,7 +51,7 @@ public class CreateTeamMatchHandler : IRequestHandler<CreateTeamMatchCommand, st
         return _urlSafeIntEncoder.Encode(teamMatch.Id);
     }
 
-    private CreateDoubleMatchesCommand CreateDoubleMatchesCommand(CreateTeamMatchCommand request, TeamMatch teamMatch, Team guestTeam, Team hostTeam)
+    private static CreateDoubleMatchesCommand CreateDoubleMatchesCommand(CreateTeamMatchCommand request, TeamMatch teamMatch, Team guestTeam, Team hostTeam)
     {
         var guestNamesWithDoublePosition = request.GuestTeam.Players.ToDictionary(s => s.FullName, r => r.DoublePosition);
         var hostNamesWithDoublePosition = request.HostTeam.Players.ToDictionary(s => s.FullName, r => r.DoublePosition);
