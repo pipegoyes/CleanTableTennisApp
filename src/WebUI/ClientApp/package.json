@@ -1,5 +1,5 @@
 {
-  "name": "CleanTableTennisApp.WebUI",
+  "name": "clean-tt-app",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -8,7 +8,7 @@
     "build": "ng build",
     "bserve": "ng build && ng serve",
     "release": "ng build --configuration production",
-    "build:ssr": "ng run CleanTableTennisApp.WebUI:server:dev",
+    "build:ssr": "ng run clean-tt-app:server:dev",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
