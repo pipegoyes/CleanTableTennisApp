@@ -1,6 +1,6 @@
+using CleanTableTennisApp.Application.Common.Dtos;
 using CleanTableTennisApp.Application.Common.Enconders;
 using CleanTableTennisApp.Application.Common.Interfaces;
-using CleanTableTennisApp.Application.Requests;
 using CleanTableTennisApp.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

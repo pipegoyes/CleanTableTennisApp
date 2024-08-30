@@ -1,5 +1,5 @@
-﻿using CleanTableTennisApp.Application.Overview.Commands;
-using CleanTableTennisApp.Application.Requests;
+﻿using CleanTableTennisApp.Application.Common.Dtos;
+using CleanTableTennisApp.Application.Overview.Commands;
 using CleanTableTennisApp.Application.Wizard.Commands;
 using CleanTableTennisApp.Application.Wizard.Queries;
 using CleanTableTennisApp.WebUI.Permission;

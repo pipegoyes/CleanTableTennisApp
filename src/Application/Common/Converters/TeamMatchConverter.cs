@@ -1,6 +1,5 @@
 using CleanTableTennisApp.Application.Common.Dtos;
 using CleanTableTennisApp.Application.Common.Enconders;
-using CleanTableTennisApp.Application.Requests;
 using CleanTableTennisApp.Application.Scores;
 using CleanTableTennisApp.Domain.Entities;
 using CleanTableTennisApp.Domain.Enums;

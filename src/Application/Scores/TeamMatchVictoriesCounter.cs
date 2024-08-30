@@ -13,7 +13,7 @@ public class TeamMatchVictoriesCounter : ITeamMatchVictoriesCounter
         return CalculateMatchVictories(teamMatch).Count(s => s == setVictory);
     }
 
-    private IReadOnlyCollection<SetVictory> CalculateMatchVictories(TeamMatch teamMatch)
+    private static IReadOnlyCollection<SetVictory> CalculateMatchVictories(TeamMatch teamMatch)
     {
         var result = new List<SetVictory>();
 
@@ -33,7 +33,7 @@ public class TeamMatchVictoriesCounter : ITeamMatchVictoriesCounter
     }
 
 
-    private SetVictory CalculateSetVictory(IReadOnlyCollection<IGamePoints> scores)
+    private static SetVictory CalculateSetVictory(IReadOnlyCollection<IGamePoints> scores)
     {
         var hostWonSets = scores.Count(s => s.GamePointsHost > s.GamePointsGuest);
         var guestWonSets = scores.Count(s => s.GamePointsGuest > s.GamePointsHost);

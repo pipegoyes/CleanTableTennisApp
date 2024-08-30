@@ -32,10 +32,6 @@ public static class DependencyInjection
         services.AddScoped<IDomainEventService, DomainEventService>();
         services.AddTransient<IDateTime, DateTimeService>();
 
-        // Todo pending to reactivate
-        services.AddAuthorization(options => 
-            options.AddPolicy("CanPurge", policy => policy.RequireRole("Administrator")));
-
         return services;
     }
 }

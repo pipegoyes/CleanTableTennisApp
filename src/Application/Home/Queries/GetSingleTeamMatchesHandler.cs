@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using CleanTableTennisApp.Application.Common.Converters;
 using CleanTableTennisApp.Application.Common.Dtos;
 using CleanTableTennisApp.Application.Common.Enconders;

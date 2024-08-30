@@ -18,12 +18,7 @@ public class Program
                 await context.Database.EnsureCreatedAsync();
 
                 //TODO this should be reactivated
-                //if (context.Database.IsSqlServer())
-                //{
                 //await context.Database.MigrateAsync();
-                //}
-
-                await ApplicationDbContextSeed.SeedSampleDataAsync(context);
             }
             catch (Exception ex)
             {

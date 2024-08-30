@@ -1,4 +1,4 @@
-using CleanTableTennisApp.Application.Requests;
+using CleanTableTennisApp.Application.Common.Dtos;
 using FluentValidation;
 
 namespace CleanTableTennisApp.Application.Scores.Validators;
@@ -20,7 +20,7 @@ public class ScoreDtoValidator : AbstractValidator<ScoreDto>
 
     }
 
-    private bool ValidatePointsDifference(int guestPoints, int hostPoints)
+    private static bool ValidatePointsDifference(int guestPoints, int hostPoints)
     {
         if (guestPoints >= TenPoints && hostPoints >= TenPoints)
         {
@@ -30,7 +30,7 @@ public class ScoreDtoValidator : AbstractValidator<ScoreDto>
         return true;
     }
 
-    private bool ValidateMinimumScore(int hostPoints, int guestPoints)
+    private static bool ValidateMinimumScore(int hostPoints, int guestPoints)
     {
         if (hostPoints < TenPoints || guestPoints < TenPoints)
         {

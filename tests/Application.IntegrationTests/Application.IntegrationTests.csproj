@@ -11,6 +11,15 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="TodoItems\**" />
+      <Compile Remove="TodoLists\**" />
+      <EmbeddedResource Remove="TodoItems\**" />
+      <EmbeddedResource Remove="TodoLists\**" />
+      <None Remove="TodoItems\**" />
+      <None Remove="TodoLists\**" />
+    </ItemGroup>
+
+    <ItemGroup>
         <None Remove="appsettings.json" />
     </ItemGroup>
 
@@ -34,12 +43,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\src\WebUI\WebUI.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="TodoItems\Commands\" />
-      <Folder Include="TodoLists\Commands\" />
-      <Folder Include="TodoLists\Queries\" />
     </ItemGroup>
 
 </Project>

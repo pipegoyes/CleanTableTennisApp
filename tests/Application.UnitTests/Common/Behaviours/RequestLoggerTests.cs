@@ -3,7 +3,6 @@ using CleanTableTennisApp.Application.Wizard.Commands;
 using CleanTableTennisApp.Application.Wizard.Validators;
 using CleanTableTennisApp.Domain.Enums;
 using FluentAssertions;
-using FluentValidation.TestHelper;
 using NUnit.Framework;
 
 namespace CleanTableTennisApp.Application.UnitTests.Common.Behaviours;

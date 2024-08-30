@@ -1,4 +1,4 @@
-﻿namespace CleanTableTennisApp.Application.Requests;
+﻿namespace CleanTableTennisApp.Application.Common.Dtos;
 
 public class ScoreDto
 {

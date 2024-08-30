@@ -1,4 +1,3 @@
-using CleanTableTennisApp.Application.Common.Dtos;
 using CleanTableTennisApp.Application.Common.Enconders;
 using CleanTableTennisApp.Application.Common.Interfaces;
 using CleanTableTennisApp.Application.Requests;
@@ -66,7 +65,7 @@ public class CreateTeamMatchHandler : IRequestHandler<CreateTeamMatchCommand, st
         return createDoubleMatchesCommand;
     }
 
-    private IList<DoublePlayerRequest> ToDoublePlayerRequests(ICollection<Player> players, IDictionary<string, DoublePosition> namesWithDoublePosition)
+    private static IList<DoublePlayerRequest> ToDoublePlayerRequests(ICollection<Player> players, IDictionary<string, DoublePosition> namesWithDoublePosition)
     {
         return players.Select(s => new DoublePlayerRequest { DoublePosition = namesWithDoublePosition[s.Name], PlayerId = s.Id }).ToArray();
     }
