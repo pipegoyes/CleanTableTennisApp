@@ -1,5 +1,5 @@
 {
-  "name": "CleanTableTennisApp.WebUI",
+  "name": "clean-tt-app",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -8,7 +8,7 @@
     "build": "ng build",
     "bserve": "ng build && ng serve",
     "release": "ng build --configuration production",
-    "build:ssr": "ng run CleanTableTennisApp.WebUI:server:dev",
+    "build:ssr": "ng run clean-tt-app:server:dev",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -31,7 +31,7 @@
     "@fortawesome/free-solid-svg-icons": "5.14.0",
     "@microsoft/signalr": "^7.0.7",
     "aspnet-prerendering": "^3.0.1",
-    "bootstrap": "^4.3.1",
+    "bootstrap": "^5.0.2",
     "core-js": "^2.6.5",
     "jquery": "3.5.0",
     "ngx-bootstrap": "^5.2.0",
