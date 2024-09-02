@@ -1,4 +1,5 @@
 using CleanTableTennisApp.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace CleanTableTennisApp.WebUI;
 
@@ -15,10 +16,7 @@ public class Program
             try
             {
                 var context = services.GetRequiredService<ApplicationDbContext>();
-                await context.Database.EnsureCreatedAsync();
-
-                //TODO this should be reactivated
-                //await context.Database.MigrateAsync();
+                await context.Database.MigrateAsync();
             }
             catch (Exception ex)
             {

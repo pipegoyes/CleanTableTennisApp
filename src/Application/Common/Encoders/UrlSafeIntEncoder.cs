@@ -1,4 +1,4 @@
-namespace CleanTableTennisApp.Application.Common.Enconders;
+namespace CleanTableTennisApp.Application.Common.Encoders;
 
 public interface IUrlSafeIntEncoder
 {

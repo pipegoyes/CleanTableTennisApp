@@ -1,12 +1,6 @@
 using System.Security.Claims;
 using CleanTableTennisApp.Application;
-using CleanTableTennisApp.Application.Common.Converters;
-using CleanTableTennisApp.Application.Common.Enconders;
 using CleanTableTennisApp.Application.Common.Interfaces;
-using CleanTableTennisApp.Application.Overview;
-using CleanTableTennisApp.Application.Scores;
-using CleanTableTennisApp.Application.Scores.Validators;
-using CleanTableTennisApp.Domain.Entities;
 using CleanTableTennisApp.Infrastructure;
 using CleanTableTennisApp.Infrastructure.Persistence;
 using CleanTableTennisApp.WebUI.Controllers;
@@ -14,7 +8,6 @@ using CleanTableTennisApp.WebUI.Filters;
 using CleanTableTennisApp.WebUI.Permission;
 using CleanTableTennisApp.WebUI.RequestExamples;
 using CleanTableTennisApp.WebUI.Services;
-using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -40,21 +33,9 @@ public class Startup
     {
         services.AddApplication();
         services.AddInfrastructure(Configuration);
-
-        services.AddDatabaseDeveloperPageExceptionFilter();
-
-        // todo some of them needs to go to AddApplication or AddInfrastructure
-        services.AddSingleton<ICurrentUserService, CurrentUserService>();
-        services.AddSingleton<IUrlSafeIntEncoder, UrlSafeIntEncoder>();
-        services.AddSingleton<IValidator<ICollection<Score>>, ScoreValidator>();
-        services.AddSingleton<IValidator<ICollection<DoubleMatchScore>>, DoubleScoreValidator>();
-        services.AddSingleton<IVictoriesCounter, VictoriesCounter>();
-        services.AddSingleton<IGamePointsUpdater<Score>, GamePointsUpdater<Score>>();
-        services.AddSingleton<IGamePointsUpdater<DoubleMatchScore>, GamePointsUpdater<DoubleMatchScore>>();
-        services.AddSingleton<ITeamMatchConverter, TeamMatchConverter>();
-        services.AddSingleton<IScoreDtoConverter, ScoreDtoConverter>();
-        services.AddSingleton<ITeamMatchVictoriesCounter, TeamMatchVictoriesCounter>();
+        
         services.AddSingleton<IAuthorizationHandler, HasPermissionsHandler>();
+        services.AddSingleton<ICurrentUserService, CurrentUserService>();
 
         services.AddCors(builder =>
         {

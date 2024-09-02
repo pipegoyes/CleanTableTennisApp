@@ -1,5 +1,5 @@
 using CleanTableTennisApp.Application.Common.Dtos;
-using CleanTableTennisApp.Application.Common.Enconders;
+using CleanTableTennisApp.Application.Common.Encoders;
 using CleanTableTennisApp.Application.Common.Interfaces;
 using CleanTableTennisApp.Domain.Entities;
 using FluentValidation;
