@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <RootNamespace>CleanTableTennisApp.Application.UnitTests</RootNamespace>
         <AssemblyName>CleanTableTennisApp.Application.UnitTests</AssemblyName>
 
@@ -9,6 +9,12 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="Common\Mappings\**" />
+      <EmbeddedResource Remove="Common\Mappings\**" />
+      <None Remove="Common\Mappings\**" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
@@ -24,10 +30,6 @@
     <ItemGroup>
         <ProjectReference Include="..\..\src\Application\Application.csproj" />
         <ProjectReference Include="..\..\src\Infrastructure\Infrastructure.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Common\Mappings\" />
     </ItemGroup>
 
 </Project>

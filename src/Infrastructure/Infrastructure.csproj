@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <RootNamespace>CleanTableTennisApp.Infrastructure</RootNamespace>
         <AssemblyName>CleanTableTennisApp.Infrastructure</AssemblyName>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -12,8 +12,11 @@
 
     <ItemGroup>
       <Compile Remove="Files\**" />
+      <Compile Remove="Persistence\Migrations\**" />
       <EmbeddedResource Remove="Files\**" />
+      <EmbeddedResource Remove="Persistence\Migrations\**" />
       <None Remove="Files\**" />
+      <None Remove="Persistence\Migrations\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -34,7 +37,6 @@
 
     <ItemGroup>
       <Folder Include="Migrations\" />
-      <Folder Include="Persistence\Migrations\" />
     </ItemGroup>
 
 </Project>

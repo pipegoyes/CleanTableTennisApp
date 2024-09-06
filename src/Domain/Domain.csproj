@@ -1,13 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <RootNamespace>CleanTableTennisApp.Domain</RootNamespace>
         <AssemblyName>CleanTableTennisApp.Domain</AssemblyName>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-	    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-	    <AnalysisMode>Recommended</AnalysisMode>
+	      <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+	      <AnalysisMode>Recommended</AnalysisMode>
     </PropertyGroup>
 
     <ItemGroup>

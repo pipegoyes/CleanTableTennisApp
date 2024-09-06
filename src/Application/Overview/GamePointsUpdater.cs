@@ -1,5 +1,5 @@
-using CleanTableTennisApp.Application.Common.Enconders;
-using CleanTableTennisApp.Application.Requests;
+using CleanTableTennisApp.Application.Common.Dtos;
+using CleanTableTennisApp.Application.Common.Encoders;
 using CleanTableTennisApp.Domain.Extensions;
 using CleanTableTennisApp.Domain.Interfaces;
 

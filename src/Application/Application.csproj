@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <RootNamespace>CleanTableTennisApp.Application</RootNamespace>
         <AssemblyName>CleanTableTennisApp.Application</AssemblyName>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -17,7 +17,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
         <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="10.3.4" />
         <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
@@ -30,7 +29,7 @@
     <ItemGroup>
         <Folder Include="Common\Converters\" />
         <Folder Include="Common\Dtos\" />
-        <Folder Include="Common\Enconders\" />
+        <Folder Include="Common\Encoders\" />
         <Folder Include="Home\Queries\" />
         <Folder Include="Overview\Commands\" />
         <Folder Include="Overview\Queries\" />

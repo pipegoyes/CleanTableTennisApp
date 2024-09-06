@@ -8,7 +8,7 @@ namespace CleanTableTennisApp.Application.Wizard.Commands;
 
 public class CreateAllSingleMatchesCommand : IRequest<bool>
 {
-    public int TeamMatchId { get; set; } = default;
+    public int TeamMatchId { get; set; }
 }
 
 public class CreateAllSingleMatchesHandler : IRequestHandler<CreateAllSingleMatchesCommand, bool>
@@ -50,7 +50,7 @@ public class CreateAllSingleMatchesHandler : IRequestHandler<CreateAllSingleMatc
         }
     }
 
-    private SingleMatch[] CreateMatches(TuplePlayers hostTuplePlayers, TuplePlayers guestTuplePlayers, TeamMatch teamMatch, int playerPosition)
+    private static SingleMatch[] CreateMatches(TuplePlayers hostTuplePlayers, TuplePlayers guestTuplePlayers, TeamMatch teamMatch, int playerPosition)
     {
         var result = new List<SingleMatch>
         {

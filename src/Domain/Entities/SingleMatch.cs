@@ -1,5 +1,4 @@
-﻿using System.Xml.Schema;
-using CleanTableTennisApp.Domain.Interfaces;
+﻿using CleanTableTennisApp.Domain.Interfaces;
 
 namespace CleanTableTennisApp.Domain.Entities;
 

@@ -1,6 +1,6 @@
-﻿using CleanTableTennisApp.Application.Overview.Commands;
+﻿using CleanTableTennisApp.Application.Common.Dtos;
+using CleanTableTennisApp.Application.Overview.Commands;
 using CleanTableTennisApp.Application.Overview.Queries;
-using CleanTableTennisApp.Application.Requests;
 using CleanTableTennisApp.WebUI.Permission;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

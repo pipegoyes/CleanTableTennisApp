@@ -1,4 +1,5 @@
 using CleanTableTennisApp.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace CleanTableTennisApp.WebUI;
 
@@ -15,15 +16,7 @@ public class Program
             try
             {
                 var context = services.GetRequiredService<ApplicationDbContext>();
-                await context.Database.EnsureCreatedAsync();
-
-                //TODO this should be reactivated
-                //if (context.Database.IsSqlServer())
-                //{
-                //await context.Database.MigrateAsync();
-                //}
-
-                await ApplicationDbContextSeed.SeedSampleDataAsync(context);
+                await context.Database.MigrateAsync();
             }
             catch (Exception ex)
             {

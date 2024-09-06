@@ -1,5 +1,4 @@
 using CleanTableTennisApp.Application.Overview.Commands;
-using CleanTableTennisApp.Application.Wizard.Validators;
 using FluentValidation;
 
 namespace CleanTableTennisApp.Application.Scores.Validators;

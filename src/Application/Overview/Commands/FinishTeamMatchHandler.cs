@@ -1,4 +1,4 @@
-using CleanTableTennisApp.Application.Common.Enconders;
+using CleanTableTennisApp.Application.Common.Encoders;
 using CleanTableTennisApp.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

@@ -19,11 +19,13 @@ public class DomainEventService : IDomainEventService
 
     public async Task Publish(DomainEvent domainEvent)
     {
-        _logger.LogInformation("Publishing domain event. Event - {event}", domainEvent.GetType().Name);
+#pragma warning disable CA1848
+        _logger.LogInformation($"Publishing domain event. Event {domainEvent.GetType().Name}");
+#pragma warning restore CA1848
         await _mediator.Publish(GetNotificationCorrespondingToDomainEvent(domainEvent));
     }
 
-    private INotification GetNotificationCorrespondingToDomainEvent(DomainEvent domainEvent)
+    private static INotification GetNotificationCorrespondingToDomainEvent(DomainEvent domainEvent)
     {
         return (INotification)Activator.CreateInstance(
             typeof(DomainEventNotification<>).MakeGenericType(domainEvent.GetType()), domainEvent)!;

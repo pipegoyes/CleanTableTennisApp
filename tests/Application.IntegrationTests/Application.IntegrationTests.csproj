@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <RootNamespace>CleanTableTennisApp.Application.IntegrationTests</RootNamespace>
         <AssemblyName>CleanTableTennisApp.Application.IntegrationTests</AssemblyName>
 
@@ -9,6 +9,15 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="TodoItems\**" />
+      <Compile Remove="TodoLists\**" />
+      <EmbeddedResource Remove="TodoItems\**" />
+      <EmbeddedResource Remove="TodoLists\**" />
+      <None Remove="TodoItems\**" />
+      <None Remove="TodoLists\**" />
+    </ItemGroup>
 
     <ItemGroup>
         <None Remove="appsettings.json" />
@@ -22,24 +31,17 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
-        <PackageReference Include="nunit" Version="3.13.2" />
-        <PackageReference Include="NUnit3TestAdapter" Version="4.1.0">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-        <PackageReference Include="FluentAssertions" Version="6.2.0" />
+        <PackageReference Include="FluentAssertions" Version="6.12.0" />
         <PackageReference Include="Moq" Version="4.16.1" />
-        <PackageReference Include="Respawn" Version="4.0.0" />
+        <PackageReference Include="xunit" Version="2.9.0" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\..\src\WebUI\WebUI.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="TodoItems\Commands\" />
-      <Folder Include="TodoLists\Commands\" />
-      <Folder Include="TodoLists\Queries\" />
     </ItemGroup>
 
 </Project>

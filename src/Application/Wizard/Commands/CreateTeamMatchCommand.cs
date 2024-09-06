@@ -1,5 +1,4 @@
-using CleanTableTennisApp.Application.Common.Dtos;
-using CleanTableTennisApp.Application.Common.Enconders;
+using CleanTableTennisApp.Application.Common.Encoders;
 using CleanTableTennisApp.Application.Common.Interfaces;
 using CleanTableTennisApp.Application.Requests;
 using CleanTableTennisApp.Domain.Entities;
@@ -52,7 +51,7 @@ public class CreateTeamMatchHandler : IRequestHandler<CreateTeamMatchCommand, st
         return _urlSafeIntEncoder.Encode(teamMatch.Id);
     }
 
-    private CreateDoubleMatchesCommand CreateDoubleMatchesCommand(CreateTeamMatchCommand request, TeamMatch teamMatch, Team guestTeam, Team hostTeam)
+    private static CreateDoubleMatchesCommand CreateDoubleMatchesCommand(CreateTeamMatchCommand request, TeamMatch teamMatch, Team guestTeam, Team hostTeam)
     {
         var guestNamesWithDoublePosition = request.GuestTeam.Players.ToDictionary(s => s.FullName, r => r.DoublePosition);
         var hostNamesWithDoublePosition = request.HostTeam.Players.ToDictionary(s => s.FullName, r => r.DoublePosition);
@@ -66,7 +65,7 @@ public class CreateTeamMatchHandler : IRequestHandler<CreateTeamMatchCommand, st
         return createDoubleMatchesCommand;
     }
 
-    private IList<DoublePlayerRequest> ToDoublePlayerRequests(ICollection<Player> players, IDictionary<string, DoublePosition> namesWithDoublePosition)
+    private static IList<DoublePlayerRequest> ToDoublePlayerRequests(ICollection<Player> players, IDictionary<string, DoublePosition> namesWithDoublePosition)
     {
         return players.Select(s => new DoublePlayerRequest { DoublePosition = namesWithDoublePosition[s.Name], PlayerId = s.Id }).ToArray();
     }

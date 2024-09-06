@@ -26,7 +26,7 @@ Whats need to be done for beta version?
 
 Bugs
 - (resolved) ComboBox does not display initial game points correctly
-- There is no error when you select 11 and nothing, it saves score in single match
+- (resolved) There is no error when you select 11 and nothing, it saves score in single match
 - Consider set order in scores (single and doubles)
 
 Features
@@ -44,6 +44,10 @@ TODOS
 
 Tech debt
 - Single View to display score and double scores 
+- Update to latest angular version
+- Update npm packages 
+- Update to latest .net version
+- Reactivate feature EF and audit create by and modify by 
 
 
 Questions
@@ -51,29 +55,9 @@ Questions
 - AuditableEntity for all entities ?
 
 Azure
-- in DB Server add networking exception for azure services 
-- Verify user and password credentials for db
-- Create/export a certificate with powershell (createCertificate.ps1)
-- Add app setting in web app api
 - Install static-web-apps-cli
 	npm install -g @azure/static-web-apps-cli
 - Build and deploy front end 	
 	swa deploy -n clean-tt-frontend ./dist --env production
 - cors setting with defined origin
-- do not forget to change enviroment.prod to point to the right api url with port enviroment.prod.ts
 
-[Obsolete]
-BACK END - Migrating to JWT
-- Register functionality 
-- Reactivate feature EF and audit create by and modify by 
-- Validate loginRequest before creating JWT Token
-- Add private claims 
-- Protect endpoints
-
-
-Angular - Migrating to JWT (see https://github.com/auth0/angular2-jwt)
-- Create Token service to call logincontroller and get jwt Token
-- Create options factory to set getter functionality
-	https://github.com/auth0/angular2-jwt/blob/main/EXAMPLES.md
-- create login component
-- Adjust navigation bar to show register/login buttons
