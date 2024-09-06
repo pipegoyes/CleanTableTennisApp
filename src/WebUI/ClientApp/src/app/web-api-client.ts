@@ -15,15 +15,21 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
-export interface IDoubleScoreClient {
-    get(doubleMatchIdEncoded: string): Observable<ScoreDto[]>;
-    update(command: UpdateDoubleMatchScoreCommand): Observable<boolean>;
+export interface IClient {
+    getDoubleScore(doubleMatchIdEncoded: string): Observable<ScoreDto[]>;
+    updateDoubleScore(command: UpdateDoubleMatchScoreCommand): Observable<boolean>;
+    finishTeamMatch(command: FinishTeamMatchCommand): Observable<boolean>;
+    getOverviewDto(query: GetOverviewQuery): Observable<OverviewDto>;
+    getScore(matchIdEncoded: string): Observable<ScoreDto[]>;
+    updateScore(command: UpdateMatchScoreCommand): Observable<boolean>;
+    createTeamMatch(command: CreateTeamMatchCommand): Observable<TeamMatch>;
+    getTeamMatches(teamMatchIdEncoded: string | null | undefined): Observable<TeamMatchDto[]>;
 }
 
 @Injectable({
     providedIn: 'root'
 })
-export class DoubleScoreClient implements IDoubleScoreClient {
+export class Client implements IClient {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -33,8 +39,8 @@ export class DoubleScoreClient implements IDoubleScoreClient {
         this.baseUrl = baseUrl ?? "";
     }
 
-    get(doubleMatchIdEncoded: string): Observable<ScoreDto[]> {
-        let url_ = this.baseUrl + "/api/DoubleScore/{doubleMatchIdEncoded}";
+    getDoubleScore(doubleMatchIdEncoded: string): Observable<ScoreDto[]> {
+        let url_ = this.baseUrl + "/double-score/{doubleMatchIdEncoded}";
         if (doubleMatchIdEncoded === undefined || doubleMatchIdEncoded === null)
             throw new Error("The parameter 'doubleMatchIdEncoded' must be defined.");
         url_ = url_.replace("{doubleMatchIdEncoded}", encodeURIComponent("" + doubleMatchIdEncoded));
@@ -49,11 +55,11 @@ export class DoubleScoreClient implements IDoubleScoreClient {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGet(response_);
+            return this.processGetDoubleScore(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGet(response_ as any);
+                    return this.processGetDoubleScore(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<ScoreDto[]>;
                 }
@@ -62,7 +68,7 @@ export class DoubleScoreClient implements IDoubleScoreClient {
         }));
     }
 
-    protected processGet(response: HttpResponseBase): Observable<ScoreDto[]> {
+    protected processGetDoubleScore(response: HttpResponseBase): Observable<ScoreDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -83,6 +89,10 @@ export class DoubleScoreClient implements IDoubleScoreClient {
             }
             return _observableOf(result200);
             }));
+        } else if (status === 404) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("A server side error occurred.", status, _responseText, _headers);
+            }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
@@ -91,8 +101,75 @@ export class DoubleScoreClient implements IDoubleScoreClient {
         return _observableOf<ScoreDto[]>(null as any);
     }
 
-    update(command: UpdateDoubleMatchScoreCommand): Observable<boolean> {
-        let url_ = this.baseUrl + "/api/DoubleScore";
+    updateDoubleScore(command: UpdateDoubleMatchScoreCommand): Observable<boolean> {
+        let url_ = this.baseUrl + "/double-score";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(command);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdateDoubleScore(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUpdateDoubleScore(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<boolean>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<boolean>;
+        }));
+    }
+
+    protected processUpdateDoubleScore(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return _observableOf(result200);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData400)) {
+                result400 = [] as any;
+                for (let item of resultData400)
+                    result400!.push(ValidationFailure.fromJS(item));
+            }
+            else {
+                result400 = <any>null;
+            }
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<boolean>(null as any);
+    }
+
+    finishTeamMatch(command: FinishTeamMatchCommand): Observable<boolean> {
+        let url_ = this.baseUrl + "/overview";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(command);
@@ -108,11 +185,11 @@ export class DoubleScoreClient implements IDoubleScoreClient {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processUpdate(response_);
+            return this.processFinishTeamMatch(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processUpdate(response_ as any);
+                    return this.processFinishTeamMatch(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<boolean>;
                 }
@@ -121,20 +198,34 @@ export class DoubleScoreClient implements IDoubleScoreClient {
         }));
     }
 
-    protected processUpdate(response: HttpResponseBase): Observable<boolean> {
+    protected processFinishTeamMatch(response: HttpResponseBase): Observable<boolean> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
             (response as any).error instanceof Blob ? (response as any).error : undefined;
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
+        if (status === 201) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            let result201: any = null;
+            let resultData201 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                result201 = resultData201 !== undefined ? resultData201 : <any>null;
     
-            return _observableOf(result200);
+            return _observableOf(result201);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData400)) {
+                result400 = [] as any;
+                for (let item of resultData400)
+                    result400!.push(ValidationFailure.fromJS(item));
+            }
+            else {
+                result400 = <any>null;
+            }
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
@@ -143,48 +234,29 @@ export class DoubleScoreClient implements IDoubleScoreClient {
         }
         return _observableOf<boolean>(null as any);
     }
-}
 
-export interface IOverviewClient {
-    getAllMatches(teamMatchIdEncoded: string | undefined): Observable<OverviewDto>;
-    finish(command: FinishTeamMatchCommand): Observable<boolean>;
-}
-
-@Injectable({
-    providedIn: 'root'
-})
-export class OverviewClient implements IOverviewClient {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl ?? "";
-    }
-
-    getAllMatches(teamMatchIdEncoded: string | undefined): Observable<OverviewDto> {
-        let url_ = this.baseUrl + "/api/Overview?";
-        if (teamMatchIdEncoded === null)
-            throw new Error("The parameter 'teamMatchIdEncoded' cannot be null.");
-        else if (teamMatchIdEncoded !== undefined)
-            url_ += "TeamMatchIdEncoded=" + encodeURIComponent("" + teamMatchIdEncoded) + "&";
+    getOverviewDto(query: GetOverviewQuery): Observable<OverviewDto> {
+        let url_ = this.baseUrl + "/overview";
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(query);
+
         let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetAllMatches(response_);
+            return this.processGetOverviewDto(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetAllMatches(response_ as any);
+                    return this.processGetOverviewDto(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<OverviewDto>;
                 }
@@ -193,7 +265,7 @@ export class OverviewClient implements IOverviewClient {
         }));
     }
 
-    protected processGetAllMatches(response: HttpResponseBase): Observable<OverviewDto> {
+    protected processGetOverviewDto(response: HttpResponseBase): Observable<OverviewDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -215,80 +287,8 @@ export class OverviewClient implements IOverviewClient {
         return _observableOf<OverviewDto>(null as any);
     }
 
-    finish(command: FinishTeamMatchCommand): Observable<boolean> {
-        let url_ = this.baseUrl + "/api/Overview";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(command);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processFinish(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processFinish(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<boolean>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<boolean>;
-        }));
-    }
-
-    protected processFinish(response: HttpResponseBase): Observable<boolean> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = resultData200 !== undefined ? resultData200 : <any>null;
-    
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<boolean>(null as any);
-    }
-}
-
-export interface IScoresClient {
-    get(matchIdEncoded: string): Observable<ScoreDto[]>;
-    update(command: UpdateMatchScoreCommand): Observable<boolean>;
-}
-
-@Injectable({
-    providedIn: 'root'
-})
-export class ScoresClient implements IScoresClient {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl ?? "";
-    }
-
-    get(matchIdEncoded: string): Observable<ScoreDto[]> {
-        let url_ = this.baseUrl + "/api/Scores/{matchIdEncoded}";
+    getScore(matchIdEncoded: string): Observable<ScoreDto[]> {
+        let url_ = this.baseUrl + "/score/{matchIdEncoded}";
         if (matchIdEncoded === undefined || matchIdEncoded === null)
             throw new Error("The parameter 'matchIdEncoded' must be defined.");
         url_ = url_.replace("{matchIdEncoded}", encodeURIComponent("" + matchIdEncoded));
@@ -303,11 +303,11 @@ export class ScoresClient implements IScoresClient {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGet(response_);
+            return this.processGetScore(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGet(response_ as any);
+                    return this.processGetScore(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<ScoreDto[]>;
                 }
@@ -316,7 +316,7 @@ export class ScoresClient implements IScoresClient {
         }));
     }
 
-    protected processGet(response: HttpResponseBase): Observable<ScoreDto[]> {
+    protected processGetScore(response: HttpResponseBase): Observable<ScoreDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -337,6 +337,10 @@ export class ScoresClient implements IScoresClient {
             }
             return _observableOf(result200);
             }));
+        } else if (status === 404) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("A server side error occurred.", status, _responseText, _headers);
+            }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
@@ -345,8 +349,8 @@ export class ScoresClient implements IScoresClient {
         return _observableOf<ScoreDto[]>(null as any);
     }
 
-    update(command: UpdateMatchScoreCommand): Observable<boolean> {
-        let url_ = this.baseUrl + "/api/Scores";
+    updateScore(command: UpdateMatchScoreCommand): Observable<boolean> {
+        let url_ = this.baseUrl + "/score";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(command);
@@ -361,12 +365,12 @@ export class ScoresClient implements IScoresClient {
             })
         };
 
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processUpdate(response_);
+        return this.http.request("put", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUpdateScore(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processUpdate(response_ as any);
+                    return this.processUpdateScore(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<boolean>;
                 }
@@ -375,7 +379,7 @@ export class ScoresClient implements IScoresClient {
         }));
     }
 
-    protected processUpdate(response: HttpResponseBase): Observable<boolean> {
+    protected processUpdateScore(response: HttpResponseBase): Observable<boolean> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -390,6 +394,20 @@ export class ScoresClient implements IScoresClient {
     
             return _observableOf(result200);
             }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData400)) {
+                result400 = [] as any;
+                for (let item of resultData400)
+                    result400!.push(ValidationFailure.fromJS(item));
+            }
+            else {
+                result400 = <any>null;
+            }
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
@@ -397,29 +415,9 @@ export class ScoresClient implements IScoresClient {
         }
         return _observableOf<boolean>(null as any);
     }
-}
 
-export interface ITeamMatchClient {
-    create(command: CreateTeamMatchCommand): Observable<string>;
-    get(): Observable<TeamMatchDto[]>;
-    getSingle(teamMatchIdEncoded: string | undefined): Observable<TeamMatchDto>;
-}
-
-@Injectable({
-    providedIn: 'root'
-})
-export class TeamMatchClient implements ITeamMatchClient {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl ?? "";
-    }
-
-    create(command: CreateTeamMatchCommand): Observable<string> {
-        let url_ = this.baseUrl + "/api/TeamMatch";
+    createTeamMatch(command: CreateTeamMatchCommand): Observable<TeamMatch> {
+        let url_ = this.baseUrl + "/team-match";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(command);
@@ -435,44 +433,59 @@ export class TeamMatchClient implements ITeamMatchClient {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreate(response_);
+            return this.processCreateTeamMatch(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processCreate(response_ as any);
+                    return this.processCreateTeamMatch(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<string>;
+                    return _observableThrow(e) as any as Observable<TeamMatch>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<string>;
+                return _observableThrow(response_) as any as Observable<TeamMatch>;
         }));
     }
 
-    protected processCreate(response: HttpResponseBase): Observable<string> {
+    protected processCreateTeamMatch(response: HttpResponseBase): Observable<TeamMatch> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
             (response as any).error instanceof Blob ? (response as any).error : undefined;
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
+        if (status === 201) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = resultData200 !== undefined ? resultData200 : <any>null;
-    
-            return _observableOf(result200);
+            let result201: any = null;
+            let resultData201 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result201 = TeamMatch.fromJS(resultData201);
+            return _observableOf(result201);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData400)) {
+                result400 = [] as any;
+                for (let item of resultData400)
+                    result400!.push(ValidationFailure.fromJS(item));
+            }
+            else {
+                result400 = <any>null;
+            }
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<string>(null as any);
+        return _observableOf<TeamMatch>(null as any);
     }
 
-    get(): Observable<TeamMatchDto[]> {
-        let url_ = this.baseUrl + "/api/TeamMatch";
+    getTeamMatches(teamMatchIdEncoded: string | null | undefined): Observable<TeamMatchDto[]> {
+        let url_ = this.baseUrl + "/team-match?";
+        if (teamMatchIdEncoded !== undefined && teamMatchIdEncoded !== null)
+            url_ += "teamMatchIdEncoded=" + encodeURIComponent("" + teamMatchIdEncoded) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -484,11 +497,11 @@ export class TeamMatchClient implements ITeamMatchClient {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGet(response_);
+            return this.processGetTeamMatches(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGet(response_ as any);
+                    return this.processGetTeamMatches(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<TeamMatchDto[]>;
                 }
@@ -497,7 +510,7 @@ export class TeamMatchClient implements ITeamMatchClient {
         }));
     }
 
-    protected processGet(response: HttpResponseBase): Observable<TeamMatchDto[]> {
+    protected processGetTeamMatches(response: HttpResponseBase): Observable<TeamMatchDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -524,58 +537,6 @@ export class TeamMatchClient implements ITeamMatchClient {
             }));
         }
         return _observableOf<TeamMatchDto[]>(null as any);
-    }
-
-    getSingle(teamMatchIdEncoded: string | undefined): Observable<TeamMatchDto> {
-        let url_ = this.baseUrl + "/api/TeamMatch/singleTeamMatch?";
-        if (teamMatchIdEncoded === null)
-            throw new Error("The parameter 'teamMatchIdEncoded' cannot be null.");
-        else if (teamMatchIdEncoded !== undefined)
-            url_ += "teamMatchIdEncoded=" + encodeURIComponent("" + teamMatchIdEncoded) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetSingle(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetSingle(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<TeamMatchDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<TeamMatchDto>;
-        }));
-    }
-
-    protected processGetSingle(response: HttpResponseBase): Observable<TeamMatchDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = TeamMatchDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<TeamMatchDto>(null as any);
     }
 }
 
@@ -621,6 +582,84 @@ export interface IScoreDto {
     scoreIdEncoded?: string;
     hostPoints?: number;
     guestPoints?: number;
+}
+
+export class ValidationFailure implements IValidationFailure {
+    propertyName?: string | undefined;
+    errorMessage?: string | undefined;
+    attemptedValue?: any | undefined;
+    customState?: any | undefined;
+    severity?: Severity;
+    errorCode?: string | undefined;
+    formattedMessagePlaceholderValues?: { [key: string]: any; } | undefined;
+
+    constructor(data?: IValidationFailure) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.propertyName = _data["propertyName"];
+            this.errorMessage = _data["errorMessage"];
+            this.attemptedValue = _data["attemptedValue"];
+            this.customState = _data["customState"];
+            this.severity = _data["severity"];
+            this.errorCode = _data["errorCode"];
+            if (_data["formattedMessagePlaceholderValues"]) {
+                this.formattedMessagePlaceholderValues = {} as any;
+                for (let key in _data["formattedMessagePlaceholderValues"]) {
+                    if (_data["formattedMessagePlaceholderValues"].hasOwnProperty(key))
+                        (<any>this.formattedMessagePlaceholderValues)![key] = _data["formattedMessagePlaceholderValues"][key];
+                }
+            }
+        }
+    }
+
+    static fromJS(data: any): ValidationFailure {
+        data = typeof data === 'object' ? data : {};
+        let result = new ValidationFailure();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["propertyName"] = this.propertyName;
+        data["errorMessage"] = this.errorMessage;
+        data["attemptedValue"] = this.attemptedValue;
+        data["customState"] = this.customState;
+        data["severity"] = this.severity;
+        data["errorCode"] = this.errorCode;
+        if (this.formattedMessagePlaceholderValues) {
+            data["formattedMessagePlaceholderValues"] = {};
+            for (let key in this.formattedMessagePlaceholderValues) {
+                if (this.formattedMessagePlaceholderValues.hasOwnProperty(key))
+                    (<any>data["formattedMessagePlaceholderValues"])[key] = (<any>this.formattedMessagePlaceholderValues)[key];
+            }
+        }
+        return data;
+    }
+}
+
+export interface IValidationFailure {
+    propertyName?: string | undefined;
+    errorMessage?: string | undefined;
+    attemptedValue?: any | undefined;
+    customState?: any | undefined;
+    severity?: Severity;
+    errorCode?: string | undefined;
+    formattedMessagePlaceholderValues?: { [key: string]: any; } | undefined;
+}
+
+export enum Severity {
+    Error = 0,
+    Warning = 1,
+    Info = 2,
 }
 
 export class UpdateDoubleMatchScoreCommand implements IUpdateDoubleMatchScoreCommand {
@@ -669,6 +708,42 @@ export class UpdateDoubleMatchScoreCommand implements IUpdateDoubleMatchScoreCom
 export interface IUpdateDoubleMatchScoreCommand {
     doubleMatchIdEncoded?: string;
     scoreDtos?: ScoreDto[];
+}
+
+export class FinishTeamMatchCommand implements IFinishTeamMatchCommand {
+    teamMatchIdEncoded?: string;
+
+    constructor(data?: IFinishTeamMatchCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.teamMatchIdEncoded = _data["teamMatchIdEncoded"];
+        }
+    }
+
+    static fromJS(data: any): FinishTeamMatchCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new FinishTeamMatchCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["teamMatchIdEncoded"] = this.teamMatchIdEncoded;
+        return data;
+    }
+}
+
+export interface IFinishTeamMatchCommand {
+    teamMatchIdEncoded?: string;
 }
 
 export class OverviewDto implements IOverviewDto {
@@ -884,10 +959,10 @@ export interface IOverviewDoubleMatchDto {
     scoresDtos?: ScoreDto[];
 }
 
-export class FinishTeamMatchCommand implements IFinishTeamMatchCommand {
+export class GetOverviewQuery implements IGetOverviewQuery {
     teamMatchIdEncoded?: string;
 
-    constructor(data?: IFinishTeamMatchCommand) {
+    constructor(data?: IGetOverviewQuery) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -902,9 +977,9 @@ export class FinishTeamMatchCommand implements IFinishTeamMatchCommand {
         }
     }
 
-    static fromJS(data: any): FinishTeamMatchCommand {
+    static fromJS(data: any): GetOverviewQuery {
         data = typeof data === 'object' ? data : {};
-        let result = new FinishTeamMatchCommand();
+        let result = new GetOverviewQuery();
         result.init(data);
         return result;
     }
@@ -916,7 +991,7 @@ export class FinishTeamMatchCommand implements IFinishTeamMatchCommand {
     }
 }
 
-export interface IFinishTeamMatchCommand {
+export interface IGetOverviewQuery {
     teamMatchIdEncoded?: string;
 }
 
@@ -970,6 +1045,437 @@ export interface IUpdateMatchScoreCommand {
     matchIdEncoded?: string;
     teamMatchIdEncoded?: string;
     scoreDtos?: ScoreDto[];
+}
+
+export abstract class AuditableEntity implements IAuditableEntity {
+    created?: Date;
+    createdBy?: string | undefined;
+    lastModified?: Date | undefined;
+    lastModifiedBy?: string | undefined;
+
+    constructor(data?: IAuditableEntity) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.created = _data["created"] ? new Date(_data["created"].toString()) : <any>undefined;
+            this.createdBy = _data["createdBy"];
+            this.lastModified = _data["lastModified"] ? new Date(_data["lastModified"].toString()) : <any>undefined;
+            this.lastModifiedBy = _data["lastModifiedBy"];
+        }
+    }
+
+    static fromJS(data: any): AuditableEntity {
+        data = typeof data === 'object' ? data : {};
+        throw new Error("The abstract class 'AuditableEntity' cannot be instantiated.");
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["created"] = this.created ? this.created.toISOString() : <any>undefined;
+        data["createdBy"] = this.createdBy;
+        data["lastModified"] = this.lastModified ? this.lastModified.toISOString() : <any>undefined;
+        data["lastModifiedBy"] = this.lastModifiedBy;
+        return data;
+    }
+}
+
+export interface IAuditableEntity {
+    created?: Date;
+    createdBy?: string | undefined;
+    lastModified?: Date | undefined;
+    lastModifiedBy?: string | undefined;
+}
+
+export class TeamMatch extends AuditableEntity implements ITeamMatch {
+    id?: number;
+    hostTeam?: Team;
+    guestTeam?: Team;
+    finishedAt?: Date | undefined;
+    singleMatches?: SingleMatch[];
+    doubleMatches?: DoubleMatch[];
+
+    constructor(data?: ITeamMatch) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.id = _data["id"];
+            this.hostTeam = _data["hostTeam"] ? Team.fromJS(_data["hostTeam"]) : <any>undefined;
+            this.guestTeam = _data["guestTeam"] ? Team.fromJS(_data["guestTeam"]) : <any>undefined;
+            this.finishedAt = _data["finishedAt"] ? new Date(_data["finishedAt"].toString()) : <any>undefined;
+            if (Array.isArray(_data["singleMatches"])) {
+                this.singleMatches = [] as any;
+                for (let item of _data["singleMatches"])
+                    this.singleMatches!.push(SingleMatch.fromJS(item));
+            }
+            if (Array.isArray(_data["doubleMatches"])) {
+                this.doubleMatches = [] as any;
+                for (let item of _data["doubleMatches"])
+                    this.doubleMatches!.push(DoubleMatch.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): TeamMatch {
+        data = typeof data === 'object' ? data : {};
+        let result = new TeamMatch();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["hostTeam"] = this.hostTeam ? this.hostTeam.toJSON() : <any>undefined;
+        data["guestTeam"] = this.guestTeam ? this.guestTeam.toJSON() : <any>undefined;
+        data["finishedAt"] = this.finishedAt ? this.finishedAt.toISOString() : <any>undefined;
+        if (Array.isArray(this.singleMatches)) {
+            data["singleMatches"] = [];
+            for (let item of this.singleMatches)
+                data["singleMatches"].push(item.toJSON());
+        }
+        if (Array.isArray(this.doubleMatches)) {
+            data["doubleMatches"] = [];
+            for (let item of this.doubleMatches)
+                data["doubleMatches"].push(item.toJSON());
+        }
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface ITeamMatch extends IAuditableEntity {
+    id?: number;
+    hostTeam?: Team;
+    guestTeam?: Team;
+    finishedAt?: Date | undefined;
+    singleMatches?: SingleMatch[];
+    doubleMatches?: DoubleMatch[];
+}
+
+export class Team extends AuditableEntity implements ITeam {
+    id?: number;
+    name?: string;
+    players?: Player[];
+
+    constructor(data?: ITeam) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            if (Array.isArray(_data["players"])) {
+                this.players = [] as any;
+                for (let item of _data["players"])
+                    this.players!.push(Player.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): Team {
+        data = typeof data === 'object' ? data : {};
+        let result = new Team();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        if (Array.isArray(this.players)) {
+            data["players"] = [];
+            for (let item of this.players)
+                data["players"].push(item.toJSON());
+        }
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface ITeam extends IAuditableEntity {
+    id?: number;
+    name?: string;
+    players?: Player[];
+}
+
+export class Player extends AuditableEntity implements IPlayer {
+    id?: number;
+    name?: string;
+    teamId?: number;
+
+    constructor(data?: IPlayer) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.teamId = _data["teamId"];
+        }
+    }
+
+    static fromJS(data: any): Player {
+        data = typeof data === 'object' ? data : {};
+        let result = new Player();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["teamId"] = this.teamId;
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface IPlayer extends IAuditableEntity {
+    id?: number;
+    name?: string;
+    teamId?: number;
+}
+
+export class SingleMatch extends AuditableEntity implements ISingleMatch {
+    id?: number;
+    hostPlayer?: Player;
+    guestPlayer?: Player;
+    teamMatch?: TeamMatch;
+    playingOrder?: PlayingOrder;
+    scores?: Score[];
+
+    constructor(data?: ISingleMatch) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.id = _data["id"];
+            this.hostPlayer = _data["hostPlayer"] ? Player.fromJS(_data["hostPlayer"]) : <any>undefined;
+            this.guestPlayer = _data["guestPlayer"] ? Player.fromJS(_data["guestPlayer"]) : <any>undefined;
+            this.teamMatch = _data["teamMatch"] ? TeamMatch.fromJS(_data["teamMatch"]) : <any>undefined;
+            this.playingOrder = _data["playingOrder"];
+            if (Array.isArray(_data["scores"])) {
+                this.scores = [] as any;
+                for (let item of _data["scores"])
+                    this.scores!.push(Score.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): SingleMatch {
+        data = typeof data === 'object' ? data : {};
+        let result = new SingleMatch();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["hostPlayer"] = this.hostPlayer ? this.hostPlayer.toJSON() : <any>undefined;
+        data["guestPlayer"] = this.guestPlayer ? this.guestPlayer.toJSON() : <any>undefined;
+        data["teamMatch"] = this.teamMatch ? this.teamMatch.toJSON() : <any>undefined;
+        data["playingOrder"] = this.playingOrder;
+        if (Array.isArray(this.scores)) {
+            data["scores"] = [];
+            for (let item of this.scores)
+                data["scores"].push(item.toJSON());
+        }
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface ISingleMatch extends IAuditableEntity {
+    id?: number;
+    hostPlayer?: Player;
+    guestPlayer?: Player;
+    teamMatch?: TeamMatch;
+    playingOrder?: PlayingOrder;
+    scores?: Score[];
+}
+
+export class Score implements IScore {
+    id?: number;
+    gamePointsHost?: number;
+    gamePointsGuest?: number;
+    match?: SingleMatch | undefined;
+
+    constructor(data?: IScore) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.gamePointsHost = _data["gamePointsHost"];
+            this.gamePointsGuest = _data["gamePointsGuest"];
+            this.match = _data["match"] ? SingleMatch.fromJS(_data["match"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): Score {
+        data = typeof data === 'object' ? data : {};
+        let result = new Score();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["gamePointsHost"] = this.gamePointsHost;
+        data["gamePointsGuest"] = this.gamePointsGuest;
+        data["match"] = this.match ? this.match.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IScore {
+    id?: number;
+    gamePointsHost?: number;
+    gamePointsGuest?: number;
+    match?: SingleMatch | undefined;
+}
+
+export class DoubleMatch extends AuditableEntity implements IDoubleMatch {
+    id?: number;
+    hostPlayerRight?: Player;
+    hostPlayerLeft?: Player;
+    guestPlayerRight?: Player;
+    guestPlayerLeft?: Player;
+    teamMatchId?: number;
+    playingOrder?: PlayingOrder;
+    scores?: DoubleMatchScore[];
+
+    constructor(data?: IDoubleMatch) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.id = _data["id"];
+            this.hostPlayerRight = _data["hostPlayerRight"] ? Player.fromJS(_data["hostPlayerRight"]) : <any>undefined;
+            this.hostPlayerLeft = _data["hostPlayerLeft"] ? Player.fromJS(_data["hostPlayerLeft"]) : <any>undefined;
+            this.guestPlayerRight = _data["guestPlayerRight"] ? Player.fromJS(_data["guestPlayerRight"]) : <any>undefined;
+            this.guestPlayerLeft = _data["guestPlayerLeft"] ? Player.fromJS(_data["guestPlayerLeft"]) : <any>undefined;
+            this.teamMatchId = _data["teamMatchId"];
+            this.playingOrder = _data["playingOrder"];
+            if (Array.isArray(_data["scores"])) {
+                this.scores = [] as any;
+                for (let item of _data["scores"])
+                    this.scores!.push(DoubleMatchScore.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): DoubleMatch {
+        data = typeof data === 'object' ? data : {};
+        let result = new DoubleMatch();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["hostPlayerRight"] = this.hostPlayerRight ? this.hostPlayerRight.toJSON() : <any>undefined;
+        data["hostPlayerLeft"] = this.hostPlayerLeft ? this.hostPlayerLeft.toJSON() : <any>undefined;
+        data["guestPlayerRight"] = this.guestPlayerRight ? this.guestPlayerRight.toJSON() : <any>undefined;
+        data["guestPlayerLeft"] = this.guestPlayerLeft ? this.guestPlayerLeft.toJSON() : <any>undefined;
+        data["teamMatchId"] = this.teamMatchId;
+        data["playingOrder"] = this.playingOrder;
+        if (Array.isArray(this.scores)) {
+            data["scores"] = [];
+            for (let item of this.scores)
+                data["scores"].push(item.toJSON());
+        }
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface IDoubleMatch extends IAuditableEntity {
+    id?: number;
+    hostPlayerRight?: Player;
+    hostPlayerLeft?: Player;
+    guestPlayerRight?: Player;
+    guestPlayerLeft?: Player;
+    teamMatchId?: number;
+    playingOrder?: PlayingOrder;
+    scores?: DoubleMatchScore[];
+}
+
+export class DoubleMatchScore implements IDoubleMatchScore {
+    id?: number;
+    gamePointsHost?: number;
+    gamePointsGuest?: number;
+    doubleMatch?: DoubleMatch | undefined;
+
+    constructor(data?: IDoubleMatchScore) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.gamePointsHost = _data["gamePointsHost"];
+            this.gamePointsGuest = _data["gamePointsGuest"];
+            this.doubleMatch = _data["doubleMatch"] ? DoubleMatch.fromJS(_data["doubleMatch"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): DoubleMatchScore {
+        data = typeof data === 'object' ? data : {};
+        let result = new DoubleMatchScore();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["gamePointsHost"] = this.gamePointsHost;
+        data["gamePointsGuest"] = this.gamePointsGuest;
+        data["doubleMatch"] = this.doubleMatch ? this.doubleMatch.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IDoubleMatchScore {
+    id?: number;
+    gamePointsHost?: number;
+    gamePointsGuest?: number;
+    doubleMatch?: DoubleMatch | undefined;
 }
 
 export class CreateTeamMatchCommand implements ICreateTeamMatchCommand {
