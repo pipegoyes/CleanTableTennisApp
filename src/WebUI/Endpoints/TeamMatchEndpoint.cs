@@ -2,6 +2,7 @@
 using CleanTableTennisApp.Application.Home.Queries;
 using CleanTableTennisApp.Application.Wizard.Commands;
 using CleanTableTennisApp.Domain.Entities;
+using CleanTableTennisApp.WebUI.Endpoints.Internal;
 using CleanTableTennisApp.WebUI.Permission;
 using FluentValidation.Results;
 using MediatR;

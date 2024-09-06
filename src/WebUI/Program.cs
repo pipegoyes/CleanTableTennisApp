@@ -4,6 +4,7 @@ using CleanTableTennisApp.Application.Common.Interfaces;
 using CleanTableTennisApp.Infrastructure;
 using CleanTableTennisApp.Infrastructure.Persistence;
 using CleanTableTennisApp.WebUI.Endpoints;
+using CleanTableTennisApp.WebUI.Endpoints.Internal;
 using CleanTableTennisApp.WebUI.Permission;
 using CleanTableTennisApp.WebUI.RequestExamples;
 using CleanTableTennisApp.WebUI.Services;

@@ -1,4 +1,4 @@
-namespace CleanTableTennisApp.WebUI.Endpoints;
+namespace CleanTableTennisApp.WebUI.Endpoints.Internal;
 
 public interface IEndpoints
 {
