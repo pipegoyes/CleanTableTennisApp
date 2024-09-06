@@ -30,6 +30,7 @@ public static class DependencyInjection
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
         services.AddScoped<IDomainEventService, DomainEventService>();
+        services.AddScoped<DbInitializer>();
         services.AddTransient<IDateTime, DateTimeService>();
 
         return services;
