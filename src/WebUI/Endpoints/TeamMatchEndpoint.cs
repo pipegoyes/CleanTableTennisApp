@@ -31,6 +31,7 @@ public class TeamMatchEndpoint : IEndpoints
 
     private static async Task<IResult> CreateTeamMatch(IMediator mediator, CreateTeamMatchCommand command)
     {
+        // todo pending to add validator
         // todo refactor returning a teammatch 
         var teamMatchId = await mediator.Send(command);
         return Results.Ok(teamMatchId);
