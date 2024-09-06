@@ -23,7 +23,7 @@ public class ScoreEndpoint : IEndpoints
             .Produces<ScoreDto[]>().Produces(404)
             .WithTags(Tag);
 
-        app.MapPut($"{BaseRoute}/{{isbn}}", UpdateDoubleScoreAsync)
+        app.MapPut($"{BaseRoute}/{{isbn}}", UpdateScoreAsync)
             .WithName("UpdateScore")
             .RequireAuthorization(Permissions.Write.Matches)
             .Accepts<UpdateMatchScoreCommand>(EndpointConstants.ContentType)
@@ -44,7 +44,7 @@ public class ScoreEndpoint : IEndpoints
         return Results.Ok(result);
     }
 
-    private static async Task<IResult> UpdateDoubleScoreAsync(IMediator mediator, [FromBody] UpdateMatchScoreCommand command)
+    private static async Task<IResult> UpdateScoreAsync(IMediator mediator, [FromBody] UpdateMatchScoreCommand command)
     {
         var result = await mediator.Send(command);
         if (result)
