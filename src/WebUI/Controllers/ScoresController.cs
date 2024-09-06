@@ -9,15 +9,8 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace CleanTableTennisApp.WebUI.Controllers;
 
-public class ScoresController : ApiControllerBase
+public class ScoresController(IHubContext<ScoresHub> hubContext) : ApiControllerBase
 {
-    private readonly IHubContext<ScoresHub> _hubContext;
-
-    public ScoresController(IHubContext<ScoresHub> hubContext)
-    {
-        _hubContext = hubContext;
-    }
-
     [HttpGet("{matchIdEncoded}")]
     public async Task<ActionResult<ScoreDto[]>> Get(string matchIdEncoded)
     {
@@ -27,7 +20,6 @@ public class ScoresController : ApiControllerBase
 
     [HttpPost]
     [Authorize(Permissions.Write.Matches)]
-    // TODO this functionality should be restricted by roles
     public async Task<ActionResult<bool>> Update([FromBody] UpdateMatchScoreCommand command)
     {
         var result = await Mediator.Send(command);
@@ -35,7 +27,7 @@ public class ScoresController : ApiControllerBase
         {
             var overviewDto = await Mediator.Send(new GetOverviewQuery { TeamMatchIdEncoded = command.TeamMatchIdEncoded, });
 
-            await _hubContext.Clients.All.SendAsync($"scores-matchId:{command.TeamMatchIdEncoded}", overviewDto);
+            await hubContext.Clients.All.SendAsync($"scores-matchId:{command.TeamMatchIdEncoded}", overviewDto);
         }
 
         return result;
