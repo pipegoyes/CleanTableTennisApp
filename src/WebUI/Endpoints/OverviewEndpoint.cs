@@ -23,7 +23,8 @@ public class OverviewEndpoint : IEndpoints
             .WithName("FinishTeamMatch")
             .RequireAuthorization(Permissions.Write.Matches)
             .Accepts<FinishTeamMatchCommand>(ContentType)
-            .Produces<bool>(201).Produces<IEnumerable<ValidationFailure>>(400)
+            .Produces<bool>(200, ContentType)
+            //.Produces<IEnumerable<ValidationFailure>>(400)
             .WithTags(Tag);
 
         app.MapGet($"{BaseRoute}/{{teamMatchIdEncoded}}", GetOverviewDto)
@@ -35,7 +36,7 @@ public class OverviewEndpoint : IEndpoints
     private static async Task<IResult> FinishTeamMatch(IMediator mediator, [FromBody] FinishTeamMatchCommand command)
     {
         var teamMatchId = await mediator.Send(command);
-        return Results.Content(teamMatchId.ToString());
+        return Results.Ok<bool>(teamMatchId);
     }
 
     private static async Task<IResult> GetOverviewDto(IMediator mediator, string teamMatchIdEncoded)
