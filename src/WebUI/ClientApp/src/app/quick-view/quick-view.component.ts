@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { RealTimeScoreService } from '../real-time-score.service';
-import { FinishTeamMatchCommand, OverviewClient, OverviewDto, TeamMatchClient, TeamMatchDto } from '../web-api-client';
+import { Client, FinishTeamMatchCommand, OverviewDto, TeamMatchDto } from '../web-api-client';
 import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
@@ -13,7 +13,7 @@ import { AuthService } from '@auth0/auth0-angular';
 })
 export class QuickViewComponent implements OnInit, OnDestroy {
 
-  teamMatchDto$ : Observable<TeamMatchDto>;
+  teamMatchDto : TeamMatchDto;
   isAuthenticated$ : Observable<boolean> = of(false);
 
   overviewDto$ : Observable<OverviewDto>;
@@ -23,8 +23,7 @@ export class QuickViewComponent implements OnInit, OnDestroy {
 
   constructor(private activatedRoute : ActivatedRoute, 
     private router : Router,
-    private teamMatchClient : TeamMatchClient, 
-    private overviewClient: OverviewClient,
+    private apiClient : Client, 
     private realTimeScoreServices : RealTimeScoreService,
     public auth: AuthService) { 
       this.realTimeScoreServices.startConnection();
@@ -32,8 +31,10 @@ export class QuickViewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.activatedRoute.params.pipe(map(p => p.teamMatchId)).subscribe(teamMatchIdEncoded => {
-      this.teamMatchDto$ = this.teamMatchClient.getSingle(teamMatchIdEncoded)
-      this.overviewDto$ = this.overviewClient.getAllMatches(teamMatchIdEncoded)
+      this.apiClient.getTeamMatches(teamMatchIdEncoded).subscribe(t => {
+        this.teamMatchDto = t[0];
+      })
+      this.overviewDto$ = this.apiClient.getOverviewDto(teamMatchIdEncoded)
       this.realTimeScoreServices.registerScoreListener(teamMatchIdEncoded)
 
       this.realTimeScoreServices.onScoreChange()
@@ -51,7 +52,7 @@ export class QuickViewComponent implements OnInit, OnDestroy {
     this.activatedRoute.params.pipe(map(p => p.teamMatchId)).subscribe(teamMatchIdEncoded => {
       var command = new FinishTeamMatchCommand();
       command.teamMatchIdEncoded = teamMatchIdEncoded; 
-      this.overviewClient.finish(command).subscribe(response =>{
+      this.apiClient.finishTeamMatch(command).subscribe(response
         if(response){
           this.router.navigate([''])
         }

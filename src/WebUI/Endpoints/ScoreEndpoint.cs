@@ -23,7 +23,7 @@ public class ScoreEndpoint : IEndpoints
             .Produces<ScoreDto[]>().Produces(404)
             .WithTags(Tag);
 
-        app.MapPut($"{BaseRoute}/{{isbn}}", UpdateScoreAsync)
+        app.MapPut($"{BaseRoute}", UpdateScoreAsync)
             .WithName("UpdateScore")
             .RequireAuthorization(Permissions.Write.Matches)
             .Accepts<UpdateMatchScoreCommand>(EndpointConstants.ContentType)

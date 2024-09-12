@@ -22,7 +22,7 @@ public class DoubleScoreEndpoint : IEndpoints
             .Produces<ScoreDto[]>().Produces(404)
             .WithTags(Tag);
 
-        app.MapPut($"{BaseRoute}/{{isbn}}", UpdateDoubleScoreAsync)
+        app.MapPut($"{BaseRoute}", UpdateDoubleScoreAsync)
             .WithName("UpdateDoubleScore")
             .RequireAuthorization(Permissions.Write.Matches)
             .Accepts<UpdateDoubleMatchScoreCommand>(EndpointConstants.ContentType)

@@ -19,10 +19,10 @@ export interface IClient {
     getDoubleScore(doubleMatchIdEncoded: string): Observable<ScoreDto[]>;
     updateDoubleScore(command: UpdateDoubleMatchScoreCommand): Observable<boolean>;
     finishTeamMatch(command: FinishTeamMatchCommand): Observable<boolean>;
-    getOverviewDto(query: GetOverviewQuery): Observable<OverviewDto>;
+    getOverviewDto(teamMatchIdEncoded: string): Observable<OverviewDto>;
     getScore(matchIdEncoded: string): Observable<ScoreDto[]>;
     updateScore(command: UpdateMatchScoreCommand): Observable<boolean>;
-    createTeamMatch(command: CreateTeamMatchCommand): Observable<TeamMatch>;
+    createTeamMatch(command: CreateTeamMatchCommand): Observable<string>;
     getTeamMatches(teamMatchIdEncoded: string | null | undefined): Observable<TeamMatchDto[]>;
 }
 
@@ -235,18 +235,17 @@ export class Client implements IClient {
         return _observableOf<boolean>(null as any);
     }
 
-    getOverviewDto(query: GetOverviewQuery): Observable<OverviewDto> {
-        let url_ = this.baseUrl + "/overview";
+    getOverviewDto(teamMatchIdEncoded: string): Observable<OverviewDto> {
+        let url_ = this.baseUrl + "/overview/{teamMatchIdEncoded}";
+        if (teamMatchIdEncoded === undefined || teamMatchIdEncoded === null)
+            throw new Error("The parameter 'teamMatchIdEncoded' must be defined.");
+        url_ = url_.replace("{teamMatchIdEncoded}", encodeURIComponent("" + teamMatchIdEncoded));
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(query);
-
         let options_ : any = {
-            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
@@ -416,7 +415,7 @@ export class Client implements IClient {
         return _observableOf<boolean>(null as any);
     }
 
-    createTeamMatch(command: CreateTeamMatchCommand): Observable<TeamMatch> {
+    createTeamMatch(command: CreateTeamMatchCommand): Observable<string> {
         let url_ = this.baseUrl + "/team-match";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -439,14 +438,14 @@ export class Client implements IClient {
                 try {
                     return this.processCreateTeamMatch(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<TeamMatch>;
+                    return _observableThrow(e) as any as Observable<string>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<TeamMatch>;
+                return _observableThrow(response_) as any as Observable<string>;
         }));
     }
 
-    protected processCreateTeamMatch(response: HttpResponseBase): Observable<TeamMatch> {
+    protected processCreateTeamMatch(response: HttpResponseBase): Observable<string> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -457,7 +456,8 @@ export class Client implements IClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result201: any = null;
             let resultData201 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result201 = TeamMatch.fromJS(resultData201);
+                result201 = resultData201 !== undefined ? resultData201 : <any>null;
+    
             return _observableOf(result201);
             }));
         } else if (status === 400) {
@@ -479,7 +479,7 @@ export class Client implements IClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<TeamMatch>(null as any);
+        return _observableOf<string>(null as any);
     }
 
     getTeamMatches(teamMatchIdEncoded: string | null | undefined): Observable<TeamMatchDto[]> {
@@ -959,42 +959,6 @@ export interface IOverviewDoubleMatchDto {
     scoresDtos?: ScoreDto[];
 }
 
-export class GetOverviewQuery implements IGetOverviewQuery {
-    teamMatchIdEncoded?: string;
-
-    constructor(data?: IGetOverviewQuery) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.teamMatchIdEncoded = _data["teamMatchIdEncoded"];
-        }
-    }
-
-    static fromJS(data: any): GetOverviewQuery {
-        data = typeof data === 'object' ? data : {};
-        let result = new GetOverviewQuery();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["teamMatchIdEncoded"] = this.teamMatchIdEncoded;
-        return data;
-    }
-}
-
-export interface IGetOverviewQuery {
-    teamMatchIdEncoded?: string;
-}
-
 export class UpdateMatchScoreCommand implements IUpdateMatchScoreCommand {
     matchIdEncoded?: string;
     teamMatchIdEncoded?: string;
@@ -1045,437 +1009,6 @@ export interface IUpdateMatchScoreCommand {
     matchIdEncoded?: string;
     teamMatchIdEncoded?: string;
     scoreDtos?: ScoreDto[];
-}
-
-export abstract class AuditableEntity implements IAuditableEntity {
-    created?: Date;
-    createdBy?: string | undefined;
-    lastModified?: Date | undefined;
-    lastModifiedBy?: string | undefined;
-
-    constructor(data?: IAuditableEntity) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.created = _data["created"] ? new Date(_data["created"].toString()) : <any>undefined;
-            this.createdBy = _data["createdBy"];
-            this.lastModified = _data["lastModified"] ? new Date(_data["lastModified"].toString()) : <any>undefined;
-            this.lastModifiedBy = _data["lastModifiedBy"];
-        }
-    }
-
-    static fromJS(data: any): AuditableEntity {
-        data = typeof data === 'object' ? data : {};
-        throw new Error("The abstract class 'AuditableEntity' cannot be instantiated.");
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["created"] = this.created ? this.created.toISOString() : <any>undefined;
-        data["createdBy"] = this.createdBy;
-        data["lastModified"] = this.lastModified ? this.lastModified.toISOString() : <any>undefined;
-        data["lastModifiedBy"] = this.lastModifiedBy;
-        return data;
-    }
-}
-
-export interface IAuditableEntity {
-    created?: Date;
-    createdBy?: string | undefined;
-    lastModified?: Date | undefined;
-    lastModifiedBy?: string | undefined;
-}
-
-export class TeamMatch extends AuditableEntity implements ITeamMatch {
-    id?: number;
-    hostTeam?: Team;
-    guestTeam?: Team;
-    finishedAt?: Date | undefined;
-    singleMatches?: SingleMatch[];
-    doubleMatches?: DoubleMatch[];
-
-    constructor(data?: ITeamMatch) {
-        super(data);
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            this.id = _data["id"];
-            this.hostTeam = _data["hostTeam"] ? Team.fromJS(_data["hostTeam"]) : <any>undefined;
-            this.guestTeam = _data["guestTeam"] ? Team.fromJS(_data["guestTeam"]) : <any>undefined;
-            this.finishedAt = _data["finishedAt"] ? new Date(_data["finishedAt"].toString()) : <any>undefined;
-            if (Array.isArray(_data["singleMatches"])) {
-                this.singleMatches = [] as any;
-                for (let item of _data["singleMatches"])
-                    this.singleMatches!.push(SingleMatch.fromJS(item));
-            }
-            if (Array.isArray(_data["doubleMatches"])) {
-                this.doubleMatches = [] as any;
-                for (let item of _data["doubleMatches"])
-                    this.doubleMatches!.push(DoubleMatch.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): TeamMatch {
-        data = typeof data === 'object' ? data : {};
-        let result = new TeamMatch();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["hostTeam"] = this.hostTeam ? this.hostTeam.toJSON() : <any>undefined;
-        data["guestTeam"] = this.guestTeam ? this.guestTeam.toJSON() : <any>undefined;
-        data["finishedAt"] = this.finishedAt ? this.finishedAt.toISOString() : <any>undefined;
-        if (Array.isArray(this.singleMatches)) {
-            data["singleMatches"] = [];
-            for (let item of this.singleMatches)
-                data["singleMatches"].push(item.toJSON());
-        }
-        if (Array.isArray(this.doubleMatches)) {
-            data["doubleMatches"] = [];
-            for (let item of this.doubleMatches)
-                data["doubleMatches"].push(item.toJSON());
-        }
-        super.toJSON(data);
-        return data;
-    }
-}
-
-export interface ITeamMatch extends IAuditableEntity {
-    id?: number;
-    hostTeam?: Team;
-    guestTeam?: Team;
-    finishedAt?: Date | undefined;
-    singleMatches?: SingleMatch[];
-    doubleMatches?: DoubleMatch[];
-}
-
-export class Team extends AuditableEntity implements ITeam {
-    id?: number;
-    name?: string;
-    players?: Player[];
-
-    constructor(data?: ITeam) {
-        super(data);
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            this.id = _data["id"];
-            this.name = _data["name"];
-            if (Array.isArray(_data["players"])) {
-                this.players = [] as any;
-                for (let item of _data["players"])
-                    this.players!.push(Player.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): Team {
-        data = typeof data === 'object' ? data : {};
-        let result = new Team();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["name"] = this.name;
-        if (Array.isArray(this.players)) {
-            data["players"] = [];
-            for (let item of this.players)
-                data["players"].push(item.toJSON());
-        }
-        super.toJSON(data);
-        return data;
-    }
-}
-
-export interface ITeam extends IAuditableEntity {
-    id?: number;
-    name?: string;
-    players?: Player[];
-}
-
-export class Player extends AuditableEntity implements IPlayer {
-    id?: number;
-    name?: string;
-    teamId?: number;
-
-    constructor(data?: IPlayer) {
-        super(data);
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            this.id = _data["id"];
-            this.name = _data["name"];
-            this.teamId = _data["teamId"];
-        }
-    }
-
-    static fromJS(data: any): Player {
-        data = typeof data === 'object' ? data : {};
-        let result = new Player();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["name"] = this.name;
-        data["teamId"] = this.teamId;
-        super.toJSON(data);
-        return data;
-    }
-}
-
-export interface IPlayer extends IAuditableEntity {
-    id?: number;
-    name?: string;
-    teamId?: number;
-}
-
-export class SingleMatch extends AuditableEntity implements ISingleMatch {
-    id?: number;
-    hostPlayer?: Player;
-    guestPlayer?: Player;
-    teamMatch?: TeamMatch;
-    playingOrder?: PlayingOrder;
-    scores?: Score[];
-
-    constructor(data?: ISingleMatch) {
-        super(data);
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            this.id = _data["id"];
-            this.hostPlayer = _data["hostPlayer"] ? Player.fromJS(_data["hostPlayer"]) : <any>undefined;
-            this.guestPlayer = _data["guestPlayer"] ? Player.fromJS(_data["guestPlayer"]) : <any>undefined;
-            this.teamMatch = _data["teamMatch"] ? TeamMatch.fromJS(_data["teamMatch"]) : <any>undefined;
-            this.playingOrder = _data["playingOrder"];
-            if (Array.isArray(_data["scores"])) {
-                this.scores = [] as any;
-                for (let item of _data["scores"])
-                    this.scores!.push(Score.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): SingleMatch {
-        data = typeof data === 'object' ? data : {};
-        let result = new SingleMatch();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["hostPlayer"] = this.hostPlayer ? this.hostPlayer.toJSON() : <any>undefined;
-        data["guestPlayer"] = this.guestPlayer ? this.guestPlayer.toJSON() : <any>undefined;
-        data["teamMatch"] = this.teamMatch ? this.teamMatch.toJSON() : <any>undefined;
-        data["playingOrder"] = this.playingOrder;
-        if (Array.isArray(this.scores)) {
-            data["scores"] = [];
-            for (let item of this.scores)
-                data["scores"].push(item.toJSON());
-        }
-        super.toJSON(data);
-        return data;
-    }
-}
-
-export interface ISingleMatch extends IAuditableEntity {
-    id?: number;
-    hostPlayer?: Player;
-    guestPlayer?: Player;
-    teamMatch?: TeamMatch;
-    playingOrder?: PlayingOrder;
-    scores?: Score[];
-}
-
-export class Score implements IScore {
-    id?: number;
-    gamePointsHost?: number;
-    gamePointsGuest?: number;
-    match?: SingleMatch | undefined;
-
-    constructor(data?: IScore) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.gamePointsHost = _data["gamePointsHost"];
-            this.gamePointsGuest = _data["gamePointsGuest"];
-            this.match = _data["match"] ? SingleMatch.fromJS(_data["match"]) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): Score {
-        data = typeof data === 'object' ? data : {};
-        let result = new Score();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["gamePointsHost"] = this.gamePointsHost;
-        data["gamePointsGuest"] = this.gamePointsGuest;
-        data["match"] = this.match ? this.match.toJSON() : <any>undefined;
-        return data;
-    }
-}
-
-export interface IScore {
-    id?: number;
-    gamePointsHost?: number;
-    gamePointsGuest?: number;
-    match?: SingleMatch | undefined;
-}
-
-export class DoubleMatch extends AuditableEntity implements IDoubleMatch {
-    id?: number;
-    hostPlayerRight?: Player;
-    hostPlayerLeft?: Player;
-    guestPlayerRight?: Player;
-    guestPlayerLeft?: Player;
-    teamMatchId?: number;
-    playingOrder?: PlayingOrder;
-    scores?: DoubleMatchScore[];
-
-    constructor(data?: IDoubleMatch) {
-        super(data);
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            this.id = _data["id"];
-            this.hostPlayerRight = _data["hostPlayerRight"] ? Player.fromJS(_data["hostPlayerRight"]) : <any>undefined;
-            this.hostPlayerLeft = _data["hostPlayerLeft"] ? Player.fromJS(_data["hostPlayerLeft"]) : <any>undefined;
-            this.guestPlayerRight = _data["guestPlayerRight"] ? Player.fromJS(_data["guestPlayerRight"]) : <any>undefined;
-            this.guestPlayerLeft = _data["guestPlayerLeft"] ? Player.fromJS(_data["guestPlayerLeft"]) : <any>undefined;
-            this.teamMatchId = _data["teamMatchId"];
-            this.playingOrder = _data["playingOrder"];
-            if (Array.isArray(_data["scores"])) {
-                this.scores = [] as any;
-                for (let item of _data["scores"])
-                    this.scores!.push(DoubleMatchScore.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): DoubleMatch {
-        data = typeof data === 'object' ? data : {};
-        let result = new DoubleMatch();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["hostPlayerRight"] = this.hostPlayerRight ? this.hostPlayerRight.toJSON() : <any>undefined;
-        data["hostPlayerLeft"] = this.hostPlayerLeft ? this.hostPlayerLeft.toJSON() : <any>undefined;
-        data["guestPlayerRight"] = this.guestPlayerRight ? this.guestPlayerRight.toJSON() : <any>undefined;
-        data["guestPlayerLeft"] = this.guestPlayerLeft ? this.guestPlayerLeft.toJSON() : <any>undefined;
-        data["teamMatchId"] = this.teamMatchId;
-        data["playingOrder"] = this.playingOrder;
-        if (Array.isArray(this.scores)) {
-            data["scores"] = [];
-            for (let item of this.scores)
-                data["scores"].push(item.toJSON());
-        }
-        super.toJSON(data);
-        return data;
-    }
-}
-
-export interface IDoubleMatch extends IAuditableEntity {
-    id?: number;
-    hostPlayerRight?: Player;
-    hostPlayerLeft?: Player;
-    guestPlayerRight?: Player;
-    guestPlayerLeft?: Player;
-    teamMatchId?: number;
-    playingOrder?: PlayingOrder;
-    scores?: DoubleMatchScore[];
-}
-
-export class DoubleMatchScore implements IDoubleMatchScore {
-    id?: number;
-    gamePointsHost?: number;
-    gamePointsGuest?: number;
-    doubleMatch?: DoubleMatch | undefined;
-
-    constructor(data?: IDoubleMatchScore) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.gamePointsHost = _data["gamePointsHost"];
-            this.gamePointsGuest = _data["gamePointsGuest"];
-            this.doubleMatch = _data["doubleMatch"] ? DoubleMatch.fromJS(_data["doubleMatch"]) : <any>undefined;
-        }
-    }
-
-    static fromJS(data: any): DoubleMatchScore {
-        data = typeof data === 'object' ? data : {};
-        let result = new DoubleMatchScore();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["gamePointsHost"] = this.gamePointsHost;
-        data["gamePointsGuest"] = this.gamePointsGuest;
-        data["doubleMatch"] = this.doubleMatch ? this.doubleMatch.toJSON() : <any>undefined;
-        return data;
-    }
-}
-
-export interface IDoubleMatchScore {
-    id?: number;
-    gamePointsHost?: number;
-    gamePointsGuest?: number;
-    doubleMatch?: DoubleMatch | undefined;
 }
 
 export class CreateTeamMatchCommand implements ICreateTeamMatchCommand {
