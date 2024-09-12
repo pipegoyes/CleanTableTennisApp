@@ -52,7 +52,7 @@ export class QuickViewComponent implements OnInit, OnDestroy {
     this.activatedRoute.params.pipe(map(p => p.teamMatchId)).subscribe(teamMatchIdEncoded => {
       var command = new FinishTeamMatchCommand();
       command.teamMatchIdEncoded = teamMatchIdEncoded; 
-      this.apiClient.finishTeamMatch(command).subscribe(response
+      this.apiClient.finishTeamMatch(command).subscribe(response => {
         if(response){
           this.router.navigate([''])
         }
