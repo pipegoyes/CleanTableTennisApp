@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { API_BASE_URL, OverviewDto, ScoreDto } from './web-api-client';
+import { API_BASE_URL, TeamMatchOverviewDto, ScoreDto } from './web-api-client';
 import * as signalR from "@microsoft/signalr"
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 
@@ -10,7 +10,7 @@ import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 export class RealTimeScoreService {
 
   baseUrl: string;
-  overviewDtoSubject : Subject<OverviewDto> = new Subject<OverviewDto>() ;
+  overviewDtoSubject : Subject<TeamMatchOverviewDto> = new Subject<TeamMatchOverviewDto>() ;
 
   private hubConnection: signalR.HubConnection
     public startConnection = () => {
@@ -33,7 +33,7 @@ export class RealTimeScoreService {
     });
   }
 
-  public onScoreChange() : Observable<OverviewDto>{
+  public onScoreChange() : Observable<TeamMatchOverviewDto>{
     return this.overviewDtoSubject.asObservable();
   }
 }

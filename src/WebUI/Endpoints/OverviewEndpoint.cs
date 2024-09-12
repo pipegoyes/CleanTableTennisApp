@@ -1,12 +1,10 @@
 ﻿using CleanTableTennisApp.Application.Common.Dtos;
-using CleanTableTennisApp.Application.Overview.Commands;
-using CleanTableTennisApp.Application.Wizard.Queries;
+using CleanTableTennisApp.Application.TeamMatches.Command;
+using CleanTableTennisApp.Application.TeamMatches.Queries;
 using CleanTableTennisApp.WebUI.Endpoints.Internal;
 using CleanTableTennisApp.WebUI.Permission;
-using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace CleanTableTennisApp.WebUI.Endpoints;
 
@@ -29,7 +27,7 @@ public class OverviewEndpoint : IEndpoints
 
         app.MapGet($"{BaseRoute}/{{teamMatchIdEncoded}}", GetOverviewDto)
             .WithName("GetOverviewDto")
-            .Produces<OverviewDto>()
+            .Produces<TeamMatchOverviewDto>()
             .WithTags(Tag);
     }
 
@@ -41,7 +39,7 @@ public class OverviewEndpoint : IEndpoints
 
     private static async Task<IResult> GetOverviewDto(IMediator mediator, string teamMatchIdEncoded)
     {
-        var query = new GetOverviewQuery { TeamMatchIdEncoded = teamMatchIdEncoded };
+        var query = new GetTeamMatchOverviewQuery { TeamMatchIdEncoded = teamMatchIdEncoded };
         var result = await mediator.Send(query); ;
         return Results.Ok(result);
     }

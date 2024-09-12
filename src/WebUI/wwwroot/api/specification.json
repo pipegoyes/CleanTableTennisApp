@@ -54,7 +54,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateDoubleMatchScoreCommand"
+                "$ref": "#/components/schemas/UpdateDoubleMatchScoresCommand"
               }
             }
           },
@@ -143,7 +143,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OverviewDto"
+                  "$ref": "#/components/schemas/TeamMatchOverviewDto"
                 }
               }
             }
@@ -199,7 +199,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateMatchScoreCommand"
+                "$ref": "#/components/schemas/UpdateSingleMatchScoreCommand"
               }
             }
           },
@@ -252,7 +252,7 @@
           "x-position": 1
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "",
             "content": {
               "application/json": {
@@ -376,7 +376,7 @@
           2
         ]
       },
-      "UpdateDoubleMatchScoreCommand": {
+      "UpdateDoubleMatchScoresCommand": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -400,7 +400,7 @@
           }
         }
       },
-      "OverviewDto": {
+      "TeamMatchOverviewDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -516,7 +516,7 @@
           }
         }
       },
-      "UpdateMatchScoreCommand": {
+      "UpdateSingleMatchScoreCommand": {
         "type": "object",
         "additionalProperties": false,
         "properties": {

@@ -21,7 +21,8 @@ public class TeamMatchEndpoint : IEndpoints
             .WithName("CreateTeamMatch")
             .RequireAuthorization(Permissions.Write.Matches)
             .Accepts<CreateTeamMatchCommand>(ContentType)
-            .Produces<string>(201).Produces<IEnumerable<ValidationFailure>>(400)
+            .Produces<string>(200)
+            .Produces<IEnumerable<ValidationFailure>>(400)
             .WithTags(Tag);
 
         app.MapGet(BaseRoute, GetTeamMatches)
@@ -35,7 +36,7 @@ public class TeamMatchEndpoint : IEndpoints
         // todo pending to add validator
         // todo refactor returning a teammatch 
         var teamMatchId = await mediator.Send(command);
-        return Results.Content(teamMatchId);
+        return Results.Ok(teamMatchId);
     }
 
     private static async Task<IResult> GetTeamMatches(IMediator mediator, string? teamMatchIdEncoded)

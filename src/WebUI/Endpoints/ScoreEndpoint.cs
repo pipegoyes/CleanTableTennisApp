@@ -1,7 +1,7 @@
 ﻿using CleanTableTennisApp.Application.Common.Dtos;
-using CleanTableTennisApp.Application.Overview.Commands;
-using CleanTableTennisApp.Application.Wizard.Commands;
-using CleanTableTennisApp.Application.Wizard.Queries;
+using CleanTableTennisApp.Application.Scores.SingleMatchScores.Commands;
+using CleanTableTennisApp.Application.Scores.SingleMatchScores.Queries;
+using CleanTableTennisApp.Application.TeamMatches.Queries;
 using CleanTableTennisApp.WebUI.Endpoints.Internal;
 using CleanTableTennisApp.WebUI.Permission;
 using FluentValidation.Results;
@@ -26,7 +26,7 @@ public class ScoreEndpoint : IEndpoints
         app.MapPut($"{BaseRoute}", UpdateScoreAsync)
             .WithName("UpdateScore")
             .RequireAuthorization(Permissions.Write.Matches)
-            .Accepts<UpdateMatchScoreCommand>(EndpointConstants.ContentType)
+            .Accepts<UpdateSingleMatchScoreCommand>(EndpointConstants.ContentType)
             .Produces<bool>(200)
             // todo pending to clarify
             .Produces<IEnumerable<ValidationFailure>>(400)
@@ -39,17 +39,17 @@ public class ScoreEndpoint : IEndpoints
 
     private static async Task<IResult> GetScoreMatchByIdAsync(IMediator mediator, string matchIdEncoded)
     {
-        var query = new GetMatchScoreQuery(matchIdEncoded);
+        var query = new GetSingleMatchScoresQuery(matchIdEncoded);
         var result = await mediator.Send(query);
         return Results.Ok(result);
     }
 
-    private static async Task<IResult> UpdateScoreAsync(IMediator mediator, [FromBody] UpdateMatchScoreCommand command)
+    private static async Task<IResult> UpdateScoreAsync(IMediator mediator, [FromBody] UpdateSingleMatchScoreCommand command)
     {
         var result = await mediator.Send(command);
         if (result)
         {
-            var overviewDto = await mediator.Send(new GetOverviewQuery { TeamMatchIdEncoded = command.TeamMatchIdEncoded, });
+            var overviewDto = await mediator.Send(new GetTeamMatchOverviewQuery { TeamMatchIdEncoded = command.TeamMatchIdEncoded, });
             //todo pending to reactivate
             //await hubContext.Clients.All.SendAsync($"scores-matchId:{command.TeamMatchIdEncoded}", overviewDto);
         }

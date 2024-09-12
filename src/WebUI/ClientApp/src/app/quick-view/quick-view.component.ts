@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { RealTimeScoreService } from '../real-time-score.service';
-import { Client, FinishTeamMatchCommand, OverviewDto, TeamMatchDto } from '../web-api-client';
+import { Client, FinishTeamMatchCommand, TeamMatchOverviewDto, TeamMatchDto } from '../web-api-client';
 import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
@@ -16,8 +16,8 @@ export class QuickViewComponent implements OnInit, OnDestroy {
   teamMatchDto : TeamMatchDto;
   isAuthenticated$ : Observable<boolean> = of(false);
 
-  overviewDto$ : Observable<OverviewDto>;
-  overviewDtoSubject : BehaviorSubject<OverviewDto> = new BehaviorSubject<OverviewDto>(null);
+  overviewDto$ : Observable<TeamMatchOverviewDto>;
+  overviewDtoSubject : BehaviorSubject<TeamMatchOverviewDto> = new BehaviorSubject<TeamMatchOverviewDto>(null);
   private destroy$ = new Subject<void>();
 
 
@@ -40,7 +40,7 @@ export class QuickViewComponent implements OnInit, OnDestroy {
       this.realTimeScoreServices.onScoreChange()
         .pipe(takeUntil(this.destroy$))
         .subscribe(dto => {
-          var overviewDto = new OverviewDto(dto)
+          var overviewDto = new TeamMatchOverviewDto(dto)
           console.log(overviewDto);
           this.overviewDtoSubject.next(overviewDto);
       });     
