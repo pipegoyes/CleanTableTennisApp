@@ -1,7 +1,7 @@
 ﻿using CleanTableTennisApp.Application.Common.Dtos;
 using CleanTableTennisApp.Application.Home.Queries;
+using CleanTableTennisApp.Application.TeamMatches.Command;
 using CleanTableTennisApp.Application.Wizard.Commands;
-using CleanTableTennisApp.Domain.Entities;
 using CleanTableTennisApp.WebUI.Endpoints.Internal;
 using CleanTableTennisApp.WebUI.Permission;
 using FluentValidation.Results;
@@ -42,7 +42,7 @@ public class TeamMatchEndpoint : IEndpoints
     {
         if (teamMatchIdEncoded is null)
         {
-            var result = await mediator.Send(new GetOnGoingTeamMatchesQuery());
+            var result = await mediator.Send(new GetTeamMatchesQuery());
             return Results.Ok(result);
         }
 

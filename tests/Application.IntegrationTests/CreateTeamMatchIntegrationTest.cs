@@ -1,5 +1,5 @@
 ﻿using CleanTableTennisApp.Application.Requests;
-using CleanTableTennisApp.Application.Wizard.Commands;
+using CleanTableTennisApp.Application.TeamMatches.Command;
 using CleanTableTennisApp.Domain.Enums;
 using FluentAssertions;
 using Xunit;

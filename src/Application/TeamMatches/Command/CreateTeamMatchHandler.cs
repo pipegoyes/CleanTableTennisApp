@@ -1,12 +1,12 @@
-using CleanTableTennisApp.Application.Common.Encoders;
+﻿using CleanTableTennisApp.Application.Common.Encoders;
 using CleanTableTennisApp.Application.Common.Interfaces;
 using CleanTableTennisApp.Application.Requests;
+using CleanTableTennisApp.Application.Wizard.Commands;
 using CleanTableTennisApp.Domain.Entities;
 using CleanTableTennisApp.Domain.Enums;
 using MediatR;
 
-namespace CleanTableTennisApp.Application.Wizard.Commands;
-
+namespace CleanTableTennisApp.Application.TeamMatches.Command;
 
 public class CreateTeamMatchCommand : IRequest<string>
 {
@@ -72,7 +72,7 @@ public class CreateTeamMatchHandler : IRequestHandler<CreateTeamMatchCommand, st
 
     private static void AddPlayers(Team hostTeam, IList<PlayerRequest> players)
     {
-        foreach (PlayerRequest player in players)
+        foreach (var player in players)
         {
             if (hostTeam.Players.All(s => s.Name != player.FullName))
             {
@@ -94,3 +94,4 @@ public class CreateTeamMatchHandler : IRequestHandler<CreateTeamMatchCommand, st
         return existingHost;
     }
 }
+

@@ -1,4 +1,4 @@
-using CleanTableTennisApp.Application.Wizard.Commands;
+using CleanTableTennisApp.Application.TeamMatches.Command;
 using FluentValidation;
 
 namespace CleanTableTennisApp.Application.Wizard.Validators;
