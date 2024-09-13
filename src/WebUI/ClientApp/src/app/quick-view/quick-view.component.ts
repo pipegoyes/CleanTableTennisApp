@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { RealTimeScoreService } from '../real-time-score.service';
-import { Client, FinishTeamMatchCommand, TeamMatchOverviewDto, TeamMatchDto } from '../web-api-client';
+import { Client, FinishTeamMatchCommand, TeamMatchOverviewDto, TeamMatchResponse } from '../web-api-client';
 import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
@@ -13,7 +13,7 @@ import { AuthService } from '@auth0/auth0-angular';
 })
 export class QuickViewComponent implements OnInit, OnDestroy {
 
-  teamMatchDto : TeamMatchDto;
+  teamMatchDto : TeamMatchResponse;
   isAuthenticated$ : Observable<boolean> = of(false);
 
   overviewDto$ : Observable<TeamMatchOverviewDto>;

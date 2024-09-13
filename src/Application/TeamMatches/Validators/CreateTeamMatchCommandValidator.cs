@@ -10,6 +10,6 @@ public class CreateTeamMatchCommandValidator : AbstractValidator<CreateTeamMatch
     {
         RuleFor(x => x.HostTeam).NotNull().SetValidator(new TeamRequestValidator());
         RuleFor(x => x.GuestTeam).NotNull().SetValidator(new TeamRequestValidator());
-        RuleFor(s => s).Must(s => s.HostTeam.Name != s.GuestTeam.Name);
+        RuleFor(s => s).Must(s => s.HostTeam.Name != s.GuestTeam.Name).WithMessage("Both teams could not have the same name");
     }
 }

@@ -22,8 +22,8 @@ export interface IClient {
     getOverviewDto(teamMatchIdEncoded: string): Observable<TeamMatchOverviewDto>;
     getScore(matchIdEncoded: string): Observable<ScoreDto[]>;
     updateScore(command: UpdateSingleMatchScoreCommand): Observable<boolean>;
-    createTeamMatch(command: CreateTeamMatchCommand): Observable<string>;
-    getTeamMatches(teamMatchIdEncoded: string | null | undefined): Observable<TeamMatchDto[]>;
+    createTeamMatch(request: CreateTeamMatchRequest): Observable<string>;
+    getTeamMatches(teamMatchIdEncoded: string | null | undefined): Observable<TeamMatchResponse[]>;
 }
 
 @Injectable({
@@ -401,11 +401,11 @@ export class Client implements IClient {
         return _observableOf<boolean>(null as any);
     }
 
-    createTeamMatch(command: CreateTeamMatchCommand): Observable<string> {
+    createTeamMatch(request: CreateTeamMatchRequest): Observable<string> {
         let url_ = this.baseUrl + "/team-match";
         url_ = url_.replace(/[?&]$/, "");
 
-        const content_ = JSON.stringify(command);
+        const content_ = JSON.stringify(request);
 
         let options_ : any = {
             body: content_,
@@ -468,7 +468,7 @@ export class Client implements IClient {
         return _observableOf<string>(null as any);
     }
 
-    getTeamMatches(teamMatchIdEncoded: string | null | undefined): Observable<TeamMatchDto[]> {
+    getTeamMatches(teamMatchIdEncoded: string | null | undefined): Observable<TeamMatchResponse[]> {
         let url_ = this.baseUrl + "/team-match?";
         if (teamMatchIdEncoded !== undefined && teamMatchIdEncoded !== null)
             url_ += "teamMatchIdEncoded=" + encodeURIComponent("" + teamMatchIdEncoded) + "&";
@@ -489,14 +489,14 @@ export class Client implements IClient {
                 try {
                     return this.processGetTeamMatches(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<TeamMatchDto[]>;
+                    return _observableThrow(e) as any as Observable<TeamMatchResponse[]>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<TeamMatchDto[]>;
+                return _observableThrow(response_) as any as Observable<TeamMatchResponse[]>;
         }));
     }
 
-    protected processGetTeamMatches(response: HttpResponseBase): Observable<TeamMatchDto[]> {
+    protected processGetTeamMatches(response: HttpResponseBase): Observable<TeamMatchResponse[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -510,7 +510,7 @@ export class Client implements IClient {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(TeamMatchDto.fromJS(item));
+                    result200!.push(TeamMatchResponse.fromJS(item));
             }
             else {
                 result200 = <any>null;
@@ -522,7 +522,7 @@ export class Client implements IClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<TeamMatchDto[]>(null as any);
+        return _observableOf<TeamMatchResponse[]>(null as any);
     }
 }
 
@@ -997,11 +997,11 @@ export interface IUpdateSingleMatchScoreCommand {
     scoreDtos?: ScoreDto[];
 }
 
-export class CreateTeamMatchCommand implements ICreateTeamMatchCommand {
-    hostTeam?: CreateTeamPlayersDto;
-    guestTeam?: CreateTeamPlayersDto;
+export class CreateTeamMatchRequest implements ICreateTeamMatchRequest {
+    hostTeam?: CreateTeamPlayersRequest;
+    guestTeam?: CreateTeamPlayersRequest;
 
-    constructor(data?: ICreateTeamMatchCommand) {
+    constructor(data?: ICreateTeamMatchRequest) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -1012,14 +1012,14 @@ export class CreateTeamMatchCommand implements ICreateTeamMatchCommand {
 
     init(_data?: any) {
         if (_data) {
-            this.hostTeam = _data["hostTeam"] ? CreateTeamPlayersDto.fromJS(_data["hostTeam"]) : <any>undefined;
-            this.guestTeam = _data["guestTeam"] ? CreateTeamPlayersDto.fromJS(_data["guestTeam"]) : <any>undefined;
+            this.hostTeam = _data["hostTeam"] ? CreateTeamPlayersRequest.fromJS(_data["hostTeam"]) : <any>undefined;
+            this.guestTeam = _data["guestTeam"] ? CreateTeamPlayersRequest.fromJS(_data["guestTeam"]) : <any>undefined;
         }
     }
 
-    static fromJS(data: any): CreateTeamMatchCommand {
+    static fromJS(data: any): CreateTeamMatchRequest {
         data = typeof data === 'object' ? data : {};
-        let result = new CreateTeamMatchCommand();
+        let result = new CreateTeamMatchRequest();
         result.init(data);
         return result;
     }
@@ -1032,16 +1032,16 @@ export class CreateTeamMatchCommand implements ICreateTeamMatchCommand {
     }
 }
 
-export interface ICreateTeamMatchCommand {
-    hostTeam?: CreateTeamPlayersDto;
-    guestTeam?: CreateTeamPlayersDto;
+export interface ICreateTeamMatchRequest {
+    hostTeam?: CreateTeamPlayersRequest;
+    guestTeam?: CreateTeamPlayersRequest;
 }
 
-export class CreateTeamPlayersDto implements ICreateTeamPlayersDto {
+export class CreateTeamPlayersRequest implements ICreateTeamPlayersRequest {
     name?: string;
-    players?: CreatePlayerDto[];
+    players?: CreatePlayerRequest[];
 
-    constructor(data?: ICreateTeamPlayersDto) {
+    constructor(data?: ICreateTeamPlayersRequest) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -1056,14 +1056,14 @@ export class CreateTeamPlayersDto implements ICreateTeamPlayersDto {
             if (Array.isArray(_data["players"])) {
                 this.players = [] as any;
                 for (let item of _data["players"])
-                    this.players!.push(CreatePlayerDto.fromJS(item));
+                    this.players!.push(CreatePlayerRequest.fromJS(item));
             }
         }
     }
 
-    static fromJS(data: any): CreateTeamPlayersDto {
+    static fromJS(data: any): CreateTeamPlayersRequest {
         data = typeof data === 'object' ? data : {};
-        let result = new CreateTeamPlayersDto();
+        let result = new CreateTeamPlayersRequest();
         result.init(data);
         return result;
     }
@@ -1080,16 +1080,16 @@ export class CreateTeamPlayersDto implements ICreateTeamPlayersDto {
     }
 }
 
-export interface ICreateTeamPlayersDto {
+export interface ICreateTeamPlayersRequest {
     name?: string;
-    players?: CreatePlayerDto[];
+    players?: CreatePlayerRequest[];
 }
 
-export class CreatePlayerDto implements ICreatePlayerDto {
+export class CreatePlayerRequest implements ICreatePlayerRequest {
     fullName?: string;
     doublePosition?: DoublePosition;
 
-    constructor(data?: ICreatePlayerDto) {
+    constructor(data?: ICreatePlayerRequest) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -1105,9 +1105,9 @@ export class CreatePlayerDto implements ICreatePlayerDto {
         }
     }
 
-    static fromJS(data: any): CreatePlayerDto {
+    static fromJS(data: any): CreatePlayerRequest {
         data = typeof data === 'object' ? data : {};
-        let result = new CreatePlayerDto();
+        let result = new CreatePlayerRequest();
         result.init(data);
         return result;
     }
@@ -1120,7 +1120,7 @@ export class CreatePlayerDto implements ICreatePlayerDto {
     }
 }
 
-export interface ICreatePlayerDto {
+export interface ICreatePlayerRequest {
     fullName?: string;
     doublePosition?: DoublePosition;
 }
@@ -1131,7 +1131,7 @@ export enum DoublePosition {
     SecondDouble = 2,
 }
 
-export class TeamMatchDto implements ITeamMatchDto {
+export class TeamMatchResponse implements ITeamMatchResponse {
     hostTeamName?: string;
     guestTeamName?: string;
     startedAt?: Date;
@@ -1139,7 +1139,7 @@ export class TeamMatchDto implements ITeamMatchDto {
     guestVictories?: number;
     teamMatchIdEncoded?: string;
 
-    constructor(data?: ITeamMatchDto) {
+    constructor(data?: ITeamMatchResponse) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -1159,9 +1159,9 @@ export class TeamMatchDto implements ITeamMatchDto {
         }
     }
 
-    static fromJS(data: any): TeamMatchDto {
+    static fromJS(data: any): TeamMatchResponse {
         data = typeof data === 'object' ? data : {};
-        let result = new TeamMatchDto();
+        let result = new TeamMatchResponse();
         result.init(data);
         return result;
     }
@@ -1178,7 +1178,7 @@ export class TeamMatchDto implements ITeamMatchDto {
     }
 }
 
-export interface ITeamMatchDto {
+export interface ITeamMatchResponse {
     hostTeamName?: string;
     guestTeamName?: string;
     startedAt?: Date;

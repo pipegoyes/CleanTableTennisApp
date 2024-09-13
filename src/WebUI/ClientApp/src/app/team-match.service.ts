@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Players } from './models/Players';
 import { WizardInformation } from './models/WizardInformation';
-import { Client, CreateTeamMatchCommand, DoublePosition, PlayerRequest, TeamMatchDto, TeamRequest } from './web-api-client';
+import { Client, CreateTeamMatchRequest, DoublePosition, CreatePlayerRequest, TeamMatchResponse, CreateTeamPlayersRequest } from './web-api-client';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class TeamMatchService {
   constructor(private teamMatchClient: Client) { }
 
 
-  get() : Observable<TeamMatchDto[]>{
+  get() : Observable<TeamMatchResponse[]>{
     return this.teamMatchClient.getTeamMatches(null);
   }
 
@@ -21,9 +21,9 @@ export class TeamMatchService {
     return this.teamMatchClient.createTeamMatch(teamMatchCommand);
   }
 
-  private ToTeamMatchCommand(wizardInformation: WizardInformation): CreateTeamMatchCommand{
+  private ToTeamMatchCommand(wizardInformation: WizardInformation): CreateTeamMatchRequest{
 
-    var teamMatchCommand = new CreateTeamMatchCommand();
+    var teamMatchCommand = new CreateTeamMatchRequest();
     teamMatchCommand.hostTeam = this.CreateTeamRequest(
       wizardInformation.teamInformation.hostName, 
       wizardInformation.hostPlayers,
@@ -40,11 +40,11 @@ export class TeamMatchService {
   }
 
   private CreateTeamRequest(name: string, players: Players, firstDoubleNames: string[], secondDoubleNames: string[]){
-    return new TeamRequest({name: name, players: [
-      new PlayerRequest({fullName: players.player1, doublePosition: this.GetDoublePosition(players.player1, firstDoubleNames, secondDoubleNames)}),
-      new PlayerRequest({fullName: players.player2, doublePosition: this.GetDoublePosition(players.player2, firstDoubleNames, secondDoubleNames)}),
-      new PlayerRequest({fullName: players.player3, doublePosition: this.GetDoublePosition(players.player3, firstDoubleNames, secondDoubleNames)}),
-      new PlayerRequest({fullName: players.player4, doublePosition: this.GetDoublePosition(players.player4, firstDoubleNames, secondDoubleNames)}),
+    return new CreateTeamPlayersRequest ({name: name, players: [
+      new CreatePlayerRequest({fullName: players.player1, doublePosition: this.GetDoublePosition(players.player1, firstDoubleNames, secondDoubleNames)}),
+      new CreatePlayerRequest({fullName: players.player2, doublePosition: this.GetDoublePosition(players.player2, firstDoubleNames, secondDoubleNames)}),
+      new CreatePlayerRequest({fullName: players.player3, doublePosition: this.GetDoublePosition(players.player3, firstDoubleNames, secondDoubleNames)}),
+      new CreatePlayerRequest({fullName: players.player4, doublePosition: this.GetDoublePosition(players.player4, firstDoubleNames, secondDoubleNames)}),
     ]})
   }
 

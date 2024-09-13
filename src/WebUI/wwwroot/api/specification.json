@@ -240,11 +240,11 @@
         ],
         "operationId": "CreateTeamMatch",
         "requestBody": {
-          "x-name": "command",
+          "x-name": "request",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateTeamMatchCommand"
+                "$ref": "#/components/schemas/CreateTeamMatchRequest"
               }
             }
           },
@@ -301,7 +301,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TeamMatchDto"
+                    "$ref": "#/components/schemas/TeamMatchResponse"
                   }
                 }
               }
@@ -534,19 +534,19 @@
           }
         }
       },
-      "CreateTeamMatchCommand": {
+      "CreateTeamMatchRequest": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "hostTeam": {
-            "$ref": "#/components/schemas/CreateTeamPlayersDto"
+            "$ref": "#/components/schemas/CreateTeamPlayersRequest"
           },
           "guestTeam": {
-            "$ref": "#/components/schemas/CreateTeamPlayersDto"
+            "$ref": "#/components/schemas/CreateTeamPlayersRequest"
           }
         }
       },
-      "CreateTeamPlayersDto": {
+      "CreateTeamPlayersRequest": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -556,12 +556,12 @@
           "players": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/CreatePlayerDto"
+              "$ref": "#/components/schemas/CreatePlayerRequest"
             }
           }
         }
       },
-      "CreatePlayerDto": {
+      "CreatePlayerRequest": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -587,7 +587,7 @@
           2
         ]
       },
-      "TeamMatchDto": {
+      "TeamMatchResponse": {
         "type": "object",
         "additionalProperties": false,
         "properties": {

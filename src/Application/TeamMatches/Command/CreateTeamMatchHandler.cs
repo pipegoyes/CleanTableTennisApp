@@ -97,4 +97,3 @@ public class CreateTeamMatchHandler : IRequestHandler<CreateTeamMatchCommand, st
         return existingHost;
     }
 }
-

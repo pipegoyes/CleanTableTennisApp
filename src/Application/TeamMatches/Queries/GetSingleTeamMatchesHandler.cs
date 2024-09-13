@@ -1,34 +1,28 @@
-using CleanTableTennisApp.Application.Common.Converters;
-using CleanTableTennisApp.Application.Common.Dtos;
 using CleanTableTennisApp.Application.Common.Encoders;
 using CleanTableTennisApp.Application.Common.Interfaces;
+using CleanTableTennisApp.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanTableTennisApp.Application.Home.Queries;
 
-public class GetSingleTeamMatchesQuery : IRequest<TeamMatchDto>
+public class GetSingleTeamMatchesQuery : IRequest<TeamMatch>
 {
     public string TeamMatchIdEncoded { get; set; } = string.Empty;
 }
 
-public class GetSingleTeamMatchesHandler : IRequestHandler<GetSingleTeamMatchesQuery, TeamMatchDto>
+public class GetSingleTeamMatchesHandler : IRequestHandler<GetSingleTeamMatchesQuery, TeamMatch>
 {
-    
     private readonly IApplicationDbContext _context;
-    private readonly IUrlSafeIntEncoder _encoder;
-    private readonly ITeamMatchConverter _teamMatchConverter;
 
-    public GetSingleTeamMatchesHandler(IApplicationDbContext context, IUrlSafeIntEncoder encoder, ITeamMatchConverter teamMatchConverter)
+    public GetSingleTeamMatchesHandler(IApplicationDbContext context)
     {
         _context = context;
-        _encoder = encoder;
-        _teamMatchConverter = teamMatchConverter;
     }
 
-    public async Task<TeamMatchDto> Handle(GetSingleTeamMatchesQuery request, CancellationToken cancellationToken)
+    public async Task<TeamMatch> Handle(GetSingleTeamMatchesQuery request, CancellationToken cancellationToken)
     {
-        var teamMatchId = _encoder.Decode(request.TeamMatchIdEncoded);
+        var teamMatchId = TeamMatch.Decode(request.TeamMatchIdEncoded);
 
         var teamMatch = await _context.TeamMatches
             .Include(s => s.GuestTeam)
@@ -39,6 +33,6 @@ public class GetSingleTeamMatchesHandler : IRequestHandler<GetSingleTeamMatchesQ
             .ThenInclude(s => s.Scores)
             .FirstAsync(s => s.Id == teamMatchId, cancellationToken: cancellationToken);
 
-        return _teamMatchConverter.ToDto(teamMatch);
+        return teamMatch;
     }
 } 
