@@ -1,39 +1,144 @@
+using System.Security.Claims;
+using CleanTableTennisApp.Application;
+using CleanTableTennisApp.Application.Common.Interfaces;
+using CleanTableTennisApp.Infrastructure;
 using CleanTableTennisApp.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
+using CleanTableTennisApp.WebUI.Endpoints.Internal;
+using CleanTableTennisApp.WebUI.Permission;
+using CleanTableTennisApp.WebUI.RequestExamples;
+using CleanTableTennisApp.WebUI.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
+using NSwag.Examples;
 
-namespace CleanTableTennisApp.WebUI;
+var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
+var config = builder.Configuration;
 
-public class Program
+services.AddApplication();
+services.AddInfrastructure(config);
+services.AddEndpoints<Program>(config);
+
+services.AddSingleton<IAuthorizationHandler, HasPermissionsHandler>();
+services.AddSingleton<ICurrentUserService, CurrentUserService>();
+
+services.AddCors(corsOptions =>
 {
-    public static async Task Main(string[] args)
+    //todo use a dedicated policy and disable it in development Example .useCors(myProdPolicy)
+    corsOptions.AddDefaultPolicy(policy =>
     {
-        var host = CreateHostBuilder(args).Build();
+        var originUrl = config.GetValue<string>("OriginUrl");
+        policy.WithOrigins(originUrl!)
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
+services.AddHttpContextAccessor();
+services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>();
+builder.Services.AddEndpointsApiExplorer();
 
-        using (var scope = host.Services.CreateScope())
+//TODO Missing functionality ApiExceptionFilterAttribute wrap exception and throw expected error code
+//services.AddControllersWithViews(options =>
+//        options.Filters.Add<ApiExceptionFilterAttribute>())
+//    .AddFluentValidation(x => x.AutomaticValidationEnabled = false);
+
+services.AddExampleProviders(typeof(CreateTeamMatchExample).Assembly);
+
+var domain = $"https://{config.GetValue<string>("Auth0:Domain")}/";
+services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = domain;
+        options.Audience = config.GetValue<string>("Auth0:Audience");
+        options.TokenValidationParameters = new TokenValidationParameters
         {
-            var services = scope.ServiceProvider;
+            NameClaimType = ClaimTypes.NameIdentifier
+        };
+    });
 
-            try
-            {
-                var context = services.GetRequiredService<ApplicationDbContext>();
-                await context.Database.MigrateAsync();
-            }
-            catch (Exception ex)
-            {
-                var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                var loggerMessage = LoggerMessage.Define(LogLevel.Error, 1, "An error occurred while migrating or seeding the database.");
-                loggerMessage(logger, ex);
-                throw;
-            }
-        }
+services.AddAuthorization(options =>
+{
+    options.AddPolicy(Permissions.Write.Matches, policy => policy.Requirements.Add(new
+        PermissionDto(Permissions.Write.Matches, domain)));
+    options.AddPolicy(Permissions.All.Admin, policy => policy.Requirements.Add(new
+        PermissionDto(Permissions.All.Admin, domain)));
+});
 
-        await host.RunAsync();
-    }
+// todo missing ? AddOpenApiDocument
+services.AddOpenApiDocument((configure, provider) =>
+{
+    configure.Title = "CleanTableTennisApp API";
+    configure.Version = "1.0";
+    //configure.AddExamples(provider);
+});
 
-    public static IHostBuilder CreateHostBuilder(string[] args)
-    {
-        return Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =>
-                webBuilder.UseStartup<Startup>());
-    }
+services.AddSignalR();
+
+var app = builder.Build();
+
+if (builder.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+    app.UseMigrationsEndPoint();
 }
+else
+{
+    app.UseExceptionHandler("/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
+
+app.UseHealthChecks("/health");
+app.UseHttpsRedirection();
+
+// todo app.UseStaticFiles();
+app.UseOpenApi();
+app.UseStaticFiles();
+app.UseSwaggerUi(settings =>
+{
+    settings.Path = "/api";
+    settings.DocumentPath = "/api/specification.json";
+});
+
+// todo move to a file and make it work
+//app.Use(async(context, next) =>
+//{
+//    try
+//    {
+//        await next(context);
+//    }
+//    catch (ValidationException validationException)
+//    {
+//        context.Response.StatusCode = 400;
+//        var validationFailureResponse = new ValidationFailureResponse
+//        {
+//            Errors = validationException.Errors
+//        };
+//        await context.Response.WriteAsJsonAsync(validationFailureResponse);
+//    }
+//});
+app.UseCors();
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseEndpoints<Program>();
+
+// todo app.UseRouting();
+// todo maphub is missing for minimal apis
+// app.UseEndpoints(endpoints =>
+//{
+//    endpoints.MapControllerRoute(
+//        "default",
+//        "{controller}/{action=Index}/{id?}");
+//    endpoints.MapRazorPages();
+//    endpoints.MapHub<ScoresHub>("/real-time-scores");
+//});
+
+using (var scope = app.Services.CreateScope())
+{
+    var initializer = scope.ServiceProvider.GetRequiredService<DbInitializer>();
+    await initializer.InitializeAsync();
+}
+
+app.Run();

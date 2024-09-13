@@ -1,5 +1,5 @@
 using CleanTableTennisApp.Application.Requests;
-using CleanTableTennisApp.Application.Wizard.Commands;
+using CleanTableTennisApp.Application.TeamMatches.Command;
 using CleanTableTennisApp.Domain.Enums;
 using NSwag.Examples;
 
@@ -11,10 +11,10 @@ public class CreateTeamMatchExample : IExampleProvider<CreateTeamMatchCommand>
     {
         return new CreateTeamMatchCommand
         {
-            HostTeam = new TeamRequest
+            HostTeam = new CreateTeamPlayersDto
             {
                 Name = "Host",
-                Players = new List<PlayerRequest>
+                Players = new List<CreatePlayerDto>
                 {
                     new()
                     {
@@ -38,10 +38,10 @@ public class CreateTeamMatchExample : IExampleProvider<CreateTeamMatchCommand>
                     },
                 }
             },
-            GuestTeam = new TeamRequest
+            GuestTeam = new CreateTeamPlayersDto
             {
                 Name = "Guest",
-                Players = new List<PlayerRequest>
+                Players = new List<CreatePlayerDto>
                 {
                     new()
                     {

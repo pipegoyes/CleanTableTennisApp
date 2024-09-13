@@ -28,12 +28,7 @@
 
     <ItemGroup>
         <Folder Include="Common\Converters\" />
-        <Folder Include="Common\Dtos\" />
         <Folder Include="Common\Encoders\" />
-        <Folder Include="Home\Queries\" />
-        <Folder Include="Overview\Commands\" />
-        <Folder Include="Overview\Queries\" />
-        <Folder Include="Scores\Validators\" />
     </ItemGroup>
 
 </Project>

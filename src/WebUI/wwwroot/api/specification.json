@@ -3,15 +3,15 @@
   "openapi": "3.0.0",
   "info": {
     "title": "CleanTableTennisApp API",
-    "version": "1.0.0"
+    "version": "1.0"
   },
   "paths": {
-    "/api/DoubleScore/{doubleMatchIdEncoded}": {
+    "/double-score/{doubleMatchIdEncoded}": {
       "get": {
         "tags": [
           "DoubleScore"
         ],
-        "operationId": "DoubleScore_Get",
+        "operationId": "GetDoubleScore",
         "parameters": [
           {
             "name": "doubleMatchIdEncoded",
@@ -36,22 +36,25 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": ""
           }
         }
       }
     },
-    "/api/DoubleScore": {
-      "post": {
+    "/double-score": {
+      "put": {
         "tags": [
           "DoubleScore"
         ],
-        "operationId": "DoubleScore_Update",
+        "operationId": "UpdateDoubleScore",
         "requestBody": {
           "x-name": "command",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateDoubleMatchScoreCommand"
+                "$ref": "#/components/schemas/UpdateDoubleMatchScoresCommand"
               }
             }
           },
@@ -68,49 +71,29 @@
                 }
               }
             }
-          }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
-      }
-    },
-    "/api/Overview": {
-      "get": {
-        "tags": [
-          "Overview"
-        ],
-        "operationId": "Overview_GetAllMatches",
-        "parameters": [
-          {
-            "name": "TeamMatchIdEncoded",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            },
-            "x-position": 1
-          }
-        ],
-        "responses": {
-          "200": {
+          },
+          "400": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OverviewDto"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ValidationFailure"
+                  }
                 }
               }
             }
           }
         }
-      },
+      }
+    },
+    "/overview": {
       "post": {
         "tags": [
           "Overview"
         ],
-        "operationId": "Overview_Finish",
+        "operationId": "FinishTeamMatch",
         "requestBody": {
           "x-name": "command",
           "content": {
@@ -134,20 +117,46 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        }
       }
     },
-    "/api/Scores/{matchIdEncoded}": {
+    "/overview/{teamMatchIdEncoded}": {
       "get": {
         "tags": [
-          "Scores"
+          "Overview"
         ],
-        "operationId": "Scores_Get",
+        "operationId": "GetOverviewDto",
+        "parameters": [
+          {
+            "name": "teamMatchIdEncoded",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeamMatchOverviewDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/score/{matchIdEncoded}": {
+      "get": {
+        "tags": [
+          "Score"
+        ],
+        "operationId": "GetScore",
         "parameters": [
           {
             "name": "matchIdEncoded",
@@ -172,22 +181,25 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": ""
           }
         }
       }
     },
-    "/api/Scores": {
-      "post": {
+    "/score": {
+      "put": {
         "tags": [
-          "Scores"
+          "Score"
         ],
-        "operationId": "Scores_Update",
+        "operationId": "UpdateScore",
         "requestBody": {
           "x-name": "command",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateMatchScoreCommand"
+                "$ref": "#/components/schemas/UpdateSingleMatchScoreCommand"
               }
             }
           },
@@ -204,71 +216,35 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ValidationFailure"
+                  }
+                }
+              }
+            }
           }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        }
       }
     },
-    "/api/TeamMatch": {
+    "/team-match": {
       "post": {
         "tags": [
           "TeamMatch"
         ],
-        "operationId": "TeamMatch_Create",
+        "operationId": "CreateTeamMatch",
         "requestBody": {
-          "x-name": "command",
+          "x-name": "request",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateTeamMatchCommand"
-              },
-              "example": {
-                "hostTeam": {
-                  "name": "Host",
-                  "players": [
-                    {
-                      "fullName": "First player",
-                      "doublePosition": 1
-                    },
-                    {
-                      "fullName": "Second player",
-                      "doublePosition": 1
-                    },
-                    {
-                      "fullName": "Third player",
-                      "doublePosition": 2
-                    },
-                    {
-                      "fullName": "Fourth player",
-                      "doublePosition": 2
-                    }
-                  ]
-                },
-                "guestTeam": {
-                  "name": "Guest",
-                  "players": [
-                    {
-                      "fullName": "First player",
-                      "doublePosition": 1
-                    },
-                    {
-                      "fullName": "Second player",
-                      "doublePosition": 1
-                    },
-                    {
-                      "fullName": "Third player",
-                      "doublePosition": 2
-                    },
-                    {
-                      "fullName": "Fourth player",
-                      "doublePosition": 2
-                    }
-                  ]
-                }
+                "$ref": "#/components/schemas/CreateTeamMatchRequest"
               }
             }
           },
@@ -285,48 +261,34 @@
                 }
               }
             }
-          }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
-      },
-      "get": {
-        "tags": [
-          "TeamMatch"
-        ],
-        "operationId": "TeamMatch_Get",
-        "responses": {
-          "200": {
+          },
+          "400": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TeamMatchDto"
+                    "$ref": "#/components/schemas/ValidationFailure"
                   }
                 }
               }
             }
           }
         }
-      }
-    },
-    "/api/TeamMatch/singleTeamMatch": {
+      },
       "get": {
         "tags": [
           "TeamMatch"
         ],
-        "operationId": "TeamMatch_GetSingle",
+        "operationId": "GetTeamMatches",
         "parameters": [
           {
             "name": "teamMatchIdEncoded",
             "in": "query",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "nullable": true
             },
             "x-position": 1
           }
@@ -337,7 +299,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TeamMatchDto"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TeamMatchResponse"
+                  }
                 }
               }
             }
@@ -365,7 +330,53 @@
           }
         }
       },
-      "UpdateDoubleMatchScoreCommand": {
+      "ValidationFailure": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "propertyName": {
+            "type": "string",
+            "nullable": true
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "attemptedValue": {
+            "nullable": true
+          },
+          "customState": {
+            "nullable": true
+          },
+          "severity": {
+            "$ref": "#/components/schemas/Severity"
+          },
+          "errorCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "formattedMessagePlaceholderValues": {
+            "type": "object",
+            "nullable": true,
+            "additionalProperties": {}
+          }
+        }
+      },
+      "Severity": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Error",
+          "Warning",
+          "Info"
+        ],
+        "enum": [
+          0,
+          1,
+          2
+        ]
+      },
+      "UpdateDoubleMatchScoresCommand": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -380,7 +391,16 @@
           }
         }
       },
-      "OverviewDto": {
+      "FinishTeamMatchCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "teamMatchIdEncoded": {
+            "type": "string"
+          }
+        }
+      },
+      "TeamMatchOverviewDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -496,16 +516,7 @@
           }
         }
       },
-      "FinishTeamMatchCommand": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "teamMatchIdEncoded": {
-            "type": "string"
-          }
-        }
-      },
-      "UpdateMatchScoreCommand": {
+      "UpdateSingleMatchScoreCommand": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -523,19 +534,19 @@
           }
         }
       },
-      "CreateTeamMatchCommand": {
+      "CreateTeamMatchRequest": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "hostTeam": {
-            "$ref": "#/components/schemas/TeamRequest"
+            "$ref": "#/components/schemas/CreateTeamPlayersRequest"
           },
           "guestTeam": {
-            "$ref": "#/components/schemas/TeamRequest"
+            "$ref": "#/components/schemas/CreateTeamPlayersRequest"
           }
         }
       },
-      "TeamRequest": {
+      "CreateTeamPlayersRequest": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -545,12 +556,12 @@
           "players": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/PlayerRequest"
+              "$ref": "#/components/schemas/CreatePlayerRequest"
             }
           }
         }
       },
-      "PlayerRequest": {
+      "CreatePlayerRequest": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -576,7 +587,7 @@
           2
         ]
       },
-      "TeamMatchDto": {
+      "TeamMatchResponse": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -603,19 +614,6 @@
           }
         }
       }
-    },
-    "securitySchemes": {
-      "JWT": {
-        "type": "apiKey",
-        "description": "Type into the textbox: Bearer {your JWT token}.",
-        "name": "Authorization",
-        "in": "header"
-      }
     }
-  },
-  "security": [
-    {
-      "JWT": []
-    }
-  ]
+  }
 }

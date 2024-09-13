@@ -48,7 +48,10 @@ Tech debt
 - Update npm packages 
 - Update to latest .net version
 - Reactivate feature EF and audit create by and modify by 
-
+- Migrate requests/response to contracts Project
+	. DoubleScore
+	. Overview
+	. Score
 
 Questions
 - Domain Events ? Create score ? to notify all users ?

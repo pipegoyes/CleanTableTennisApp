@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { MatchWithScores } from './models/MatchWithScores';
-import { DoubleScoreClient, ScoreDto, UpdateDoubleMatchScoreCommand } from './web-api-client';
+import { Client, ScoreDto, UpdateDoubleMatchScoresCommand } from './web-api-client';
 
 @Injectable({
   providedIn: 'root'
@@ -10,19 +10,19 @@ export class DoubleScoreService {
   private _doubleMatchWithScores : BehaviorSubject<MatchWithScores> = new BehaviorSubject({ matchIdEncoded: null, scores: []});
   matchWithScores$ = this._doubleMatchWithScores.asObservable(); 
 
-  constructor(private doubleScoreClient: DoubleScoreClient) { }
+  constructor(private apiClient: Client) { }
 
   update(matchIdEncoded: string, scoreRequests : ScoreDto[] ) : Observable<boolean>{
     var filteredScores = scoreRequests.filter(s => s.hostPoints != null && s.guestPoints != null);
-    var updateCommand = new UpdateDoubleMatchScoreCommand({
+    var updateCommand = new UpdateDoubleMatchScoresCommand({
       doubleMatchIdEncoded: matchIdEncoded,
       scoreDtos: filteredScores.filter(s => s.guestPoints != 0 || s.hostPoints != 0)
     });
-    return this.doubleScoreClient.update(updateCommand);
+    return this.apiClient.updateDoubleScore(updateCommand);
   }
 
   get(matchIdEncoded: string): Observable<MatchWithScores>{
-    this.doubleScoreClient.get(matchIdEncoded).subscribe(s => {
+    this.apiClient.getDoubleScore(matchIdEncoded).subscribe(s => {
       this._doubleMatchWithScores.next({
         matchIdEncoded: matchIdEncoded,
         scores: s

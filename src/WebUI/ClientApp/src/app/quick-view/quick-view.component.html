@@ -3,12 +3,12 @@
     <ng-template pTemplate="body">
 
         <!--TODO move to another component-->
-        <div *ngIf="teamMatchDto$ | async as dto">
+        <div *ngIf="teamMatchDto as dto">
             <h2>{{ dto.hostTeamName }} ({{dto.hostVictories}}) vs {{ dto.guestTeamName }} ({{ dto.guestVictories }})</h2>
             <p>Started at: {{ dto.startedAt | date }}</p>
 
         </div>
-        <div *ngIf="!(teamMatchDto$ | async)">Loading...</div>
+        <div *ngIf="!(teamMatchDto)">Loading...</div>
 
         <div *ngIf="overviewDto$ | async as overviewDto">
 

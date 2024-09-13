@@ -1,6 +1,6 @@
 ﻿using CleanTableTennisApp.Application.Requests;
-using CleanTableTennisApp.Application.Wizard.Commands;
-using CleanTableTennisApp.Application.Wizard.Validators;
+using CleanTableTennisApp.Application.TeamMatches.Command;
+using CleanTableTennisApp.Application.TeamMatches.Validators;
 using CleanTableTennisApp.Domain.Enums;
 using FluentAssertions;
 using NUnit.Framework;
@@ -22,10 +22,10 @@ public class CreateTeamMatchCommandValidatorTest
     {
         var teamMatchCommand = new CreateTeamMatchCommand
         {
-            GuestTeam = new TeamRequest
+            GuestTeam = new CreateTeamPlayersDto
             {
                 Name = "Guest",
-                Players = new List<PlayerRequest>
+                Players = new List<CreatePlayerDto>
                 {
                     CreatePlayer("Felipe Goyes", DoublePosition.FirstDouble),
                     CreatePlayer("Andres Coral", DoublePosition.FirstDouble),
@@ -33,10 +33,10 @@ public class CreateTeamMatchCommandValidatorTest
                     CreatePlayer("Jan Peter", DoublePosition.SecondDouble),
                 }
             },
-            HostTeam = new TeamRequest()
+            HostTeam = new CreateTeamPlayersDto()
             {
                 Name = "Host",
-                Players = new List<PlayerRequest>()
+                Players = new List<CreatePlayerDto>()
                 {
                     CreatePlayer("Player1 LastName1", DoublePosition.FirstDouble),
                     CreatePlayer("Player2 LastName2", DoublePosition.FirstDouble),
@@ -50,7 +50,7 @@ public class CreateTeamMatchCommandValidatorTest
         result.Errors.Should().BeEmpty();
     }
 
-    private static PlayerRequest CreatePlayer(string name, DoublePosition doublePosition) =>
+    private static CreatePlayerDto CreatePlayer(string name, DoublePosition doublePosition) =>
         new()
         {
             DoublePosition = doublePosition,

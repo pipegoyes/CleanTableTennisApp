@@ -1,5 +1,5 @@
 ﻿using CleanTableTennisApp.Application.Requests;
-using CleanTableTennisApp.Application.Wizard.Commands;
+using CleanTableTennisApp.Application.TeamMatches.Command;
 using CleanTableTennisApp.Domain.Enums;
 using FluentAssertions;
 using Xunit;
@@ -16,10 +16,10 @@ namespace CleanTableTennisApp.Application.IntegrationTests
             
             var request = new CreateTeamMatchCommand
             {
-                GuestTeam = new TeamRequest
+                GuestTeam = new CreateTeamPlayersDto
                 {
                     Name = "Guest Team",
-                    Players = new List<PlayerRequest>
+                    Players = new List<CreatePlayerDto>
                     {
                         new() { DoublePosition = DoublePosition.FirstDouble, FullName = "Felipe Goyes" },
                         new() { DoublePosition = DoublePosition.FirstDouble, FullName = "Andres Coral" },
@@ -27,10 +27,10 @@ namespace CleanTableTennisApp.Application.IntegrationTests
                         new() { DoublePosition = DoublePosition.SecondDouble, FullName = "Sutanito Muester" },
                     }
                 },
-                HostTeam = new TeamRequest
+                HostTeam = new CreateTeamPlayersDto
                 {
                     Name = "Host Team",
-                    Players = new List<PlayerRequest>
+                    Players = new List<CreatePlayerDto>
                     {
                         new() { DoublePosition = DoublePosition.FirstDouble, FullName = "Felipe Goyes2" },
                         new() { DoublePosition = DoublePosition.FirstDouble, FullName = "Andres Coral2" },

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TeamMatchService } from '../team-match.service';
-import { TeamMatchDto } from '../web-api-client';
+import { TeamMatchResponse } from '../web-api-client';
 import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
@@ -11,17 +11,12 @@ import { AuthService } from '@auth0/auth0-angular';
 })
 export class OnGoingTeamMatchesComponent implements OnInit {
 
-  teamMatches$: Observable<TeamMatchDto[]>
+  teamMatches$: Observable<TeamMatchResponse[]>
 
   constructor(private teamMatchService: TeamMatchService, private auth : AuthService) { }
 
   ngOnInit(): void {
-    this.auth.isAuthenticated$.subscribe(isAuthenticate =>{
-      if(isAuthenticate){
-        this.teamMatches$ = this.teamMatchService.get();
-      }
-    })
-    
+    this.teamMatches$ = this.teamMatchService.get();
   }
 
 }

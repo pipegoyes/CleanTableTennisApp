@@ -23,6 +23,8 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUI", "src\WebUI\WebUI.csproj", "{22454EE9-16B3-4B7A-8352-37E59B858155}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUI.Contracts", "src\WebUI.Contracts\WebUI.Contracts.csproj", "{B8DEA37D-AD1F-4F59-BDCC-1A5CDEC15CBC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{22454EE9-16B3-4B7A-8352-37E59B858155}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22454EE9-16B3-4B7A-8352-37E59B858155}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22454EE9-16B3-4B7A-8352-37E59B858155}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8DEA37D-AD1F-4F59-BDCC-1A5CDEC15CBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8DEA37D-AD1F-4F59-BDCC-1A5CDEC15CBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8DEA37D-AD1F-4F59-BDCC-1A5CDEC15CBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8DEA37D-AD1F-4F59-BDCC-1A5CDEC15CBC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +79,7 @@ Global
 		{DC37FD87-552C-4613-9F16-1537CA522898} = {664D406C-2F83-48F0-BFC3-408D5CB53C65}
 		{277029AF-D9E1-4B75-9F11-48FEA7345AD7} = {664D406C-2F83-48F0-BFC3-408D5CB53C65}
 		{22454EE9-16B3-4B7A-8352-37E59B858155} = {6ED356A7-8B47-4613-AD01-C85CF28491BD}
+		{B8DEA37D-AD1F-4F59-BDCC-1A5CDEC15CBC} = {6ED356A7-8B47-4613-AD01-C85CF28491BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3CB609D9-5D54-4C11-A371-DAAC8B74E430}
