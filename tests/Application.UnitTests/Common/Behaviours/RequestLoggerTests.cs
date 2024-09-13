@@ -1,6 +1,6 @@
 ﻿using CleanTableTennisApp.Application.Requests;
 using CleanTableTennisApp.Application.TeamMatches.Command;
-using CleanTableTennisApp.Application.Wizard.Validators;
+using CleanTableTennisApp.Application.TeamMatches.Validators;
 using CleanTableTennisApp.Domain.Enums;
 using FluentAssertions;
 using NUnit.Framework;

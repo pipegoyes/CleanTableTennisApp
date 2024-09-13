@@ -1,6 +1,9 @@
 ﻿using CleanTableTennisApp.Application.Common.Encoders;
 using CleanTableTennisApp.Application.Common.Interfaces;
+using CleanTableTennisApp.Application.DoubleMatches.Commands;
 using CleanTableTennisApp.Application.Requests;
+using CleanTableTennisApp.Application.Scores.DoubleMatchScores.Commands;
+using CleanTableTennisApp.Application.Scores.SingleMatchScores.Commands;
 using CleanTableTennisApp.Application.Wizard.Commands;
 using CleanTableTennisApp.Domain.Entities;
 using CleanTableTennisApp.Domain.Enums;
@@ -42,10 +45,10 @@ public class CreateTeamMatchHandler : IRequestHandler<CreateTeamMatchCommand, st
 
         var createDoubleMatchesCommand = CreateDoubleMatchesCommand(request, teamMatch, guestTeam, hostTeam);
 
-        var allSingleMatchesCreated = await _mediator.Send(new CreateAllSingleMatchesCommand { TeamMatchId = teamMatch.Id }, cancellationToken);
+        var allSingleMatchesCreated = await _mediator.Send(new CreateSingleMatchCommand { TeamMatchId = teamMatch.Id }, cancellationToken);
         var allDoubleMatchesCreated = await _mediator.Send(createDoubleMatchesCommand, cancellationToken);
         var singleScoresCreated = await _mediator.Send(new CreateEmptySingleScoresCommand { TeamMatchId = teamMatch.Id }, cancellationToken);
-        var doubleScoresCreated = await _mediator.Send(new CreateEmptyDoubleScoresCommand { TeamMatchId = teamMatch.Id }, cancellationToken);
+        var doubleScoresCreated = await _mediator.Send(new CreateEmptyDoubleMatchScoresCommand { TeamMatchId = teamMatch.Id }, cancellationToken);
 
         //todo what do to with responses ?
         return _urlSafeIntEncoder.Encode(teamMatch.Id);

@@ -2,8 +2,8 @@
 using CleanTableTennisApp.Application.Common.Behaviours;
 using CleanTableTennisApp.Application.Common.Converters;
 using CleanTableTennisApp.Application.Common.Encoders;
-using CleanTableTennisApp.Application.Overview;
 using CleanTableTennisApp.Application.Scores;
+using CleanTableTennisApp.Application.Scores.SingleMatchScores;
 using CleanTableTennisApp.Application.Scores.Validators;
 using CleanTableTennisApp.Domain.Entities;
 using FluentValidation;
@@ -24,11 +24,11 @@ public static class DependencyInjection
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
 
         services.AddSingleton<IUrlSafeIntEncoder, UrlSafeIntEncoder>();
-        services.AddSingleton<IValidator<ICollection<Score>>, ScoreValidator>();
+        services.AddSingleton<IValidator<ICollection<SingleMatchScore>>, ScoreValidator>();
         services.AddSingleton<IValidator<ICollection<DoubleMatchScore>>, DoubleScoreValidator>();
         services.AddSingleton<IVictoriesCounter, VictoriesCounter>();
 
-        services.AddTransient<IGamePointsUpdater<Score>, GamePointsUpdater<Score>>();
+        services.AddTransient<IGamePointsUpdater<SingleMatchScore>, GamePointsUpdater<SingleMatchScore>>();
         services.AddTransient<IGamePointsUpdater<DoubleMatchScore>, GamePointsUpdater<DoubleMatchScore>>();
 
         services.AddSingleton<ITeamMatchConverter, TeamMatchConverter>();

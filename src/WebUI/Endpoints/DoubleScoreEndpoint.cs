@@ -25,7 +25,7 @@ public class DoubleScoreEndpoint : IEndpoints
         app.MapPut($"{BaseRoute}", UpdateDoubleScoreAsync)
             .WithName("UpdateDoubleScore")
             .RequireAuthorization(Permissions.Write.Matches)
-            .Accepts<UpdateDoubleMatchScoresCommand>(EndpointConstants.ContentType)
+            .Accepts<UpdateDoubleMatchScoresCommand>(EndpointConstants.Json)
             .Produces<bool>(200).Produces<IEnumerable<ValidationFailure>>(400)
             .WithTags(Tag);
     }

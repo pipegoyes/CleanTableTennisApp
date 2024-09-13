@@ -2,11 +2,11 @@
 
 namespace CleanTableTennisApp.Domain.Entities;
 
-public class SingleMatch : AuditableEntity, IScorable<Score>
+public class SingleMatch : AuditableEntity, IScorable<SingleMatchScore>
 {
     public SingleMatch()
     {
-        Scores = new List<Score>();
+        Scores = new List<SingleMatchScore>();
     }
 
     public SingleMatch(Player hostPlayer, Player guestPlayer, TeamMatch teamMatch, PlayingOrder playingOrder)
@@ -15,7 +15,7 @@ public class SingleMatch : AuditableEntity, IScorable<Score>
         GuestPlayer = guestPlayer;
         TeamMatch = teamMatch;
         PlayingOrder = playingOrder;
-        Scores = new List<Score>();
+        Scores = new List<SingleMatchScore>();
     }
 
     public int Id { get; set; }
@@ -23,5 +23,5 @@ public class SingleMatch : AuditableEntity, IScorable<Score>
     public Player GuestPlayer { get; set; } = new();
     public TeamMatch TeamMatch { get; set; } = new();
     public PlayingOrder PlayingOrder { get; set; } = new();
-    public ICollection<Score> Scores { get; set; }
+    public ICollection<SingleMatchScore> Scores { get; set; }
 }

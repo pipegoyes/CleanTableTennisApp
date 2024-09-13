@@ -34,7 +34,7 @@ public class ScoreDtoValidator : AbstractValidator<ScoreDto>
     {
         if (hostPoints < TenPoints || guestPoints < TenPoints)
         {
-            return (hostPoints == ElevenPoints && guestPoints < TenPoints) || (hostPoints < TenPoints && guestPoints == ElevenPoints);
+            return hostPoints == ElevenPoints && guestPoints < TenPoints || hostPoints < TenPoints && guestPoints == ElevenPoints;
         }
         return true;
     }

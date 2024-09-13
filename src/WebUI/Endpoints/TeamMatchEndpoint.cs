@@ -1,17 +1,18 @@
 ﻿using CleanTableTennisApp.Application.Common.Dtos;
 using CleanTableTennisApp.Application.Home.Queries;
 using CleanTableTennisApp.Application.TeamMatches.Command;
-using CleanTableTennisApp.Application.Wizard.Commands;
 using CleanTableTennisApp.WebUI.Endpoints.Internal;
 using CleanTableTennisApp.WebUI.Permission;
+using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CleanTableTennisApp.WebUI.Endpoints;
 
 public class TeamMatchEndpoint : IEndpoints
 {
-    private const string ContentType = "application/json";
     private const string Tag = "TeamMatch";
     private const string BaseRoute = "team-match";
 
@@ -20,28 +21,30 @@ public class TeamMatchEndpoint : IEndpoints
         app.MapPost(BaseRoute, CreateTeamMatch)
             .WithName("CreateTeamMatch")
             .RequireAuthorization(Permissions.Write.Matches)
-            .Accepts<CreateTeamMatchCommand>(ContentType)
+            .Accepts<CreateTeamMatchCommand>(EndpointConstants.Json)
             .Produces<string>(200)
             .Produces<IEnumerable<ValidationFailure>>(400)
             .WithTags(Tag);
 
-        app.MapGet(BaseRoute, GetTeamMatches)
+        app.MapGet($"{BaseRoute}", GetTeamMatches)
             .WithName("GetTeamMatches")
             .Produces<TeamMatchDto[]>()
+            .AllowAnonymous()
             .WithTags(Tag);
     }
 
-    private static async Task<IResult> CreateTeamMatch(IMediator mediator, CreateTeamMatchCommand command)
+    private static async Task<IResult> CreateTeamMatch(IMediator mediator, CreateTeamMatchCommand command, IValidator<CreateTeamMatchCommand> validator)
     {
-        // todo pending to add validator
-        // todo refactor returning a teammatch 
+        await validator.ValidateAndThrowAsync(command);
+
+        // todo refactor returning a teammatch or teamMatchoverview
         var teamMatchId = await mediator.Send(command);
         return Results.Ok(teamMatchId);
     }
 
     private static async Task<IResult> GetTeamMatches(IMediator mediator, string? teamMatchIdEncoded)
     {
-        if (teamMatchIdEncoded is null)
+        if (teamMatchIdEncoded is null || string.IsNullOrWhiteSpace(teamMatchIdEncoded))
         {
             var result = await mediator.Send(new GetTeamMatchesQuery());
             return Results.Ok(result);

@@ -3,7 +3,6 @@ using CleanTableTennisApp.Application;
 using CleanTableTennisApp.Application.Common.Interfaces;
 using CleanTableTennisApp.Infrastructure;
 using CleanTableTennisApp.Infrastructure.Persistence;
-using CleanTableTennisApp.WebUI.Endpoints;
 using CleanTableTennisApp.WebUI.Endpoints.Internal;
 using CleanTableTennisApp.WebUI.Permission;
 using CleanTableTennisApp.WebUI.RequestExamples;
@@ -103,6 +102,23 @@ app.UseSwaggerUi(settings =>
     settings.DocumentPath = "/api/specification.json";
 });
 
+// todo move to a file and make it work
+//app.Use(async(context, next) =>
+//{
+//    try
+//    {
+//        await next(context);
+//    }
+//    catch (ValidationException validationException)
+//    {
+//        context.Response.StatusCode = 400;
+//        var validationFailureResponse = new ValidationFailureResponse
+//        {
+//            Errors = validationException.Errors
+//        };
+//        await context.Response.WriteAsJsonAsync(validationFailureResponse);
+//    }
+//});
 app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();

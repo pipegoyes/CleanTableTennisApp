@@ -2,5 +2,5 @@
 
 public class EndpointConstants
 {
-    public const string ContentType = "application/json";
+    public const string Json = "application/json";
 }

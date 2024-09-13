@@ -26,7 +26,7 @@ public class ScoreEndpoint : IEndpoints
         app.MapPut($"{BaseRoute}", UpdateScoreAsync)
             .WithName("UpdateScore")
             .RequireAuthorization(Permissions.Write.Matches)
-            .Accepts<UpdateSingleMatchScoreCommand>(EndpointConstants.ContentType)
+            .Accepts<UpdateSingleMatchScoreCommand>(EndpointConstants.Json)
             .Produces<bool>(200)
             // todo pending to clarify
             .Produces<IEnumerable<ValidationFailure>>(400)

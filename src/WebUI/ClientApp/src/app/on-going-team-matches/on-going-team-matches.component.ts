@@ -16,11 +16,13 @@ export class OnGoingTeamMatchesComponent implements OnInit {
   constructor(private teamMatchService: TeamMatchService, private auth : AuthService) { }
 
   ngOnInit(): void {
-    this.auth.isAuthenticated$.subscribe(isAuthenticate =>{
-      if(isAuthenticate){
-        this.teamMatches$ = this.teamMatchService.get();
-      }
-    })
+    this.teamMatches$ = this.teamMatchService.get();
+
+    // this.auth.isAuthenticated$.subscribe(isAuthenticate =>{
+    //   if(isAuthenticate){
+        
+    //   }
+    // })
     
   }
 

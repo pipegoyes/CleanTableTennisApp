@@ -1,6 +1,6 @@
 using CleanTableTennisApp.Application.Common.Dtos;
 using CleanTableTennisApp.Application.Common.Encoders;
-using CleanTableTennisApp.Application.Scores;
+using CleanTableTennisApp.Application.Scores.SingleMatchScores;
 using CleanTableTennisApp.Domain.Entities;
 using CleanTableTennisApp.Domain.Enums;
 using CleanTableTennisApp.Domain.Interfaces;
