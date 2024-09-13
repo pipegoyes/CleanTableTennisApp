@@ -84,10 +84,10 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
         redirect_uri: window.location.origin,
       },
       httpInterceptor: {
-        allowedList: [`${environment.apiUrl}/*`],
+        allowedList: [`${environment.apiUrl}/score`, `${environment.apiUrl}/double-score`]
       },
     }),
-    { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true, },
   ],
   bootstrap: [AppComponent]
 })
