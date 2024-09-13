@@ -5,7 +5,7 @@ using FluentValidation;
 
 namespace CleanTableTennisApp.Application.TeamMatches.Validators;
 
-public class TeamRequestValidator : AbstractValidator<TeamRequest>
+public class TeamRequestValidator : AbstractValidator<CreateTeamPlayersDto>
 {
     public TeamRequestValidator()
     {
@@ -19,7 +19,7 @@ public class TeamRequestValidator : AbstractValidator<TeamRequest>
         RuleForEach(s => s.Players).SetValidator(new PlayerRequestValidator());
     }
 
-    public bool IsPlayerNameRepeated(IList<PlayerRequest> players)
+    public bool IsPlayerNameRepeated(IList<CreatePlayerDto> players)
     {
         var result = players.GroupBy(s => s.FullName).Any(s => s.Count() > 1);
         return result;

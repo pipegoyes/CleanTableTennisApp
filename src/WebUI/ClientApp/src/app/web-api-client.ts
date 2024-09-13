@@ -998,8 +998,8 @@ export interface IUpdateSingleMatchScoreCommand {
 }
 
 export class CreateTeamMatchCommand implements ICreateTeamMatchCommand {
-    hostTeam?: TeamRequest;
-    guestTeam?: TeamRequest;
+    hostTeam?: CreateTeamPlayersDto;
+    guestTeam?: CreateTeamPlayersDto;
 
     constructor(data?: ICreateTeamMatchCommand) {
         if (data) {
@@ -1012,8 +1012,8 @@ export class CreateTeamMatchCommand implements ICreateTeamMatchCommand {
 
     init(_data?: any) {
         if (_data) {
-            this.hostTeam = _data["hostTeam"] ? TeamRequest.fromJS(_data["hostTeam"]) : <any>undefined;
-            this.guestTeam = _data["guestTeam"] ? TeamRequest.fromJS(_data["guestTeam"]) : <any>undefined;
+            this.hostTeam = _data["hostTeam"] ? CreateTeamPlayersDto.fromJS(_data["hostTeam"]) : <any>undefined;
+            this.guestTeam = _data["guestTeam"] ? CreateTeamPlayersDto.fromJS(_data["guestTeam"]) : <any>undefined;
         }
     }
 
@@ -1033,15 +1033,15 @@ export class CreateTeamMatchCommand implements ICreateTeamMatchCommand {
 }
 
 export interface ICreateTeamMatchCommand {
-    hostTeam?: TeamRequest;
-    guestTeam?: TeamRequest;
+    hostTeam?: CreateTeamPlayersDto;
+    guestTeam?: CreateTeamPlayersDto;
 }
 
-export class TeamRequest implements ITeamRequest {
+export class CreateTeamPlayersDto implements ICreateTeamPlayersDto {
     name?: string;
-    players?: PlayerRequest[];
+    players?: CreatePlayerDto[];
 
-    constructor(data?: ITeamRequest) {
+    constructor(data?: ICreateTeamPlayersDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -1056,14 +1056,14 @@ export class TeamRequest implements ITeamRequest {
             if (Array.isArray(_data["players"])) {
                 this.players = [] as any;
                 for (let item of _data["players"])
-                    this.players!.push(PlayerRequest.fromJS(item));
+                    this.players!.push(CreatePlayerDto.fromJS(item));
             }
         }
     }
 
-    static fromJS(data: any): TeamRequest {
+    static fromJS(data: any): CreateTeamPlayersDto {
         data = typeof data === 'object' ? data : {};
-        let result = new TeamRequest();
+        let result = new CreateTeamPlayersDto();
         result.init(data);
         return result;
     }
@@ -1080,16 +1080,16 @@ export class TeamRequest implements ITeamRequest {
     }
 }
 
-export interface ITeamRequest {
+export interface ICreateTeamPlayersDto {
     name?: string;
-    players?: PlayerRequest[];
+    players?: CreatePlayerDto[];
 }
 
-export class PlayerRequest implements IPlayerRequest {
+export class CreatePlayerDto implements ICreatePlayerDto {
     fullName?: string;
     doublePosition?: DoublePosition;
 
-    constructor(data?: IPlayerRequest) {
+    constructor(data?: ICreatePlayerDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -1105,9 +1105,9 @@ export class PlayerRequest implements IPlayerRequest {
         }
     }
 
-    static fromJS(data: any): PlayerRequest {
+    static fromJS(data: any): CreatePlayerDto {
         data = typeof data === 'object' ? data : {};
-        let result = new PlayerRequest();
+        let result = new CreatePlayerDto();
         result.init(data);
         return result;
     }
@@ -1120,7 +1120,7 @@ export class PlayerRequest implements IPlayerRequest {
     }
 }
 
-export interface IPlayerRequest {
+export interface ICreatePlayerDto {
     fullName?: string;
     doublePosition?: DoublePosition;
 }

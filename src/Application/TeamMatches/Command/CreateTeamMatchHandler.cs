@@ -13,8 +13,8 @@ namespace CleanTableTennisApp.Application.TeamMatches.Command;
 
 public class CreateTeamMatchCommand : IRequest<string>
 {
-    public TeamRequest HostTeam { get; set; } = new();
-    public TeamRequest GuestTeam { get; set; } = new();
+    public CreateTeamPlayersDto HostTeam { get; set; } = new();
+    public CreateTeamPlayersDto GuestTeam { get; set; } = new();
 }
 
 public class CreateTeamMatchHandler : IRequestHandler<CreateTeamMatchCommand, string>
@@ -62,18 +62,18 @@ public class CreateTeamMatchHandler : IRequestHandler<CreateTeamMatchCommand, st
         var createDoubleMatchesCommand = new CreateDoubleMatchesCommand
         {
             TeamMatchId = teamMatch.Id,
-            GuestPlayers = ToDoublePlayerRequests(guestTeam.Players, guestNamesWithDoublePosition),
-            HostPlayers = ToDoublePlayerRequests(hostTeam.Players, hostNamesWithDoublePosition)
+            GuestPlayers = ToDto(guestTeam.Players, guestNamesWithDoublePosition),
+            HostPlayers = ToDto(hostTeam.Players, hostNamesWithDoublePosition)
         };
         return createDoubleMatchesCommand;
     }
 
-    private static IList<DoublePlayerRequest> ToDoublePlayerRequests(ICollection<Player> players, IDictionary<string, DoublePosition> namesWithDoublePosition)
+    private static IList<CreateDoubleMatchDto> ToDto(ICollection<Player> players, IDictionary<string, DoublePosition> namesWithDoublePosition)
     {
-        return players.Select(s => new DoublePlayerRequest { DoublePosition = namesWithDoublePosition[s.Name], PlayerId = s.Id }).ToArray();
+        return players.Select(s => new CreateDoubleMatchDto { DoublePosition = namesWithDoublePosition[s.Name], PlayerId = s.Id }).ToArray();
     }
 
-    private static void AddPlayers(Team hostTeam, IList<PlayerRequest> players)
+    private static void AddPlayers(Team hostTeam, IList<CreatePlayerDto> players)
     {
         foreach (var player in players)
         {

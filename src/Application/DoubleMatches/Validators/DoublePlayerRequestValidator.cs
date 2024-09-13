@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace CleanTableTennisApp.Application.DoubleMatches.Validators;
 
-public class DoublePlayerRequestValidator : AbstractValidator<DoublePlayerRequest>
+public class DoublePlayerRequestValidator : AbstractValidator<CreateDoubleMatchDto>
 {
     public DoublePlayerRequestValidator()
     {

@@ -539,14 +539,14 @@
         "additionalProperties": false,
         "properties": {
           "hostTeam": {
-            "$ref": "#/components/schemas/TeamRequest"
+            "$ref": "#/components/schemas/CreateTeamPlayersDto"
           },
           "guestTeam": {
-            "$ref": "#/components/schemas/TeamRequest"
+            "$ref": "#/components/schemas/CreateTeamPlayersDto"
           }
         }
       },
-      "TeamRequest": {
+      "CreateTeamPlayersDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -556,12 +556,12 @@
           "players": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/PlayerRequest"
+              "$ref": "#/components/schemas/CreatePlayerDto"
             }
           }
         }
       },
-      "PlayerRequest": {
+      "CreatePlayerDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {

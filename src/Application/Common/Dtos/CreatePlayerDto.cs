@@ -2,7 +2,7 @@
 
 namespace CleanTableTennisApp.Application.Requests;
 
-public class PlayerRequest
+public class CreatePlayerDto
 {
     public string FullName { get; set; } = string.Empty;
     public DoublePosition DoublePosition { get; set; }

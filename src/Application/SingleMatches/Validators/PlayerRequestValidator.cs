@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace CleanTableTennisApp.Application.Wizard.Validators;
 
-public class PlayerRequestValidator : AbstractValidator<PlayerRequest>
+public class PlayerRequestValidator : AbstractValidator<CreatePlayerDto>
 {
     public PlayerRequestValidator()
     {

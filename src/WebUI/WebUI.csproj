@@ -50,7 +50,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\Contracts\Contracts.csproj" />
+        <ProjectReference Include="..\..\..\Contracts\WebUI.Contracts.csproj" />
         <ProjectReference Include="..\Application\Application.csproj" />
         <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     </ItemGroup>

@@ -6,8 +6,6 @@ using CleanTableTennisApp.WebUI.Permission;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
-using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Mvc;
 
 namespace CleanTableTennisApp.WebUI.Endpoints;
 
