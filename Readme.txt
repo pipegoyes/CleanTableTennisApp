@@ -9,7 +9,7 @@ Angular CLI
 npm install -g @angular/cli@12.0.1
 12.0.1
 
-.Net 5
+.Net 8
 choco install dotnet-5.0-sdk
 
 PrimeNG
