@@ -1,66 +1,46 @@
-Node version:
-16.15.0
-Installers link -> https://nodejs.org/dist/v16.15.0/
+# Clean Table Tennis App - Development Guide
 
-NPM version:
-8.5.5
+## Project Setup
 
-Angular CLI
-npm install -g @angular/cli@12.0.1
-12.0.1
+### Environment Requirements
+- **Node.js**: v16.15.0 
+  - Installers: [Node.js v16.15.0](https://nodejs.org/dist/v16.15.0/)
+- **NPM**: v8.5.5
+- **Angular CLI**: v12.0.1 
+  - Install: `npm install -g @angular/cli@12.0.1`
+- **.NET**: v8.0
+  - Install: `choco install dotnet-5.0-sdk`
 
-.Net 8
-choco install dotnet-5.0-sdk
+### Additional Tools
+- **PrimeNG**: [v12 LTS](https://www.primefaces.org/primeng-v12-lts)
+- **Static Web Apps CLI**: 
+  - Install: `npm install -g @azure/static-web-apps-cli`
 
-PrimeNG
-https://www.primefaces.org/primeng-v12-lts
+## Development Roadmap for Beta Version
 
-Package manager CLI
-Add-Migration "Name" -Project Infrastructure 
+### Resolved Bugs
+- [x] ComboBox initial game points display
+- [x] Prevent saving single match scores with incomplete selection
 
-SWA - deploying cli
-npm install -g @azure/static-web-apps-cli
+### Pending Bugs
+- [ ] Review set order in single and double match scores
 
--------------------------------
-Whats need to be done for beta version?
+### Feature Backlog
+- [ ] Display player names in matches
+- [ ] Enhance validation error messaging
+- [ ] Implement real-time score updates without page refresh
+- [ ] Add match configuration validation
+- [ ] Create wizard to prevent player duplicates in doubles
+- [ ] Match Completion Process
+  - Comprehensive score validation
+  - Confirmation popup for match end
 
-Bugs
-- (resolved) ComboBox does not display initial game points correctly
-- (resolved) There is no error when you select 11 and nothing, it saves score in single match
-- Consider set order in scores (single and doubles)
+### Technical Todos
+- [ ] Refactor API to follow RESTful conventions (plural endpoints)
 
-Features
-- Display names in double and single matches
-- Validations does not display detail message
-- Update score in quick-view without refreshing the page
-- Shows error when match configuration is not valid
-- Validate doubles, player does not play in both doubles (wizard)
-- Finish a match 
-	. validate all scores 
-	. popup to confirm action
+### Technical Debt
+- [ ] Consolidate single and double score views
+- [ ] Upgrade to latest Angular version
 
-TODOS
-- Refactor API to make it real REST (plural at endpoints and so on)
-
-Tech debt
-- Single View to display score and double scores 
-- Update to latest angular version
-- Update npm packages 
-- Update to latest .net version
-- Reactivate feature EF and audit create by and modify by 
-- Migrate requests/response to contracts Project
-	. DoubleScore
-	. Overview
-	. Score
-
-Questions
-- Domain Events ? Create score ? to notify all users ?
-- AuditableEntity for all entities ?
-
-Azure
-- Install static-web-apps-cli
-	npm install -g @azure/static-web-apps-cli
-- Build and deploy front end 	
-	swa deploy -n clean-tt-frontend ./dist --env production
-- cors setting with defined origin
-
+## Package Manager Commands
+- Create Migration: `Add-Migration "Name" -Project Infrastructure`
